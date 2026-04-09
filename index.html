@@ -1,731 +1,255 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ODA Tactical SW — Équipement Tactique Premium</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accueil — ODA Tactical SW</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --dark:#080c08;
-  --dark2:#0c110c;
-  --green:#1b3d1b;
-  --green-mid:#2a5a2a;
-  --green-light:#3a7a3a;
-  --green-accent:#4a9e4a;
-  --green-bright:#5dbf5d;
-  --white:#f0f0eb;
-  --gray:#7a7a72;
-  --gray-light:#a8a89e;
-  --border:#243824;
-  --border-light:#2f4f2f;
-}
-
-html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;cursor:default;}
-
-/* ========== VEGETATION SVG BACKGROUND ========== */
-.veg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
-.veg-bg svg{position:absolute;bottom:0;width:100%;height:100%;}
-
-/* ========== SCROLLBAR ========== */
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--dark);}
-::-webkit-scrollbar-thumb{background:var(--green-mid);}
-
-/* ========== NAV ========== */
-nav{
-  position:fixed;top:0;left:0;width:100%;z-index:999;
-  background:rgba(8,12,8,0.96);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;height:68px;
-  backdrop-filter:blur(8px);
-}
-.nav-logo{display:flex;align-items:center;gap:12px;}
-.nav-logo img{height:40px;width:40px;object-fit:contain;border-radius:50%;}
-.nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:var(--white);}
-.nav-logo-text span{color:var(--green-accent);}
-.nav-links{display:flex;gap:36px;list-style:none;}
-.nav-links a{
-  color:var(--gray);text-decoration:none;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
-  transition:color 0.25s;position:relative;
-}
-.nav-links a::after{
-  content:'';position:absolute;left:0;bottom:-4px;
-  width:0;height:1px;background:var(--green-accent);
-  transition:width 0.25s;
-}
-.nav-links a:hover{color:var(--white);}
-.nav-links a:hover::after{width:100%;}
-.nav-right{display:flex;align-items:center;gap:16px;}
-.nav-cart{
-  background:transparent;color:var(--gray);
-  border:1px solid var(--border-light);
-  padding:8px 16px;
-  font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;
-  cursor:pointer;transition:all 0.2s;
-}
-.nav-cart:hover{color:var(--white);border-color:var(--green-accent);}
-.nav-cta{
-  background:var(--green-mid);color:var(--white);
-  border:1px solid var(--green-light);
-  padding:9px 22px;
-  font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s;
-}
-.nav-cta:hover{background:var(--green-light);}
-
-/* ========== HERO ========== */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:120px 80px 80px;
-  position:relative;overflow:hidden;
-  border-bottom:1px solid var(--border);
-}
-.hero-content{position:relative;z-index:2;max-width:700px;}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;letter-spacing:4px;color:var(--green-accent);
-  text-transform:uppercase;margin-bottom:28px;
-}
-.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--green-accent);}
-.hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(80px,10vw,148px);
-  line-height:0.88;letter-spacing:1px;
-  margin-bottom:8px;
-}
-.hero-title .t-green{color:var(--green-accent);}
-.hero-title .t-gray{color:var(--gray);font-size:clamp(44px,5.5vw,80px);}
-.hero-sub{
-  font-size:15px;color:var(--gray-light);
-  max-width:440px;line-height:1.9;
-  margin:28px 0 44px;
-  font-weight:300;letter-spacing:0.3px;
-}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
-.btn-primary{
-  background:var(--green-mid);color:var(--white);
-  border:1px solid var(--green-light);
-  padding:15px 36px;
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;
-  cursor:pointer;transition:all 0.2s;
-}
-.btn-primary:hover{background:var(--green-light);}
-.btn-ghost{
-  background:transparent;color:var(--white);
-  border:1px solid #2a2a2a;
-  padding:15px 36px;
-  font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;
-  cursor:pointer;transition:all 0.2s;
-}
-.btn-ghost:hover{border-color:var(--green-accent);color:var(--green-accent);}
-
-/* Hero watch float */
-.hero-watch{
-  position:absolute;right:6%;top:50%;transform:translateY(-50%);
-  z-index:2;width:clamp(280px,28vw,420px);
-  animation:floatwatch 5s ease-in-out infinite;
-}
-.hero-watch img{width:100%;filter:drop-shadow(0 20px 60px rgba(74,158,74,0.2));}
-@keyframes floatwatch{0%,100%{transform:translateY(-50%) translateY(0px);}50%{transform:translateY(-50%) translateY(-16px);}}
-
-/* Hero corner label */
-.hero-label{
-  position:absolute;bottom:48px;right:80px;text-align:right;z-index:2;
-}
-.hero-label-num{font-family:'Bebas Neue',sans-serif;font-size:96px;color:rgba(35,65,35,0.5);line-height:1;}
-.hero-label-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;color:var(--gray);text-transform:uppercase;}
-
-/* ========== STATS ========== */
-.stats{display:flex;border-bottom:1px solid var(--border);}
-.stat{flex:1;padding:28px 32px;border-right:1px solid var(--border);text-align:center;}
-.stat:last-child{border-right:none;}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--green-accent);}
-.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;color:var(--gray);text-transform:uppercase;margin-top:4px;}
-
-/* ========== SECTIONS ========== */
-section{padding:96px 80px;}
-.section-tag{
-  font-family:'Barlow Condensed',sans-serif;font-size:11px;
-  letter-spacing:4px;color:var(--green-accent);
-  text-transform:uppercase;margin-bottom:14px;
-  display:flex;align-items:center;gap:10px;
-}
-.section-tag::before{content:'';width:20px;height:1px;background:var(--green-accent);}
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(40px,5vw,64px);
-  letter-spacing:2px;margin-bottom:48px;
-}
-
-/* ========== PRODUCTS ========== */
-.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
-.product-card{
-  background:var(--dark2);cursor:pointer;
-  transition:background 0.25s;position:relative;overflow:hidden;
-}
-.product-card:hover{background:#101810;}
-.product-img{
-  width:100%;height:300px;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-}
-.p-watch-bg{background:radial-gradient(ellipse at center,#162016 0%,#080c08 70%);}
-.p-jacket-bg{background:radial-gradient(ellipse at center,#141c14 0%,#080c08 70%);}
-.p-vest-bg{background:radial-gradient(ellipse at center,#111911 0%,#080c08 70%);}
-.p-pants-bg{background:radial-gradient(ellipse at center,#131b13 0%,#080c08 70%);}
-
-/* Watch SVG inside product */
-.watch-product-svg{width:120px;height:120px;opacity:0.85;transition:opacity 0.25s,transform 0.3s;}
-.product-card:hover .watch-product-svg{opacity:1;transform:scale(1.06);}
-.product-badge{
-  position:absolute;top:14px;left:14px;
-  background:var(--green-mid);color:var(--white);
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;
-  letter-spacing:2px;text-transform:uppercase;padding:4px 10px;
-}
-.product-info{padding:22px 24px 24px;border-top:1px solid var(--border);}
-.product-name{
-  font-family:'Barlow Condensed',sans-serif;font-size:17px;
-  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;
-}
-.product-desc{font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:18px;}
-.product-footer{display:flex;justify-content:space-between;align-items:center;}
-.product-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green-accent);}
-.product-add{
-  background:transparent;border:1px solid var(--border-light);
-  color:var(--gray);padding:7px 14px;
-  font-family:'Barlow Condensed',sans-serif;font-size:11px;
-  letter-spacing:2px;text-transform:uppercase;
-  cursor:pointer;transition:all 0.2s;
-}
-.product-add:hover{border-color:var(--green-accent);color:var(--green-accent);}
-
-/* ========== WATCH SPOTLIGHT ========== */
-.watch-spotlight{
-  display:grid;grid-template-columns:1fr 1fr;
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-}
-.watch-left{
-  background:#060c06;
-  display:flex;align-items:center;justify-content:center;
-  padding:80px 60px;position:relative;overflow:hidden;
-  border-right:1px solid var(--border);
-}
-.watch-left-img{position:relative;z-index:1;}
-.watch-left-img img{width:340px;max-width:100%;filter:drop-shadow(0 24px 80px rgba(74,158,74,0.18));}
-.watch-right{padding:80px 72px;display:flex;flex-direction:column;justify-content:center;}
-.watch-edition{
-  display:inline-block;
-  background:var(--green);color:var(--green-bright);
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;
-  letter-spacing:3px;text-transform:uppercase;
-  padding:5px 12px;margin-bottom:24px;
-  border:1px solid var(--green-mid);
-}
-.watch-specs{margin:28px 0 36px;}
-.spec-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 0;border-bottom:1px solid var(--border);
-}
-.spec-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:11px;
-  letter-spacing:2px;color:var(--gray);text-transform:uppercase;
-}
-.spec-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--white);font-weight:600;letter-spacing:0.5px;}
-.watch-price-row{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;}
-.watch-price{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--green-accent);}
-.watch-edition-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;}
-
-/* ========== FEATURES ========== */
-.features-section{background:#060c06;}
-.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;}
-.feature{border-left:2px solid var(--green-mid);padding-left:22px;}
-.feature-num{
-  font-family:'Bebas Neue',sans-serif;font-size:48px;
-  color:rgba(42,90,42,0.4);line-height:1;margin-bottom:8px;
-}
-.feature-title{
-  font-family:'Barlow Condensed',sans-serif;font-size:16px;
-  font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:10px;color:var(--white);
-}
-.feature-text{font-size:13px;color:var(--gray);line-height:1.8;}
-
-/* ========== BANNER ========== */
-.banner{
-  background:var(--green);
-  padding:80px;text-align:center;
-  border-top:1px solid var(--green-mid);
-  border-bottom:1px solid var(--green-mid);
-  position:relative;overflow:hidden;
-}
-.banner-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(48px,7vw,96px);
-  letter-spacing:4px;margin-bottom:12px;
-  position:relative;z-index:1;
-}
-.banner-sub{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;letter-spacing:3px;
-  color:rgba(240,240,235,0.6);text-transform:uppercase;
-  margin-bottom:36px;position:relative;z-index:1;
-}
-
-/* ========== NEWSLETTER ========== */
-.newsletter{background:#050a05;padding:96px 80px;text-align:center;border-top:1px solid var(--border);}
-.newsletter-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,56px);letter-spacing:2px;margin-bottom:10px;}
-.newsletter-sub{font-size:13px;color:var(--gray);margin-bottom:36px;letter-spacing:0.3px;line-height:1.7;}
-.newsletter-form{display:flex;max-width:500px;margin:0 auto;}
-.newsletter-input{
-  flex:1;background:#0c140c;
-  border:1px solid var(--border);border-right:none;
-  color:var(--white);padding:15px 22px;
-  font-family:'Barlow',sans-serif;font-size:13px;outline:none;
-  transition:border-color 0.2s;
-}
-.newsletter-input:focus{border-color:var(--green-mid);}
-.newsletter-input::placeholder{color:var(--gray);}
-.newsletter-btn{
-  background:var(--green-mid);border:1px solid var(--green-light);
-  color:var(--white);padding:15px 28px;
-  font-family:'Barlow Condensed',sans-serif;font-size:12px;
-  letter-spacing:3px;text-transform:uppercase;
-  cursor:pointer;white-space:nowrap;transition:background 0.2s;
-}
-.newsletter-btn:hover{background:var(--green-light);}
-
-/* ========== FOOTER ========== */
-footer{background:#040804;border-top:1px solid var(--border);padding:64px 80px 32px;}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;}
-.footer-logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.footer-logo-wrap img{height:44px;width:44px;object-fit:contain;border-radius:50%;}
-.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;}
-.footer-brand span{color:var(--green-accent);}
-.footer-desc{font-size:13px;color:var(--gray);line-height:1.9;max-width:280px;}
-.footer-col-title{
-  font-family:'Barlow Condensed',sans-serif;font-size:10px;
-  letter-spacing:3px;text-transform:uppercase;
-  color:var(--white);margin-bottom:18px;
-}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.footer-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color 0.2s;}
-.footer-links a:hover{color:var(--green-accent);}
-.footer-bottom{
-  border-top:1px solid var(--border);padding-top:28px;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.footer-copy{font-size:12px;color:var(--gray);}
-.footer-copy span{color:var(--green-accent);}
-.footer-social{display:flex;gap:10px;}
-.social-link{
-  width:34px;height:34px;border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;
-  color:var(--gray);text-decoration:none;transition:all 0.2s;
-}
-.social-link:hover{border-color:var(--green-accent);color:var(--green-accent);}
-
-/* ========== LOGO FALLBACK SVG ========== */
-.logo-svg-fallback{width:40px;height:40px;border-radius:50%;background:var(--green);border:1px solid var(--green-mid);display:flex;align-items:center;justify-content:center;}
-
-/* ========== RESPONSIVE ========== */
-@media(max-width:1024px){
-  .products-grid{grid-template-columns:repeat(2,1fr);}
-  .features-grid{grid-template-columns:repeat(2,1fr);}
-  .watch-spotlight{grid-template-columns:1fr;}
-  .hero-watch{display:none;}
-}
-@media(max-width:768px){
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 24px 60px;}
-  section{padding:60px 24px;}
-  .stats{flex-wrap:wrap;}
-  .stat{flex:1 1 50%;border-bottom:1px solid var(--border);}
-  .products-grid{grid-template-columns:1fr;}
-  .features-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  .newsletter-form{flex-direction:column;}
-  .newsletter-input{border-right:1px solid var(--border);border-bottom:none;}
-  .banner,.newsletter,footer{padding:60px 24px;}
-  .watch-right{padding:48px 24px;}
-}
-</style>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+:root{--d:#080c08;--d2:#0c110c;--g:#1b3d1b;--gm:#2a5a2a;--gl:#3a7a3a;--ga:#4a9e4a;--gb:#5dbf5d;--w:#f0f0eb;--gr:#7a7a72;--grl:#a8a89e;--b:#243824;--bl:#2f4f2f}
+html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gm)}
+#nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:rgba(8,12,8,.97);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(10px)}
+.nlogo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nlogo img{height:42px;width:42px;object-fit:contain}
+.nbrand{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:var(--w)}
+.nbrand em{font-style:normal;color:var(--ga)}
+.nlinks{display:flex;gap:32px;list-style:none}
+.nlinks a{color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;transition:color .2s;position:relative}
+.nlinks a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--ga);transition:width .25s}
+.nlinks a:hover,.nlinks a.active{color:var(--w)}.nlinks a:hover::after,.nlinks a.active::after{width:100%}
+.nright{display:flex;align-items:center;gap:12px}
+.cart-a{color:var(--gr);border:1px solid var(--bl);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none}
+.cart-a:hover{color:var(--w);border-color:var(--ga)}
+.cbadge{background:var(--ga);color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-left:4px}
+.ncta{background:var(--gm);color:var(--w);border:1px solid var(--gl);padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:background .2s;text-decoration:none}
+.ncta:hover{background:var(--gl)}
+.burger{display:none;background:none;border:1px solid var(--b);color:var(--w);width:36px;height:36px;cursor:pointer;font-size:16px}
+#mmenu{display:none;position:fixed;top:68px;left:0;width:100%;background:rgba(8,12,8,.98);border-bottom:1px solid var(--b);z-index:998;flex-direction:column}
+#mmenu a{padding:16px 24px;color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--b);transition:color .2s}
+#mmenu a:hover{color:var(--ga)}
+#mmenu.open{display:flex}
+.btn{background:var(--gm);color:var(--w);border:1px solid var(--gl);padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--gl)}
+.btn-o{background:transparent;border-color:#2a2a2a;color:var(--w)}
+.btn-o:hover{border-color:var(--ga);color:var(--ga);background:transparent}
+.stag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--ga);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stag::before{content:'';width:20px;height:1px;background:var(--ga)}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:2px;margin-bottom:40px}
+section{padding:88px 80px}
+.stats{display:flex;border-bottom:1px solid var(--b)}
+.stat{flex:1;padding:28px;border-right:1px solid var(--b);text-align:center}
+.stat:last-child{border-right:none}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--ga)}
+.sl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;color:var(--gr);text-transform:uppercase;margin-top:4px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--b)}
+.pc{background:var(--d2);position:relative;overflow:hidden}
+.pc>a{display:block;text-decoration:none;color:inherit}
+.pci{height:280px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#162016 0%,#080c08 70%)}
+.pci img{height:200px;object-fit:contain;transition:transform .35s;filter:drop-shadow(0 8px 24px rgba(74,158,74,.25))}
+.pc:hover .pci img{transform:scale(1.06)}
+.pbadge{position:absolute;top:12px;left:12px;background:var(--gm);color:var(--w);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;z-index:2}
+.pinfo{padding:20px 22px 22px;border-top:1px solid var(--b)}
+.pname{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.pdesc{font-size:12px;color:var(--gr);line-height:1.7;margin-bottom:16px}
+.pfoot{display:flex;justify-content:space-between;align-items:center}
+.pprice{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ga)}
+.padd{background:transparent;border:1px solid var(--bl);color:var(--gr);padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.padd:hover{border-color:var(--ga);color:var(--ga)}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--b)}
+.sl2{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gr);text-transform:uppercase}
+.sv{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--w);font-weight:600}
+.bc{padding:84px 80px 0;display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.bc a{color:var(--gr);text-decoration:none;transition:color .2s}.bc a:hover{color:var(--ga)}
+.bc span{color:var(--gr)}.bc .cur{color:var(--w)}
+footer{background:#040804;border-top:1px solid var(--b);padding:60px 80px 28px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.flogo{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;margin-bottom:14px}
+.flogo img{height:40px;width:40px;object-fit:contain}.flogo span{color:var(--ga)}
+.fdesc{font-size:13px;color:var(--gr);line-height:1.9;max-width:280px}
+.fh{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--w);margin-bottom:16px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fl a{font-size:13px;color:var(--gr);text-decoration:none;transition:color .2s}.fl a:hover{color:var(--ga)}
+.fbot{border-top:1px solid var(--b);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gr)}
+.sbtn{width:32px;height:32px;border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gr);text-decoration:none;transition:all .2s}
+.sbtn:hover{border-color:var(--ga);color:var(--ga)}
+#toast{position:fixed;top:80px;right:20px;z-index:9999;background:var(--gm);color:var(--w);border:1px solid var(--gl);padding:12px 22px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.show{opacity:1}
+#cwrap{position:fixed;bottom:24px;right:24px;z-index:9998}
+#ctoggle{width:52px;height:52px;border-radius:50%;background:var(--gm);border:2px solid var(--gl);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(42,90,42,.4);transition:all .25s}
+#ctoggle:hover{background:var(--gl);transform:scale(1.05)}
+#cbox{display:none;position:absolute;bottom:62px;right:0;width:320px;background:#0c140c;border:1px solid var(--bl);flex-direction:column;overflow:hidden}
+#cbox.open{display:flex}
+#chead{background:var(--g);padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bl)}
+#cmsgs{height:260px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+#cmsgs::-webkit-scrollbar{width:3px}#cmsgs::-webkit-scrollbar-thumb{background:var(--bl)}
+.msg{max-width:85%;padding:9px 13px;font-size:13px;line-height:1.6}
+.msg.bot{background:#162016;border:1px solid var(--b);color:var(--grl);align-self:flex-start;border-radius:0 8px 8px 8px}
+.msg.user{background:var(--gm);color:var(--w);align-self:flex-end;border-radius:8px 0 8px 8px}
+.qb{background:transparent;border:1px solid var(--bl);color:var(--ga);padding:4px 9px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all .2s}
+.qb:hover{background:var(--gm)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ga);display:inline-block;animation:blink 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+#cform{display:flex;border-top:1px solid var(--b)}
+#cin{flex:1;background:#080c08;border:none;color:var(--w);padding:11px 14px;font-family:'Barlow',sans-serif;font-size:13px;outline:none}
+#cin::placeholder{color:var(--gr)}
+#cform button{background:var(--gm);border:none;color:var(--w);padding:11px 14px;cursor:pointer;font-size:15px}
+.szg{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 22px}
+.szb{background:transparent;border:1px solid var(--bl);color:var(--gr);width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.szb:hover,.szb.sel{background:var(--gm);border-color:var(--gl);color:var(--w)}
+@media(max-width:1200px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){section{padding:64px 40px}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){#nav{padding:0 20px}.nlinks{display:none}.burger{display:flex;align-items:center;justify-content:center}section{padding:56px 20px}.stats{flex-wrap:wrap}.stat{flex:1 1 50%;border-bottom:1px solid var(--b)}.pgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}footer{padding:48px 20px}.bc{padding:84px 20px 0}#cbox{width:calc(100vw - 48px);right:-4px}}</style>
 </head>
 <body>
-
-<!-- ====== NAV ====== -->
-<nav>
-  <div class="nav-logo">
-    <img src="logo.jpg" alt="ODA Tactical SW" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-    <div class="logo-svg-fallback" style="display:none;">
-      <svg width="20" height="20" viewBox="0 0 20 20"><polygon points="10,2 18,18 2,18" fill="#4a9e4a"/></svg>
-    </div>
-    <span class="nav-logo-text">ODA<span>·</span>TACTICAL SW</span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#collections">Collections</a></li>
-    <li><a href="#montre">Montre</a></li>
-    <li><a href="#atouts">Nos Atouts</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="nav-cart">&#9632; Panier (0)</button>
-    <button class="nav-cta">Boutique</button>
-  </div>
+<nav id="nav">
+  <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
+  <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="montre.html">Montre</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nright"><a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a><a href="collections.html" class="ncta">Boutique</a><button class="burger" onclick="toggleMenu()">&#9776;</button></div>
 </nav>
+<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a></div>
 
-<!-- ====== HERO ====== -->
-<div class="hero">
-
-  <!-- Military vegetation background -->
-  <div class="veg-bg">
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
-      <!-- Left foliage cluster -->
-      <g opacity="0.18">
-        <!-- Tall grasses left -->
-        <path d="M-20 900 Q10 700 0 500 Q15 680 30 900Z" fill="#2a5a2a"/>
-        <path d="M10 900 Q40 720 25 480 Q50 700 60 900Z" fill="#1b3d1b"/>
-        <path d="M40 900 Q80 740 55 520 Q85 710 100 900Z" fill="#2a5a2a"/>
-        <path d="M70 900 Q100 760 80 560 Q115 720 130 900Z" fill="#1b3d1b"/>
-        <!-- Fern leaves left -->
-        <path d="M-30 880 Q50 820 120 760 Q80 840 100 900Z" fill="#1f4a1f"/>
-        <path d="M-10 900 Q60 840 150 780 Q100 860 120 920Z" fill="#244824"/>
-        <path d="M0 920 Q90 870 180 810 Q120 880 140 940Z" fill="#1b3d1b"/>
-        <!-- Broad leaves -->
-        <path d="M30 900 C60 860 140 840 160 870 C120 890 60 900 30 900Z" fill="#2a5a2a"/>
-        <path d="M-20 920 C20 880 100 860 130 890 C90 910 20 920 -20 920Z" fill="#1b3d1b"/>
-        <!-- Extra tall grass stalks -->
-        <path d="M50 900 Q55 800 45 650 Q65 780 75 900Z" fill="#3a7a3a" opacity="0.5"/>
-        <path d="M90 900 Q95 820 82 700 Q105 810 110 900Z" fill="#2a5a2a" opacity="0.5"/>
-        <path d="M130 900 Q138 840 120 730 Q148 830 155 900Z" fill="#1b3d1b" opacity="0.5"/>
-      </g>
-
-      <!-- Right foliage cluster -->
-      <g opacity="0.18">
-        <path d="M1460 900 Q1430 700 1440 500 Q1425 680 1410 900Z" fill="#2a5a2a"/>
-        <path d="M1430 900 Q1400 720 1415 480 Q1390 700 1380 900Z" fill="#1b3d1b"/>
-        <path d="M1400 900 Q1360 740 1385 520 Q1355 710 1340 900Z" fill="#2a5a2a"/>
-        <path d="M1370 900 Q1340 760 1360 560 Q1325 720 1310 900Z" fill="#1b3d1b"/>
-        <!-- Fern right -->
-        <path d="M1470 880 Q1390 820 1320 760 Q1360 840 1340 900Z" fill="#1f4a1f"/>
-        <path d="M1450 900 Q1380 840 1290 780 Q1340 860 1320 920Z" fill="#244824"/>
-        <path d="M1440 920 Q1350 870 1260 810 Q1320 880 1300 940Z" fill="#1b3d1b"/>
-        <!-- Broad leaves right -->
-        <path d="M1410 900 C1380 860 1300 840 1280 870 C1320 890 1380 900 1410 900Z" fill="#2a5a2a"/>
-        <path d="M1460 920 C1420 880 1340 860 1310 890 C1350 910 1420 920 1460 920Z" fill="#1b3d1b"/>
-        <!-- Tall stalks -->
-        <path d="M1390 900 Q1385 800 1395 650 Q1375 780 1365 900Z" fill="#3a7a3a" opacity="0.5"/>
-        <path d="M1350 900 Q1345 820 1358 700 Q1335 810 1330 900Z" fill="#2a5a2a" opacity="0.5"/>
-        <path d="M1310 900 Q1302 840 1320 730 Q1292 830 1285 900Z" fill="#1b3d1b" opacity="0.5"/>
-      </g>
-
-      <!-- Bottom center sparse grass -->
-      <g opacity="0.1">
-        <path d="M600 900 Q620 820 610 720 Q630 820 640 900Z" fill="#2a5a2a"/>
-        <path d="M660 900 Q680 830 668 740 Q690 840 698 900Z" fill="#1b3d1b"/>
-        <path d="M720 900 Q740 840 728 760 Q750 850 758 900Z" fill="#2a5a2a"/>
-        <path d="M780 900 Q798 850 786 770 Q808 860 815 900Z" fill="#1b3d1b"/>
-        <path d="M840 900 Q855 860 844 780 Q866 865 872 900Z" fill="#2a5a2a"/>
-      </g>
-
-      <!-- Scattered small leaves mid -->
-      <g opacity="0.08">
-        <ellipse cx="200" cy="860" rx="60" ry="20" fill="#2a5a2a" transform="rotate(-20,200,860)"/>
-        <ellipse cx="280" cy="880" rx="50" ry="16" fill="#1b3d1b" transform="rotate(15,280,880)"/>
-        <ellipse cx="1200" cy="860" rx="60" ry="20" fill="#2a5a2a" transform="rotate(20,1200,860)"/>
-        <ellipse cx="1130" cy="880" rx="50" ry="16" fill="#1b3d1b" transform="rotate(-15,1130,880)"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">Équipement Tactique Premium — Collection 2025</div>
-    <h1 class="hero-title">
-      ODA<br>
-      <span class="t-green">TACTICAL</span><br>
-      <span class="t-gray">SOUTH WEST</span>
-    </h1>
-    <p class="hero-sub">Vêtements conçus pour l'action. Rangements optimisés, matériaux résistants, design épuré. Équipez-vous comme un professionnel.</p>
-    <div class="hero-btns">
-      <button class="btn-primary" onclick="document.getElementById('collections').scrollIntoView({behavior:'smooth'})">Découvrir la collection</button>
-      <button class="btn-ghost" onclick="document.getElementById('montre').scrollIntoView({behavior:'smooth'})">La montre ODA</button>
+<div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--b)">
+  <div style="position:absolute;inset:0;overflow:hidden;z-index:0"><svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax meet" style="position:absolute;bottom:0;width:100%;height:100%;pointer-events:none">
+  <g opacity=".16">
+    <path d="M-20 900 Q10 700 0 500 Q15 680 30 900Z" fill="#2a5a2a"/><path d="M20 900 Q50 720 35 500 Q60 700 75 900Z" fill="#1b3d1b"/><path d="M55 900 Q90 740 70 530 Q100 720 115 900Z" fill="#2a5a2a"/>
+    <path d="M-30 880 Q60 820 140 760 Q90 845 115 910Z" fill="#1f4a1f"/><path d="M0 910 Q100 865 195 805 Q130 880 155 940Z" fill="#1b3d1b"/>
+    <path d="M25 900 C55 860 145 842 165 870 C125 892 55 902 25 900Z" fill="#2a5a2a"/>
+  </g>
+  <g opacity=".16">
+    <path d="M1460 900 Q1430 700 1440 500 Q1425 680 1410 900Z" fill="#2a5a2a"/><path d="M1420 900 Q1390 720 1405 500 Q1380 700 1365 900Z" fill="#1b3d1b"/><path d="M1385 900 Q1350 740 1370 530 Q1340 720 1325 900Z" fill="#2a5a2a"/>
+    <path d="M1470 880 Q1380 820 1300 760 Q1350 845 1325 910Z" fill="#1f4a1f"/><path d="M1440 910 Q1340 865 1245 805 Q1310 880 1285 940Z" fill="#1b3d1b"/>
+    <path d="M1415 900 C1385 860 1295 842 1275 870 C1315 892 1385 902 1415 900Z" fill="#2a5a2a"/>
+  </g>
+  <g opacity=".07">
+    <path d="M580 900 Q598 838 587 760 Q605 845 612 900Z" fill="#2a5a2a"/><path d="M640 900 Q655 845 644 775 Q662 848 668 900Z" fill="#1b3d1b"/><path d="M700 900 Q713 850 702 780 Q719 852 725 900Z" fill="#2a5a2a"/><path d="M760 900 Q771 855 760 786 Q776 856 782 900Z" fill="#1b3d1b"/><path d="M820 900 Q829 858 818 790 Q833 860 839 900Z" fill="#2a5a2a"/>
+  </g>
+</svg></div>
+  <div style="position:relative;z-index:1;max-width:700px">
+    <div class="stag" style="margin-bottom:28px">Équipement Tactique Premium — Collection 2025</div>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,10vw,148px);line-height:.88;letter-spacing:1px">ODA<br><span style="color:var(--ga)">TACTICAL</span><br><span style="color:var(--gr);font-size:clamp(44px,5.5vw,80px)">SOUTH WEST</span></h1>
+    <p style="font-size:15px;color:var(--grl);max-width:440px;line-height:1.9;margin:28px 0 44px;font-weight:300">Vêtements conçus pour l'action. Rangements optimisés, matériaux résistants, design épuré.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="collections.html" class="btn">Découvrir la collection</a>
+      <a href="montre.html" class="btn btn-o">La montre ODA</a>
     </div>
   </div>
-
-  <!-- Floating watch hero -->
-  <div class="hero-watch">
-    <img src="montre.jpg" alt="ODA Tactical Watch" onerror="this.src='';">
-  </div>
-
-  <div class="hero-label">
-    <div class="hero-label-num">ODA</div>
-    <div class="hero-label-sub">Tactical Gear &bull; Est. 2024</div>
+  <div style="position:absolute;right:6%;top:50%;transform:translateY(-50%);width:clamp(260px,26vw,400px);animation:fw 5s ease-in-out infinite;z-index:1">
+    <img src="montre.jpg" alt="ODA Tactical Watch" style="width:100%;filter:drop-shadow(0 20px 60px rgba(74,158,74,.22))" onerror="this.style.display='none'">
   </div>
 </div>
+<style>@keyframes fw{0%,100%{transform:translateY(-50%) translateY(0)}50%{transform:translateY(-50%) translateY(-14px)}}</style>
 
-<!-- ====== STATS ====== -->
 <div class="stats">
-  <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Poches & rangements</div></div>
-  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Matériaux premium</div></div>
-  <div class="stat"><div class="stat-num">48H</div><div class="stat-label">Livraison express</div></div>
-  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Clients équipés</div></div>
+  <div class="stat"><div class="sn">12+</div><div class="sl">Poches & rangements</div></div>
+  <div class="stat"><div class="sn">100%</div><div class="sl">Matériaux premium</div></div>
+  <div class="stat"><div class="sn">48H</div><div class="sl">Livraison express</div></div>
+  <div class="stat"><div class="sn">500+</div><div class="sl">Clients équipés</div></div>
 </div>
 
-<!-- ====== COLLECTIONS ====== -->
-<section id="collections">
-  <div class="section-tag">Notre Catalogue</div>
-  <h2 class="section-title">COLLECTIONS TACTIQUES</h2>
-  <div class="products-grid">
-
-    <!-- MONTRE -->
-    <div class="product-card">
-      <div class="product-img p-watch-bg">
-        <img src="montre.jpg" alt="ODA Stealth Watch" style="height:220px;object-fit:contain;filter:drop-shadow(0 8px 32px rgba(74,158,74,0.3));" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-        <svg style="display:none;width:100px;height:100px;" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="40" r="28" stroke="#4a9e4a" stroke-width="2"/>
-          <circle cx="40" cy="40" r="22" stroke="#2a5a2a" stroke-width="1"/>
-          <line x1="40" y1="20" x2="40" y2="40" stroke="#f0f0eb" stroke-width="2" stroke-linecap="round"/>
-          <line x1="40" y1="40" x2="54" y2="46" stroke="#4a9e4a" stroke-width="1.5" stroke-linecap="round"/>
-          <rect x="30" y="8" width="20" height="6" rx="2" fill="#1b3d1b" stroke="#2a5a2a" stroke-width="1"/>
-          <rect x="30" y="66" width="20" height="6" rx="2" fill="#1b3d1b" stroke="#2a5a2a" stroke-width="1"/>
-        </svg>
-      </div>
-      <div class="product-badge">Nouveau</div>
-      <div class="product-info">
-        <div class="product-name">ODA STEALTH WATCH</div>
-        <div class="product-desc">Montre tactique tout noir. Verre saphir, waterproof 200m, bracelet nylon balistique noir.</div>
-        <div class="product-footer">
-          <div class="product-price">149€</div>
-          <button class="product-add">+ Panier</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- VESTE -->
-    <div class="product-card">
-      <div class="product-img p-jacket-bg">
-        <svg class="watch-product-svg" viewBox="0 0 80 80" fill="none" width="110" height="110">
-          <path d="M20 20 L10 35 L18 38 L16 70 H64 L62 38 L70 35 L60 20 L50 28 C46 32 34 32 30 28 Z" stroke="#4a9e4a" stroke-width="1.5" fill="#1b3d1b"/>
-          <line x1="40" y1="30" x2="40" y2="70" stroke="#2a5a2a" stroke-width="1"/>
-          <rect x="22" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="46" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="22" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="46" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-        </svg>
-      </div>
-      <div class="product-badge">Bestseller</div>
-      <div class="product-info">
-        <div class="product-name">VESTE TACTIQUE ODA-4</div>
-        <div class="product-desc">8 poches extérieures, 4 poches intérieures. Ripstop imperméable, doublure thermique amovible.</div>
-        <div class="product-footer">
-          <div class="product-price">189€</div>
-          <button class="product-add">+ Panier</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- GILET -->
-    <div class="product-card">
-      <div class="product-img p-vest-bg">
-        <svg class="watch-product-svg" viewBox="0 0 80 80" fill="none" width="110" height="110">
-          <path d="M25 15 L15 25 L18 70 H62 L65 25 L55 15 L50 22 C46 28 34 28 30 22 Z" stroke="#4a9e4a" stroke-width="1.5" fill="#111811"/>
-          <rect x="20" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="46" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="20" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="46" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="29" y="62" width="22" height="6" rx="1" stroke="#2a5a2a" stroke-width="1"/>
-        </svg>
-      </div>
-      <div class="product-info">
-        <div class="product-name">GILET MULTI-POCHES ODA</div>
-        <div class="product-desc">12 poches organisées, compatible porte-plaque. Fermetures YKK, velcro MOLLE sur l'avant.</div>
-        <div class="product-footer">
-          <div class="product-price">129€</div>
-          <button class="product-add">+ Panier</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARGO -->
-    <div class="product-card">
-      <div class="product-img p-pants-bg">
-        <svg class="watch-product-svg" viewBox="0 0 80 80" fill="none" width="110" height="110">
-          <path d="M22 10 H58 L62 42 L52 72 H44 L40 50 L36 72 H28 L18 42 Z" stroke="#4a9e4a" stroke-width="1.5" fill="#131a13"/>
-          <rect x="14" y="36" width="14" height="12" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <rect x="52" y="36" width="14" height="12" rx="1" stroke="#4a9e4a" stroke-width="1"/>
-          <line x1="40" y1="10" x2="40" y2="50" stroke="#2a5a2a" stroke-width="1"/>
-          <line x1="22" y1="20" x2="58" y2="20" stroke="#2a5a2a" stroke-width="0.5"/>
-        </svg>
-      </div>
-      <div class="product-info">
-        <div class="product-name">CARGO TACTIQUE ODA-7</div>
-        <div class="product-desc">Pantalon cargo noir, 7 poches renforcées. Genouillères intégrées, tissu stretch 4 voies.</div>
-        <div class="product-footer">
-          <div class="product-price">109€</div>
-          <button class="product-add">+ Panier</button>
-        </div>
-      </div>
-    </div>
-
+<section>
+  <div class="stag">Notre Catalogue</div>
+  <h2 class="stitle">COLLECTIONS TACTIQUES</h2>
+  <div class="pgrid">
+    <div class="pc"><a href="montre.html"><div class="pci"><img src="montre.jpg" alt="ODA Stealth Watch"></div><div class="pbadge">Nouveau</div><div class="pinfo"><div class="pname">ODA Stealth Watch</div><div class="pdesc">Montre tactique tout noir. Verre saphir, waterproof 200m, bracelet nylon balistique.</div><div class="pfoot"><div class="pprice">149€</div><button class="padd" data-add='{"id":"watch-01","name":"ODA Stealth Watch","price":149}'>+ Panier</button></div></div></a></div>
+    <div class="pc"><a href="produit-veste.html"><div class="pci"><svg width="130" height="130" viewBox="0 0 80 80" fill="none"><path d="M20 20L10 35l8 3-2 32h48l-2-32 8-3L60 20l-10 8c-4 4-16 4-20 0z" stroke="#4a9e4a" stroke-width="1.5" fill="#1b3d1b"/><line x1="40" y1="30" x2="40" y2="70" stroke="#2a5a2a" stroke-width="1"/><rect x="22" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="22" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/></svg></div><div class="pbadge">Bestseller</div><div class="pinfo"><div class="pname">Veste Tactique ODA-4</div><div class="pdesc">8 poches ext. + 4 int. Ripstop imperméable, doublure thermique amovible.</div><div class="pfoot"><div class="pprice">189€</div><button class="padd" data-add='{"id":"veste-04","name":"Veste Tactique ODA-4","price":189}'>+ Panier</button></div></div></a></div>
+    <div class="pc"><a href="produit-gilet.html"><div class="pci"><svg width="130" height="130" viewBox="0 0 80 80" fill="none"><path d="M25 15L15 25l3 45h44l3-45L55 15l-5 7c-4 6-16 6-20 0z" stroke="#4a9e4a" stroke-width="1.5" fill="#111811"/><rect x="20" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="20" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/></svg></div><div class="pinfo"><div class="pname">Gilet Multi-poches ODA</div><div class="pdesc">12 poches organisées, compatible porte-plaque. Velcro MOLLE sur l'avant.</div><div class="pfoot"><div class="pprice">129€</div><button class="padd" data-add='{"id":"gilet-01","name":"Gilet Multi-poches ODA","price":129}'>+ Panier</button></div></div></a></div>
+    <div class="pc"><a href="produit-cargo.html"><div class="pci"><svg width="130" height="130" viewBox="0 0 80 80" fill="none"><path d="M22 10h36l4 32-10 30h-8l-4-22-4 22h-8L18 42z" stroke="#4a9e4a" stroke-width="1.5" fill="#131a13"/><rect x="14" y="36" width="14" height="12" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="52" y="36" width="14" height="12" rx="1" stroke="#4a9e4a" stroke-width="1"/><line x1="40" y1="10" x2="40" y2="50" stroke="#2a5a2a" stroke-width="1"/></svg></div><div class="pinfo"><div class="pname">Cargo Tactique ODA-7</div><div class="pdesc">7 poches renforcées, genouillères intégrées, tissu stretch 4 voies.</div><div class="pfoot"><div class="pprice">109€</div><button class="padd" data-add='{"id":"cargo-07","name":"Cargo Tactique ODA-7","price":109}'>+ Panier</button></div></div></a></div>
   </div>
 </section>
 
-<!-- ====== WATCH SPOTLIGHT ====== -->
-<div class="watch-spotlight" id="montre">
-
-  <div class="watch-left">
-    <!-- Vegetation subtle bg -->
-    <div style="position:absolute;inset:0;overflow:hidden;opacity:0.12;pointer-events:none;">
-      <svg viewBox="0 0 600 600" style="position:absolute;bottom:0;width:100%;height:100%;">
-        <path d="M-20 600 Q30 450 10 300 Q50 450 80 600Z" fill="#2a5a2a"/>
-        <path d="M40 600 Q90 470 65 350 Q105 460 130 600Z" fill="#1b3d1b"/>
-        <path d="M580 600 Q540 450 560 300 Q520 450 500 600Z" fill="#2a5a2a"/>
-        <path d="M540 600 Q500 470 520 350 Q480 460 460 600Z" fill="#1b3d1b"/>
-        <path d="M-10 590 Q80 540 200 510 Q130 560 150 610Z" fill="#1b3d1b"/>
-        <path d="M610 590 Q520 540 400 510 Q470 560 450 610Z" fill="#1b3d1b"/>
-      </svg>
-    </div>
-    <div class="watch-left-img">
-      <img src="montre.jpg" alt="ODA Tactical Watch" onerror="this.style.display='none';">
-    </div>
+<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--b);border-bottom:1px solid var(--b)">
+  <div style="background:#060c06;display:flex;align-items:center;justify-content:center;padding:80px 60px;border-right:1px solid var(--b);position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;overflow:hidden;opacity:.1;pointer-events:none"><svg viewBox="0 0 600 600" style="position:absolute;bottom:0;width:100%;height:100%"><path d="M-20 600Q30 450 10 300Q50 450 80 600Z" fill="#2a5a2a"/><path d="M580 600Q540 450 560 300Q520 450 500 600Z" fill="#2a5a2a"/></svg></div>
+    <img src="montre.jpg" alt="ODA Watch" style="width:320px;max-width:100%;position:relative;z-index:1;filter:drop-shadow(0 24px 80px rgba(74,158,74,.2));animation:fw 5s ease-in-out infinite" onerror="this.style.display='none'">
   </div>
-
-  <div class="watch-right">
-    <div class="watch-edition">&#9642; Édition Limitée — Tactical Swiss</div>
-    <div class="section-tag">Pièce Maîtresse</div>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:2px;margin-bottom:14px;line-height:1;">ODA STEALTH<br>WATCH</h2>
-    <p style="font-size:13px;color:var(--gray);line-height:1.9;max-width:400px;">Design entièrement noir, sans compromis. Conçue pour les environnements extrêmes, discrète en toutes circonstances. Précision maximale, encombrement minimal.</p>
-
-    <div class="watch-specs">
-      <div class="spec-row"><span class="spec-label">Boîtier</span><span class="spec-val">Acier 316L — PVD Noir Mat</span></div>
-      <div class="spec-row"><span class="spec-label">Verre</span><span class="spec-val">Saphir anti-reflets</span></div>
-      <div class="spec-row"><span class="spec-label">Étanchéité</span><span class="spec-val">200 mètres / 20 ATM</span></div>
-      <div class="spec-row"><span class="spec-label">Bracelet</span><span class="spec-val">Nylon balistique noir</span></div>
-      <div class="spec-row"><span class="spec-label">Mouvement</span><span class="spec-val">Miyota 9015 automatique</span></div>
-      <div class="spec-row"><span class="spec-label">Édition</span><span class="spec-val">Limitée — 109 exemplaires</span></div>
+  <div style="padding:80px 72px;display:flex;flex-direction:column;justify-content:center">
+    <span style="display:inline-block;background:var(--g);color:var(--gb);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:5px 12px;margin-bottom:24px;border:1px solid var(--gm)">&#9642; Édition Limitée — 109 exemplaires</span>
+    <div class="stag">Pièce Maîtresse</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:2px;margin-bottom:14px;line-height:1">ODA STEALTH<br>WATCH</h2>
+    <p style="font-size:13px;color:var(--gr);line-height:1.9;max-width:400px">Design entièrement noir mat. Conçue pour les environnements extrêmes, discrète en toutes circonstances.</p>
+    <div style="margin:28px 0 36px">
+      <div class="sr"><span class="sl2">Boîtier</span><span class="sv">Acier 316L — PVD Noir Mat</span></div>
+      <div class="sr"><span class="sl2">Verre</span><span class="sv">Saphir anti-reflets</span></div>
+      <div class="sr"><span class="sl2">Étanchéité</span><span class="sv">200m / 20 ATM</span></div>
+      <div class="sr"><span class="sl2">Mouvement</span><span class="sv">Miyota 9015 automatique</span></div>
     </div>
-
-    <div class="watch-price-row">
-      <div class="watch-price">149€</div>
-      <div class="watch-edition-label">TVA incluse<br>Livraison offerte</div>
+    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:28px">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--ga)">149€</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gr);text-transform:uppercase">Livraison offerte</span>
     </div>
-    <button class="btn-primary" style="align-self:flex-start;">Commander maintenant</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="montre.html" class="btn">Voir la fiche complète</a>
+      <button class="btn btn-o" data-add='{"id":"watch-01","name":"ODA Stealth Watch","price":149}'>+ Panier</button>
+    </div>
   </div>
 </div>
 
-<!-- ====== FEATURES ====== -->
-<section class="features-section" id="atouts">
-  <div class="section-tag">Notre ADN</div>
-  <h2 class="section-title">POURQUOI ODA TACTICAL</h2>
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-num">01</div>
-      <div class="feature-title">Rangements Optimisés</div>
-      <div class="feature-text">Chaque produit est conçu avec un maximum de poches fonctionnelles et accessibles, pensées pour un usage intensif au quotidien.</div>
-    </div>
-    <div class="feature">
-      <div class="feature-num">02</div>
-      <div class="feature-title">Matériaux Résistants</div>
-      <div class="feature-text">Ripstop militaire, fermetures YKK renforcées, coutures quadruples. Nos vêtements sont faits pour durer dans toutes les conditions.</div>
-    </div>
-    <div class="feature">
-      <div class="feature-num">03</div>
-      <div class="feature-title">Design Discret</div>
-      <div class="feature-text">Esthétique minimaliste noir et vert foncé. Pas de logo criard — juste un équipement sérieux pour des personnes sérieuses.</div>
-    </div>
-    <div class="feature">
-      <div class="feature-num">04</div>
-      <div class="feature-title">Livraison Rapide</div>
-      <div class="feature-text">Expédition sous 24h depuis notre entrepôt. Livraison suivie en 48h pour la France, 3 à 5 jours pour l'Europe.</div>
-    </div>
+<section style="background:#060c06">
+  <div class="stag">Notre ADN</div>
+  <h2 class="stitle">POURQUOI ODA TACTICAL</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px">
+    <div style="border-left:2px solid var(--gm);padding-left:22px"><div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(42,90,42,.4);line-height:1;margin-bottom:8px">01</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Rangements Optimisés</div><div style="font-size:13px;color:var(--gr);line-height:1.8">Chaque produit conçu avec un maximum de poches fonctionnelles pensées pour un usage intensif.</div></div>
+    <div style="border-left:2px solid var(--gm);padding-left:22px"><div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(42,90,42,.4);line-height:1;margin-bottom:8px">02</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Matériaux Résistants</div><div style="font-size:13px;color:var(--gr);line-height:1.8">Ripstop militaire, fermetures YKK renforcées, coutures quadruples pour toutes les conditions.</div></div>
+    <div style="border-left:2px solid var(--gm);padding-left:22px"><div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(42,90,42,.4);line-height:1;margin-bottom:8px">03</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Design Discret</div><div style="font-size:13px;color:var(--gr);line-height:1.8">Esthétique minimaliste noir et vert foncé. Équipement sérieux pour personnes sérieuses.</div></div>
+    <div style="border-left:2px solid var(--gm);padding-left:22px"><div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(42,90,42,.4);line-height:1;margin-bottom:8px">04</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Livraison Rapide</div><div style="font-size:13px;color:var(--gr);line-height:1.8">Expédition sous 24h. Livraison suivie 48h France, 3-5j Europe.</div></div>
   </div>
 </section>
 
-<!-- ====== BANNER ====== -->
-<div class="banner">
-  <div style="position:absolute;inset:0;overflow:hidden;opacity:0.15;pointer-events:none;">
-    <svg viewBox="0 0 1440 300" style="position:absolute;bottom:0;width:100%;height:100%;" preserveAspectRatio="xMidYMax meet">
-      <path d="M-20 300 Q30 180 10 60 Q50 180 80 300Z" fill="#3a7a3a"/>
-      <path d="M60 300 Q110 200 85 110 Q125 200 150 300Z" fill="#2a5a2a"/>
-      <path d="M1460 300 Q1410 180 1430 60 Q1390 180 1360 300Z" fill="#3a7a3a"/>
-      <path d="M1380 300 Q1330 200 1355 110 Q1315 200 1290 300Z" fill="#2a5a2a"/>
-    </svg>
-  </div>
-  <h2 class="banner-title">ÉQUIPEZ-VOUS.<br>SOYEZ PRÊT.</h2>
-  <p class="banner-sub">&#9642; ODA Tactical SW — Vêtements &amp; Montres Tactiques &#9642;</p>
-  <button class="btn-primary" onclick="document.getElementById('collections').scrollIntoView({behavior:'smooth'})">Voir toute la collection</button>
+<div style="background:var(--g);padding:80px;text-align:center;border-top:1px solid var(--gm);border-bottom:1px solid var(--gm)">
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,96px);letter-spacing:4px;margin-bottom:12px">ÉQUIPEZ-VOUS.<br>SOYEZ PRÊT.</h2>
+  <p style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;color:rgba(240,240,235,.6);text-transform:uppercase;margin-bottom:36px">&#9642; ODA Tactical SW — Vêtements & Montres Tactiques &#9642;</p>
+  <a href="collections.html" class="btn">Voir toute la collection</a>
 </div>
 
-<!-- ====== NEWSLETTER ====== -->
-<div class="newsletter" id="contact">
-  <div class="section-tag" style="justify-content:center;">Restez Informé</div>
-  <h2 class="newsletter-title">NOUVELLES COLLECTIONS<br>EN AVANT-PREMIÈRE</h2>
-  <p class="newsletter-sub">Inscrivez-vous pour recevoir les drops exclusifs<br>et les offres réservées aux membres ODA.</p>
-  <div class="newsletter-form">
-    <input type="email" class="newsletter-input" placeholder="votre@email.com">
-    <button class="newsletter-btn">S'inscrire</button>
+<div style="background:#050a05;padding:88px 80px;text-align:center;border-top:1px solid var(--b)">
+  <div class="stag" style="justify-content:center">Restez Informé</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,52px);letter-spacing:2px;margin-bottom:10px">NOUVELLES COLLECTIONS<br>EN AVANT-PREMIÈRE</h2>
+  <p style="font-size:13px;color:var(--gr);margin-bottom:36px;line-height:1.7">Inscrivez-vous pour recevoir les drops exclusifs et les offres membres ODA.</p>
+  <div style="display:flex;max-width:500px;margin:0 auto">
+    <input type="email" placeholder="votre@email.com" style="flex:1;background:#0c140c;border:1px solid var(--b);border-right:none;color:var(--w);padding:15px 22px;font-family:'Barlow',sans-serif;font-size:13px;outline:none">
+    <button onclick="toast('Merci ! Vous êtes inscrit(e) ✓')" style="background:var(--gm);border:1px solid var(--gl);color:var(--w);padding:15px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;white-space:nowrap">S'inscrire</button>
   </div>
 </div>
 
-<!-- ====== FOOTER ====== -->
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo-wrap">
-        <img src="logo.jpg" alt="ODA Tactical SW" style="height:44px;width:44px;object-fit:contain;border-radius:50%;" onerror="this.style.display='none';">
-        <div class="footer-brand">ODA<span>·</span>TACTICAL SW</div>
-      </div>
-      <p class="footer-desc">Équipement tactique premium. Vêtements multi-poches et montres all-black pour ceux qui ne font pas de compromis.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Collections</div>
-      <ul class="footer-links">
-        <li><a href="#">Montres</a></li>
-        <li><a href="#">Vestes</a></li>
-        <li><a href="#">Gilets</a></li>
-        <li><a href="#">Pantalons</a></li>
-        <li><a href="#">Accessoires</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Informations</div>
-      <ul class="footer-links">
-        <li><a href="#">À propos</a></li>
-        <li><a href="#">Guide des tailles</a></li>
-        <li><a href="#">Livraison & retours</a></li>
-        <li><a href="#">CGV</a></li>
-        <li><a href="#">FAQ</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Contact</div>
-      <ul class="footer-links">
-        <li><a href="mailto:contact@odatactical.fr">contact@odatactical.fr</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">TikTok</a></li>
-        <li><a href="#">YouTube</a></li>
-      </ul>
-    </div>
+  <div class="fgrid">
+    <div><div class="flogo"><img src="logo.png" onerror="this.style.display='none'">ODA<span>·</span>TACTICAL SW</div><p class="fdesc">Équipement tactique premium. Vêtements multi-poches et montres all-black pour ceux qui ne font pas de compromis.</p></div>
+    <div><div class="fh">Collections</div><ul class="fl"><li><a href="montre.html">Montre Stealth</a></li><li><a href="produit-veste.html">Veste Tactique</a></li><li><a href="produit-gilet.html">Gilet Multi-poches</a></li><li><a href="produit-cargo.html">Cargo ODA-7</a></li></ul></div>
+    <div><div class="fh">Aide</div><ul class="fl"><li><a href="faq.html">FAQ</a></li><li><a href="faq.html#livraison">Livraison & retours</a></li><li><a href="faq.html#tailles">Guide des tailles</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><div class="fh">Suivez-nous</div><ul class="fl"><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 <span>ODA Tactical SW</span> — Tous droits réservés</div>
-    <div class="footer-social">
-      <a class="social-link" href="#">IG</a>
-      <a class="social-link" href="#">TT</a>
-      <a class="social-link" href="#">YT</a>
-    </div>
-  </div>
+  <div class="fbot"><span>© 2025 <b style="color:#4a9e4a">ODA Tactical SW</b></span><div style="display:flex;gap:8px;"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a><a href="#" class="sbtn">YT</a></div></div>
 </footer>
-
+<div id="toast"></div>
+<div id="cwrap">
+  <div id="cbox">
+    <div id="chead"><img src="logo.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain" onerror="this.style.display='none'"><div><div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px">Assistant ODA</div><div style="font-size:11px;color:#5dbf5d;display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:#5dbf5d;border-radius:50%;display:inline-block"></span>En ligne</div></div><button onclick="toggleChat()" style="margin-left:auto;background:none;border:none;color:#7a7a72;cursor:pointer;font-size:18px;line-height:1">&#10005;</button></div>
+    <div id="cmsgs"><div class="msg bot">Bonjour ! Comment puis-je vous aider ?<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><button class="qb" onclick="askBot('livraison')">📦 Livraison</button><button class="qb" onclick="askBot('taille')">📏 Tailles</button><button class="qb" onclick="askBot('montre')">⌚ Montre</button><button class="qb" onclick="askBot('retour')">🔄 Retours</button></div></div></div>
+    <div id="cform"><input id="cin" placeholder="Votre question..." onkeydown="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">&#10148;</button></div>
+  </div>
+  <button id="ctoggle" onclick="toggleChat()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0f0eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+</div>
+<script>const Cart={
+  get(){try{return JSON.parse(localStorage.getItem('oda_cart')||'[]');}catch(e){return[];}},
+  save(d){try{localStorage.setItem('oda_cart',JSON.stringify(d));}catch(e){}},
+  add(p){const d=this.get();const e=d.find(i=>i.id===p.id);if(e)e.qty++;else d.push({...p,qty:1});this.save(d);this.badge();toast('Ajouté au panier ✓');},
+  count(){return this.get().reduce((s,i)=>s+i.qty,0);},
+  total(){return this.get().reduce((s,i)=>s+i.price*i.qty,0);},
+  remove(id){const d=this.get().filter(i=>i.id!==id);this.save(d);this.badge();},
+  badge(){const b=document.getElementById('cb');if(b)b.textContent=this.count();}
+};
+function toast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+document.querySelectorAll('[data-add]').forEach(btn=>{btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();Cart.add(JSON.parse(btn.dataset.add));});});
+Cart.badge();
+const curPage=location.pathname.split('/').pop()||'index.html';
+document.querySelectorAll('.nlinks a').forEach(a=>{if(a.getAttribute('href')===curPage)a.classList.add('active');});
+function toggleMenu(){document.getElementById('mmenu').classList.toggle('open');}
+const BOTS={livraison:'📦 Livraison offerte dès 100€. Délai : 48h en France, 3-5j Europe. Suivi email inclus.',taille:'📏 Nos vêtements taillent normalement. En cas de doute prenez la taille au-dessus. Guide complet en FAQ.',montre:'⌚ ODA Stealth Watch : boîtier 40mm PVD noir, verre saphir, étanche 200m, mouvement Miyota 9015 auto. Éd. limitée 109 ex.',retour:'🔄 Retours sous 30 jours. Article non porté avec étiquettes. Remboursement sous 5j ouvrés.',paiement:'💳 CB Visa/Mastercard, PayPal, virement. Paiement 100% sécurisé SSL.',contact:'📧 contact@odatactical.fr — Réponse sous 24h en semaine.',def:'Je peux vous aider sur : livraison, taille, montre, retour, paiement ou contact. Posez votre question !'};
+function botReply(t){t=t.toLowerCase();if(/livr|expéd|délai/.test(t))return BOTS.livraison;if(/taille|size|mesure/.test(t))return BOTS.taille;if(/montre|watch|stealth/.test(t))return BOTS.montre;if(/retour|rembours|échange/.test(t))return BOTS.retour;if(/paie|pay|cb|carte/.test(t))return BOTS.paiement;if(/contact|email|mail/.test(t))return BOTS.contact;return BOTS.def;}
+function toggleChat(){const b=document.getElementById('cbox');b.classList.toggle('open');if(b.classList.contains('open'))document.getElementById('cin').focus();}
+function addMsg(txt,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=txt;const m=document.getElementById('cmsgs');m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function askBot(txt){addMsg(txt,'user');const tp=document.createElement('div');tp.className='msg bot';tp.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';const m=document.getElementById('cmsgs');m.appendChild(tp);m.scrollTop=m.scrollHeight;setTimeout(()=>{tp.remove();addMsg(botReply(txt),'bot');},800+Math.random()*400);}
+function sendChat(){const i=document.getElementById('cin');if(!i.value.trim())return;askBot(i.value);i.value='';}</script>
 </body>
 </html>

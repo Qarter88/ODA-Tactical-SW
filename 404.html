@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 — Page introuvable — ODA Tactical SW</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--d:#050505;--d2:#0a0a0a;--d3:#0f0f0f;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gaa:#3a4e2a;--gb:#4a6030;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310;--bl:#181c15;--red:#3a1010;--redl:#8b3030}
+body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;position:relative;overflow:hidden}
+.veg{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.06}
+.big404{font-family:'Bebas Neue',sans-serif;font-size:clamp(120px,20vw,260px);line-height:.85;color:var(--gm);letter-spacing:-4px;position:relative;z-index:1;user-select:none}
+.big404 span{color:var(--ga)}
+.subtitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);letter-spacing:3px;margin:20px 0 12px;position:relative;z-index:1}
+.sub{font-size:13px;color:var(--gr);line-height:1.8;max-width:400px;margin-bottom:36px;position:relative;z-index:1}
+.btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.btn{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:13px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none}
+.btn:hover{background:var(--gl);color:var(--w)}
+.btn-o{background:transparent;border-color:var(--b);color:var(--gr)}.btn-o:hover{border-color:var(--ga);color:var(--grl);background:transparent}
+.crosshair{position:absolute;width:40px;height:40px;opacity:.15}
+.crosshair::before{content:'';position:absolute;top:50%;left:0;width:100%;height:1px;background:var(--gb)}
+.crosshair::after{content:'';position:absolute;left:50%;top:0;height:100%;width:1px;background:var(--gb)}
+</style>
+</head>
+<body>
+<div class="veg">
+  <svg viewBox="0 0 1440 900" style="position:absolute;bottom:0;width:100%;height:100%">
+    <g opacity=".8"><path d="M-20 900Q10 700 0 500Q14 700 28 900Z" fill="#0c0e0b"/><path d="M35 900Q70 730 50 555Q82 725 96 900Z" fill="#111510"/><path d="M1460 900Q1430 700 1440 500Q1426 700 1412 900Z" fill="#0c0e0b"/><path d="M1405 900Q1370 730 1390 555Q1358 725 1344 900Z" fill="#111510"/></g>
+  </svg>
+</div>
+<div class="crosshair" style="top:20%;left:15%"></div>
+<div class="crosshair" style="top:70%;right:12%"></div>
+<div class="crosshair" style="bottom:20%;left:30%"></div>
+<img src="logo.png" style="height:52px;width:52px;object-fit:contain;opacity:.5;margin-bottom:28px;position:relative;z-index:1" onerror="this.style.display='none'">
+<div class="big404">4<span>0</span>4</div>
+<div class="subtitle">ZONE SÉCURISÉE — ACCÈS REFUSÉ</div>
+<p class="sub">La page que vous cherchez n'existe pas ou a été déplacée. Retournez en terrain connu.</p>
+<div class="btns">
+  <a href="index.html" class="btn">← Retour à l'accueil</a>
+  <a href="collections.html" class="btn btn-o">Voir la boutique</a>
+</div>
+<script>
+// Auto-redirect countdown
+let s=10;const el=document.createElement('p');el.style.cssText='font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gr);text-transform:uppercase;margin-top:28px;position:relative;z-index:1';document.body.appendChild(el);
+const t=setInterval(()=>{el.textContent='Redirection automatique dans '+s+'s';s--;if(s<0){clearInterval(t);window.location='index.html';}},1000);
+</script>
+
+<!-- RGPD COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:280px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:6px">🍪 Gestion des cookies</div>
+    <p style="font-size:12px;color:#525250;line-height:1.7">Nous utilisons des cookies essentiels (panier, session) et analytiques (mesure d'audience). <a href="cgv.html#cookies" style="color:#4a6030;text-decoration:none">En savoir plus →</a></p>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="acceptCookies()" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2d3d22';this.style.color='#e8e8e2'" onmouseout="this.style.borderColor='#171d14';this.style.color='#828280'">Essentiels uniquement</button>
+    <button onclick="acceptAllCookies()" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#171d14';this.style.color='#e8e8e2'" onmouseout="this.style.background='#111510';this.style.color='#828280'">Tout accepter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('oda_cookies');
+  if(!consent){ var b=document.getElementById('cookie-banner'); if(b)b.style.display='flex'; }
+})();
+function acceptCookies(){ localStorage.setItem('oda_cookies','essential'); hideCookieBanner(); }
+function acceptAllCookies(){ localStorage.setItem('oda_cookies','all'); hideCookieBanner(); }
+function hideCookieBanner(){ var b=document.getElementById('cookie-banner'); if(b){ b.style.opacity='0'; b.style.transition='opacity .3s'; setTimeout(function(){b.style.display='none';},300); } }
+</script>
+</body>
+</html>

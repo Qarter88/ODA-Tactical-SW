@@ -5,7 +5,7 @@
 <title>Accueil — ODA Tactical SW</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>*{margin:0;padding:0;box-sizing:border-box}
-:root{--d:#080c08;--d2:#0c110c;--g:#1b3d1b;--gm:#2a5a2a;--gl:#3a7a3a;--ga:#4a9e4a;--gb:#5dbf5d;--w:#f0f0eb;--gr:#7a7a72;--grl:#a8a89e;--b:#243824;--bl:#2f4f2f}
+:root{--d:#050505;--d2:#0a0a0a;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gb:#3d5230;--gaa:#4a6030;--w:#e8e8e2;--gr:#5a5a56;--grl:#8a8a84;--b:#121510;--bl:#1a1f16}
 html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gm)}
 #nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:rgba(8,12,8,.97);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(10px)}
@@ -102,12 +102,16 @@ footer{background:#040804;border-top:1px solid var(--b);padding:60px 80px 28px}
 @media(max-width:768px){#nav{padding:0 20px}.nlinks{display:none}.burger{display:flex;align-items:center;justify-content:center}section{padding:56px 20px}.stats{flex-wrap:wrap}.stat{flex:1 1 50%;border-bottom:1px solid var(--b)}.pgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}footer{padding:48px 20px}.bc{padding:84px 20px 0}#cbox{width:calc(100vw - 48px);right:-4px}}</style>
 </head>
 <body>
+<div id="announce-bar" style="background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative;z-index:1000">
+  <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)" id="announce-text">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth — Édition limitée 74 ex. restants &nbsp;|&nbsp; 🎯 Code ODA10 : -10% sur tout le site</span>
+  <button onclick="this.parentElement.style.display='none'" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gr);cursor:pointer;font-size:14px;line-height:1">✕</button>
+</div>
 <nav id="nav">
   <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
   <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="montre.html">Montre</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
   <div class="nright"><a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a><a href="collections.html" class="ncta">Boutique</a><button class="burger" onclick="toggleMenu()">&#9776;</button></div>
 </nav>
-<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a></div>
+<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a><a href="compte.html">Mon compte 👤</a></div>
 
 <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--b)">
   <div style="position:absolute;inset:0;overflow:hidden;z-index:0"><svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax meet" style="position:absolute;bottom:0;width:100%;height:100%;pointer-events:none">
@@ -219,7 +223,7 @@ footer{background:#040804;border-top:1px solid var(--b);padding:60px 80px 28px}
     <div><div class="fh">Aide</div><ul class="fl"><li><a href="faq.html">FAQ</a></li><li><a href="faq.html#livraison">Livraison & retours</a></li><li><a href="faq.html#tailles">Guide des tailles</a></li><li><a href="contact.html">Contact</a></li></ul></div>
     <div><div class="fh">Suivez-nous</div><ul class="fl"><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div>
   </div>
-  <div class="fbot"><span>© 2025 <b style="color:#4a9e4a">ODA Tactical SW</b></span><div style="display:flex;gap:8px;"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a><a href="#" class="sbtn">YT</a></div></div>
+  <div class="fbot"><span>© 2025 <b style="color:var(--gaa)">ODA Tactical SW</b></span><div style="display:flex;gap:8px;"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a><a href="#" class="sbtn">YT</a></div></div>
 </footer>
 <div id="toast"></div>
 <div id="cwrap">
@@ -251,5 +255,26 @@ function toggleChat(){const b=document.getElementById('cbox');b.classList.toggle
 function addMsg(txt,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=txt;const m=document.getElementById('cmsgs');m.appendChild(d);m.scrollTop=m.scrollHeight;}
 function askBot(txt){addMsg(txt,'user');const tp=document.createElement('div');tp.className='msg bot';tp.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';const m=document.getElementById('cmsgs');m.appendChild(tp);m.scrollTop=m.scrollHeight;setTimeout(()=>{tp.remove();addMsg(botReply(txt),'bot');},800+Math.random()*400);}
 function sendChat(){const i=document.getElementById('cin');if(!i.value.trim())return;askBot(i.value);i.value='';}</script>
+
+<!-- RGPD COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:280px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:6px">🍪 Gestion des cookies</div>
+    <p style="font-size:12px;color:#525250;line-height:1.7">Nous utilisons des cookies essentiels (panier, session) et analytiques (mesure d'audience). <a href="cgv.html#cookies" style="color:#4a6030;text-decoration:none">En savoir plus →</a></p>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="acceptCookies()" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2d3d22';this.style.color='#e8e8e2'" onmouseout="this.style.borderColor='#171d14';this.style.color='#828280'">Essentiels uniquement</button>
+    <button onclick="acceptAllCookies()" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#171d14';this.style.color='#e8e8e2'" onmouseout="this.style.background='#111510';this.style.color='#828280'">Tout accepter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('oda_cookies');
+  if(!consent){ var b=document.getElementById('cookie-banner'); if(b)b.style.display='flex'; }
+})();
+function acceptCookies(){ localStorage.setItem('oda_cookies','essential'); hideCookieBanner(); }
+function acceptAllCookies(){ localStorage.setItem('oda_cookies','all'); hideCookieBanner(); }
+function hideCookieBanner(){ var b=document.getElementById('cookie-banner'); if(b){ b.style.opacity='0'; b.style.transition='opacity .3s'; setTimeout(function(){b.style.display='none';},300); } }
+</script>
 </body>
 </html>

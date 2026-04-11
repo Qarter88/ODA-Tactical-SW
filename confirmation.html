@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Commande confirmée — ODA Tactical SW</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--d:#050505;--d2:#0a0a0a;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gb:#4a6030;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310}
+body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;position:relative;overflow:hidden}
+.veg{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.08}
+.check-circle{width:80px;height:80px;border-radius:50%;border:1px solid var(--ga);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:36px;position:relative;z-index:1;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(45,61,34,.4)}50%{box-shadow:0 0 0 12px rgba(45,61,34,0)}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);letter-spacing:3px;margin-bottom:12px;position:relative;z-index:1}
+h1 span{color:var(--ga)}
+p{font-size:14px;color:var(--gr);max-width:480px;line-height:1.9;margin:0 auto 12px;position:relative;z-index:1}
+.order-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gb);letter-spacing:3px;margin:20px 0;position:relative;z-index:1}
+.btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:32px;position:relative;z-index:1}
+.btn{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:13px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none}.btn:hover{background:var(--gl);color:var(--w)}
+.btn-o{background:transparent;border-color:var(--b);color:var(--gr)}.btn-o:hover{border-color:var(--ga);color:var(--grl);background:transparent}
+.steps{display:flex;gap:24px;margin:32px 0;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.step-item{text-align:center}
+.step-ico{font-size:24px;margin-bottom:8px;opacity:.6}
+.step-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr)}
+</style>
+</head>
+<body>
+<div class="veg">
+  <svg viewBox="0 0 1440 900" style="position:absolute;bottom:0;width:100%;height:100%">
+    <g opacity=".7"><path d="M-20 900Q10 700 0 500Q14 700 28 900Z" fill="#0c0e0b"/><path d="M35 900Q70 730 50 555Q82 725 96 900Z" fill="#111510"/><path d="M1460 900Q1430 700 1440 500Q1426 700 1412 900Z" fill="#0c0e0b"/><path d="M1405 900Q1370 730 1390 555Q1358 725 1344 900Z" fill="#111510"/></g>
+  </svg>
+</div>
+<div class="check-circle">✓</div>
+<h1>COMMANDE<br><span>CONFIRMÉE</span></h1>
+<div class="order-num" id="order-num">ODA-2025-XXXX</div>
+<p>Merci pour votre commande ! Un email de confirmation vient d'être envoyé à votre adresse. Votre équipement sera expédié dans les 24h.</p>
+<div class="steps">
+  <div class="step-item"><div class="step-ico">✅</div><div class="step-lbl">Commande reçue</div></div>
+  <div class="step-item"><div class="step-ico">📦</div><div class="step-lbl">Préparation</div></div>
+  <div class="step-item"><div class="step-ico">🚚</div><div class="step-lbl">Expédition 24h</div></div>
+  <div class="step-item"><div class="step-ico">🏠</div><div class="step-lbl">Livraison 48h</div></div>
+</div>
+<div class="btns">
+  <a href="tracking.html" class="btn">Suivre ma commande</a>
+  <a href="collections.html" class="btn btn-o">Continuer les achats</a>
+  <a href="compte.html" class="btn btn-o">Mon compte</a>
+</div>
+<script>
+// Generate order number from session
+const order = localStorage.getItem('oda_last_order') || ('ODA-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000));
+document.getElementById('order-num').textContent = order;
+</script>
+</body>
+</html>

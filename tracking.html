@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suivi de Commande — ODA Tactical SW</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--d:#050505;--d2:#0a0a0a;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gb:#4a6030;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310;--bl:#181c15}
+html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
+.announce{background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center}
+#nav{position:fixed;top:40px;left:0;width:100%;z-index:999;background:rgba(5,5,5,.98);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(16px)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}.nlogo img{height:40px;width:40px;object-fit:contain;opacity:.85}
+.nbrand{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:5px;color:var(--w)}.nbrand em{font-style:normal;color:var(--gb)}
+.nlinks{display:flex;gap:36px;list-style:none}
+.nlinks a{color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;transition:color .3s}.nlinks a:hover{color:var(--w)}
+.nright{display:flex;align-items:center;gap:10px}
+.cart-a{color:var(--gr);border:1px solid var(--b);padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s}.cart-a:hover{color:var(--grl);border-color:var(--ga)}
+.cbadge{background:var(--ga);color:var(--grl);font-size:9px;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-left:4px}
+.ncta{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:8px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;transition:all .2s}.ncta:hover{background:var(--gl);color:var(--w)}
+.burger{display:none;background:none;border:1px solid var(--b);color:var(--gr);width:34px;height:34px;cursor:pointer;font-size:14px;align-items:center;justify-content:center}
+#mmenu{display:none;position:fixed;top:108px;left:0;width:100%;background:rgba(5,5,5,.99);border-bottom:1px solid var(--b);z-index:998;flex-direction:column}
+#mmenu a{padding:14px 24px;color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--b)}
+#mmenu.open{display:flex}
+.track-wrap{max-width:700px;margin:0 auto;padding:140px 40px 80px}
+.stag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--ga);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stag::before{content:'';width:18px;height:1px;background:var(--ga)}
+.track-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);letter-spacing:2px;margin-bottom:10px}
+.track-sub{font-size:13px;color:var(--gr);margin-bottom:36px;line-height:1.7}
+.track-form{display:flex;gap:0;margin-bottom:36px}
+.track-input{flex:1;background:#060606;border:1px solid var(--b);border-right:none;color:var(--w);padding:14px 18px;font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color .2s;letter-spacing:2px;text-transform:uppercase}.track-input:focus{border-color:var(--ga)}.track-input::placeholder{color:var(--gr);text-transform:none;letter-spacing:0}
+.track-btn{background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:14px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}.track-btn:hover{background:var(--gl);color:var(--w)}
+#result{display:none}
+.order-card{background:var(--d2);border:1px solid var(--b);padding:24px 28px;margin-bottom:20px}
+.order-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--b)}
+.order-num-big{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--gb)}
+.order-date{font-size:12px;color:var(--gr);margin-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px}
+.status-pill{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border:1px solid var(--ga);color:var(--grl);background:rgba(45,61,34,.3)}
+.track-steps{display:flex;position:relative;margin:28px 0}
+.track-steps::before{content:'';position:absolute;top:14px;left:14px;right:14px;height:1px;background:var(--b);z-index:0}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;z-index:1}
+.step-dot{width:28px;height:28px;border-radius:50%;border:1px solid var(--b);background:var(--d2);display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .3s}
+.step-dot.done{background:var(--ga);border-color:var(--gb)}
+.step-dot.current{background:var(--gm);border-color:var(--gb);box-shadow:0 0 0 4px rgba(45,61,34,.3)}
+.step-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gr);text-align:center}
+.step-label.on{color:var(--grl)}
+.track-items{margin-top:16px}
+.track-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--b);font-size:13px;color:var(--gr)}
+.track-item:last-child{border-bottom:none}
+.track-item strong{color:var(--grl)}
+.track-total{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gb);text-align:right;margin-top:12px}
+.colissimo-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--gb);font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:1px solid var(--ga);padding:9px 18px;transition:all .2s}.colissimo-link:hover{background:var(--gm)}
+footer{background:#030303;border-top:1px solid var(--b);padding:40px 80px 24px}.fbot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gr)}
+@media(max-width:768px){#nav{padding:0 18px;top:40px}.nlinks{display:none}.burger{display:flex}.track-wrap{padding:120px 20px 60px}.track-form{flex-direction:column}.track-input{border-right:1px solid var(--b);border-bottom:none}.track-steps{flex-wrap:wrap;gap:16px}.track-steps::before{display:none}footer{padding:36px 20px}}
+</style>
+</head>
+<body>
+<div class="announce"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; 🎯 Code ODA10 : -10%</span></div>
+<nav id="nav">
+  <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
+  <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nright"><a href="compte.html" class="cart-a">👤</a><a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a><a href="collections.html" class="ncta">Boutique</a><button class="burger" onclick="document.getElementById('mmenu').classList.toggle('open')">&#9776;</button></div>
+</nav>
+<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a></div>
+
+<div class="track-wrap">
+  <div class="stag">Boutique</div>
+  <div class="track-title">SUIVI DE COMMANDE</div>
+  <div class="track-sub">Entrez votre numéro de commande (format ODA-2025-XXXX) pour suivre votre livraison en temps réel.</div>
+
+  <div class="track-form">
+    <input class="track-input" id="order-num" placeholder="ODA-2025-XXXX" maxlength="16">
+    <button class="track-btn" onclick="trackOrder()">Rechercher</button>
+  </div>
+
+  <div id="result"></div>
+
+  <div style="margin-top:48px;padding-top:32px;border-top:1px solid var(--b)">
+    <div class="stag" style="margin-bottom:16px">Besoin d'aide ?</div>
+    <p style="font-size:13px;color:var(--gr);line-height:1.8;margin-bottom:16px">Si votre numéro de commande n'est pas reconnu ou si vous avez des questions sur votre livraison :</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="contact.html" class="track-btn" style="text-decoration:none">Contacter le support</a>
+      <a href="faq.html#livraison" class="track-btn" style="text-decoration:none;background:transparent;border-color:var(--b);color:var(--gr)">FAQ livraison</a>
+    </div>
+  </div>
+</div>
+
+<footer><div class="fbot"><span>© 2025 <b style="color:var(--gb)">ODA Tactical SW</b></span><a href="index.html" style="color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase">← Retour</a></div></footer>
+
+<script>
+const cart=JSON.parse(localStorage.getItem('oda_cart')||'[]');const cb=document.getElementById('cb');if(cb)cb.textContent=cart.reduce((s,i)=>s+i.qty,0);
+
+// Simulate orders from user account + demo orders
+function trackOrder() {
+  const num = document.getElementById('order-num').value.trim().toUpperCase();
+  const result = document.getElementById('result');
+  if(!num || num.length < 8) { result.style.display='block'; result.innerHTML='<p style="color:#c08080;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-size:13px">Format invalide. Exemple : ODA-2025-1234</p>'; return; }
+  
+  // Check real orders in localStorage
+  const users = JSON.parse(localStorage.getItem('oda_users')||'[]');
+  let foundOrder = null;
+  users.forEach(u => { (u.orders||[]).forEach(o => { if(o.id === num) foundOrder = {...o, userEmail: u.email}; }); });
+  
+  // Demo orders for testing
+  const demo = {
+    'ODA-2025-0001': {id:'ODA-2025-0001',date:'08 Jan 2025',status:'delivered',step:4,items:[{name:'ODA Stealth Watch',qty:1,price:149}],total:149,tracking:'6X123456789FR'},
+    'ODA-2025-0042': {id:'ODA-2025-0042',date:'15 Jan 2025',status:'shipped',step:3,items:[{name:'Veste Tactique ODA-4 (L)',qty:1,price:189}],total:189,tracking:'6X987654321FR'},
+    'ODA-2025-0099': {id:'ODA-2025-0099',date:'20 Jan 2025',status:'pending',step:2,items:[{name:'Cargo Tactique ODA-7 (M)',qty:1,price:109},{name:'Gilet Multi-poches ODA (M)',qty:1,price:129}],total:238,tracking:null},
+  };
+  
+  const order = foundOrder || demo[num];
+  if(!order) { result.style.display='block'; result.innerHTML='<div style="background:rgba(58,16,16,.3);border:1px solid var(--red);padding:20px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:#c08080">Commande introuvable. Vérifiez le numéro dans votre email de confirmation.</div>'; return; }
+  
+  const statuses = {pending:'En préparation',shipped:'Expédiée',delivered:'Livrée',processing:'En cours'};
+  const steps = ['Commande reçue','En préparation','Expédiée','Livrée'];
+  const step = order.step || 1;
+  
+  result.style.display='block';
+  result.innerHTML = `
+    <div class="order-card">
+      <div class="order-head">
+        <div><div class="order-num-big">${num}</div><div class="order-date">Passée le ${order.date || 'Jan 2025'}</div></div>
+        <div class="status-pill">${statuses[order.status] || order.status}</div>
+      </div>
+      <div class="track-steps">
+        ${steps.map((s,i) => `<div class="step"><div class="step-dot ${i+1<=step?'done':''} ${i+1===step?'current':''}">${i+1<=step?'✓':i+1}</div><div class="step-label ${i+1<=step?'on':''}">${s}</div></div>`).join('')}
+      </div>
+      <div class="track-items">
+        ${(order.items||[]).map(item=>`<div class="track-item"><span>${item.name} × ${item.qty}</span><strong>${item.price * item.qty}€</strong></div>`).join('')}
+      </div>
+      <div class="track-total">${order.total}€</div>
+      ${order.tracking ? `<a href="https://www.laposte.fr/outils/suivre-vos-envois?code=${order.tracking}" target="_blank" class="colissimo-link">📦 Suivre sur Colissimo → N° ${order.tracking}</a>` : `<p style="font-size:12px;color:var(--gr);margin-top:16px">Numéro de suivi disponible dès l'expédition.</p>`}
+    </div>`;
+}
+document.getElementById('order-num').addEventListener('keydown', e => { if(e.key==='Enter') trackOrder(); });
+</script>
+
+<!-- RGPD COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:280px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:6px">🍪 Gestion des cookies</div>
+    <p style="font-size:12px;color:#525250;line-height:1.7">Nous utilisons des cookies essentiels (panier, session) et analytiques (mesure d'audience). <a href="cgv.html#cookies" style="color:#4a6030;text-decoration:none">En savoir plus →</a></p>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="acceptCookies()" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2d3d22';this.style.color='#e8e8e2'" onmouseout="this.style.borderColor='#171d14';this.style.color='#828280'">Essentiels uniquement</button>
+    <button onclick="acceptAllCookies()" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#171d14';this.style.color='#e8e8e2'" onmouseout="this.style.background='#111510';this.style.color='#828280'">Tout accepter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('oda_cookies');
+  if(!consent){ var b=document.getElementById('cookie-banner'); if(b)b.style.display='flex'; }
+})();
+function acceptCookies(){ localStorage.setItem('oda_cookies','essential'); hideCookieBanner(); }
+function acceptAllCookies(){ localStorage.setItem('oda_cookies','all'); hideCookieBanner(); }
+function hideCookieBanner(){ var b=document.getElementById('cookie-banner'); if(b){ b.style.opacity='0'; b.style.transition='opacity .3s'; setTimeout(function(){b.style.display='none';},300); } }
+</script>
+</body>
+</html>

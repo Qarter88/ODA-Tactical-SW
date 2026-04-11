@@ -54,7 +54,7 @@ footer{background:#030303;border-top:1px solid var(--b);padding:40px 80px 24px}.
 </style>
 </head>
 <body>
-<div class="announce"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; 🎯 Code ODA10 : -10%</span></div>
+<div class="announce"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h</span></div>
 <nav id="nav">
   <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
   <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
@@ -93,43 +93,56 @@ const cart=JSON.parse(localStorage.getItem('oda_cart')||'[]');const cb=document.
 function trackOrder() {
   const num = document.getElementById('order-num').value.trim().toUpperCase();
   const result = document.getElementById('result');
-  if(!num || num.length < 8) { result.style.display='block'; result.innerHTML='<p style="color:#c08080;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-size:13px">Format invalide. Exemple : ODA-2025-1234</p>'; return; }
-  
+  if(!num || num.length < 8) {
+    result.style.display='block';
+    result.innerHTML='<p style="color:#c08080;font-family:\'Barlow Condensed\',sans-serif;letter-spacing:1px;font-size:13px">Format invalide. Exemple : ODA-2025-1234</p>';
+    return;
+  }
+
   // Check real orders in localStorage
   const users = JSON.parse(localStorage.getItem('oda_users')||'[]');
   let foundOrder = null;
-  users.forEach(u => { (u.orders||[]).forEach(o => { if(o.id === num) foundOrder = {...o, userEmail: u.email}; }); });
-  
-  // Demo orders for testing
-  const demo = {
-    'ODA-2025-0001': {id:'ODA-2025-0001',date:'08 Jan 2025',status:'delivered',step:4,items:[{name:'ODA Stealth Watch',qty:1,price:149}],total:149,tracking:'6X123456789FR'},
-    'ODA-2025-0042': {id:'ODA-2025-0042',date:'15 Jan 2025',status:'shipped',step:3,items:[{name:'Veste Tactique ODA-4 (L)',qty:1,price:189}],total:189,tracking:'6X987654321FR'},
-    'ODA-2025-0099': {id:'ODA-2025-0099',date:'20 Jan 2025',status:'pending',step:2,items:[{name:'Cargo Tactique ODA-7 (M)',qty:1,price:109},{name:'Gilet Multi-poches ODA (M)',qty:1,price:129}],total:238,tracking:null},
-  };
-  
-  const order = foundOrder || demo[num];
-  if(!order) { result.style.display='block'; result.innerHTML='<div style="background:rgba(58,16,16,.3);border:1px solid var(--red);padding:20px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:#c08080">Commande introuvable. Vérifiez le numéro dans votre email de confirmation.</div>'; return; }
+  users.forEach(function(u){ (u.orders||[]).forEach(function(o){ if(o.id === num) foundOrder = o; }); });
+
+  const order = foundOrder;
+  if(!order) {
+    result.style.display='block';
+    result.innerHTML='<div style="background:rgba(58,16,16,.3);border:1px solid #8b3030;padding:20px 24px;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;letter-spacing:1px;color:#c08080">Commande introuvable. Vérifiez le numéro dans votre email de confirmation, ou connectez-vous à <a href="compte.html" style="color:#4a6030">votre compte</a> pour voir vos commandes.</div>';
+    return;
+  }
   
   const statuses = {pending:'En préparation',shipped:'Expédiée',delivered:'Livrée',processing:'En cours'};
   const steps = ['Commande reçue','En préparation','Expédiée','Livrée'];
   const step = order.step || 1;
   
   result.style.display='block';
-  result.innerHTML = `
-    <div class="order-card">
-      <div class="order-head">
-        <div><div class="order-num-big">${num}</div><div class="order-date">Passée le ${order.date || 'Jan 2025'}</div></div>
-        <div class="status-pill">${statuses[order.status] || order.status}</div>
-      </div>
-      <div class="track-steps">
-        ${steps.map((s,i) => `<div class="step"><div class="step-dot ${i+1<=step?'done':''} ${i+1===step?'current':''}">${i+1<=step?'✓':i+1}</div><div class="step-label ${i+1<=step?'on':''}">${s}</div></div>`).join('')}
-      </div>
-      <div class="track-items">
-        ${(order.items||[]).map(item=>`<div class="track-item"><span>${item.name} × ${item.qty}</span><strong>${item.price * item.qty}€</strong></div>`).join('')}
-      </div>
-      <div class="track-total">${order.total}€</div>
-      ${order.tracking ? `<a href="https://www.laposte.fr/outils/suivre-vos-envois?code=${order.tracking}" target="_blank" class="colissimo-link">📦 Suivre sur Colissimo → N° ${order.tracking}</a>` : `<p style="font-size:12px;color:var(--gr);margin-top:16px">Numéro de suivi disponible dès l'expédition.</p>`}
-    </div>`;
+
+  var stepsHtml = steps.map(function(s, i) {
+    var dotClass = 'step-dot' + (i+1<=step?' done':'') + (i+1===step?' current':'');
+    var labelClass = 'step-label' + (i+1<=step?' on':'');
+    var dotContent = i+1<=step ? '✓' : (i+1);
+    return '<div class="step"><div class="'+dotClass+'">'+dotContent+'</div><div class="'+labelClass+'">'+s+'</div></div>';
+  }).join('');
+
+  var itemsHtml = (order.items||[]).map(function(item) {
+    return '<div class="track-item"><span>'+item.name+' &times; '+item.qty+'</span><strong>'+(item.price*item.qty)+'€</strong></div>';
+  }).join('');
+
+  var trackingHtml = order.tracking
+    ? '<a href="https://www.laposte.fr/outils/suivre-vos-envois?code='+order.tracking+'" target="_blank" class="colissimo-link">📦 Suivre sur Colissimo &rarr; N° '+order.tracking+'</a>'
+    : '<p style="font-size:12px;color:var(--gr);margin-top:16px">Numéro de suivi disponible dès l\'expédition.</p>';
+
+  result.innerHTML =
+    '<div class="order-card">' +
+      '<div class="order-head">' +
+        '<div><div class="order-num-big">'+num+'</div><div class="order-date">Passée le '+(order.date||'Jan 2025')+'</div></div>' +
+        '<div class="status-pill">'+(statuses[order.status]||order.status)+'</div>' +
+      '</div>' +
+      '<div class="track-steps">'+stepsHtml+'</div>' +
+      '<div class="track-items">'+itemsHtml+'</div>' +
+      '<div class="track-total">'+order.total+'€</div>' +
+      trackingHtml +
+    '</div>';
 }
 document.getElementById('order-num').addEventListener('keydown', e => { if(e.key==='Enter') trackOrder(); });
 </script>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>À Propos — ODA Tactical SW</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--d:#050505;--d2:#0a0a0a;--d3:#0f0f0f;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gaa:#3a4e2a;--gb:#4a6030;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310;--bl:#181c15}
+html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--ga)}
+.announce{background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative}
+#nav{position:fixed;top:40px;left:0;width:100%;z-index:999;background:rgba(5,5,5,.98);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(16px)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}.nlogo img{height:40px;width:40px;object-fit:contain;opacity:.85}
+.nbrand{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:5px;color:var(--w)}.nbrand em{font-style:normal;color:var(--gb)}
+.nlinks{display:flex;gap:36px;list-style:none}
+.nlinks a{color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;transition:color .3s;position:relative}
+.nlinks a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1px;background:var(--gb);transition:width .3s}
+.nlinks a:hover{color:var(--w)}.nlinks a:hover::after{width:100%}
+.nright{display:flex;align-items:center;gap:10px}
+.cart-a{color:var(--gr);border:1px solid var(--b);padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:all .3s;text-decoration:none}.cart-a:hover{color:var(--grl);border-color:var(--ga)}
+.cbadge{background:var(--ga);color:var(--grl);font-size:9px;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-left:4px}
+.ncta{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:8px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none}.ncta:hover{background:var(--gl);color:var(--w)}
+.burger{display:none;background:none;border:1px solid var(--b);color:var(--gr);width:34px;height:34px;cursor:pointer;font-size:14px;align-items:center;justify-content:center}
+#mmenu{display:none;position:fixed;top:108px;left:0;width:100%;background:rgba(5,5,5,.99);border-bottom:1px solid var(--b);z-index:998;flex-direction:column}
+#mmenu a{padding:14px 24px;color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--b);transition:color .2s}
+#mmenu a:hover{color:var(--grl)}#mmenu.open{display:flex}
+.stag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--ga);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stag::before{content:'';width:18px;height:1px;background:var(--ga)}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5vw,64px);letter-spacing:2px;margin-bottom:40px}
+section{padding:88px 80px}
+.btn{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:13px 30px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}.btn:hover{background:var(--gl);color:var(--w)}
+.btn-o{background:transparent;border-color:var(--b);color:var(--gr)}.btn-o:hover{border-color:var(--ga);color:var(--grl);background:transparent}
+#toast{position:fixed;top:80px;right:18px;z-index:9999;background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}#toast.on{opacity:1}
+footer{background:#030303;border-top:1px solid var(--b);padding:56px 80px 28px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px}
+.flogo{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:12px}.flogo img{height:36px;width:36px;object-fit:contain;opacity:.7}.flogo span{color:var(--gb)}
+.fdesc{font-size:12px;color:var(--gr);line-height:1.9;max-width:260px}
+.fh{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--grl);margin-bottom:14px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:10px}.fl a{font-size:12px;color:var(--gr);text-decoration:none;transition:color .2s}.fl a:hover{color:var(--grl)}
+.fbot{border-top:1px solid var(--b);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gr)}
+.sbtn{width:28px;height:28px;border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--gr);text-decoration:none;transition:all .2s}.sbtn:hover{border-color:var(--ga);color:var(--grl)}
+#cw{position:fixed;bottom:20px;right:20px;z-index:9998}
+#ct{width:46px;height:46px;border-radius:50%;background:var(--gm);border:1px solid var(--gl);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.7);transition:all .25s}.#ct:hover{background:var(--gl)}
+#cb2{display:none;position:absolute;bottom:56px;right:0;width:285px;background:var(--d2);border:1px solid var(--b);flex-direction:column;overflow:hidden}#cb2.on{display:flex}
+#ch{background:var(--g);padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--b)}
+#cm{height:200px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:86%;padding:8px 12px;font-size:12px;line-height:1.6}
+.bot{background:var(--g);border:1px solid var(--b);color:var(--grl);align-self:flex-start;border-radius:0 6px 6px 6px}
+.usr{background:var(--gm);color:var(--grl);align-self:flex-end;border-radius:6px 0 6px 6px}
+#cf{display:flex;border-top:1px solid var(--b)}
+#cin{flex:1;background:var(--d);border:none;color:var(--w);padding:10px 12px;font-size:12px;outline:none}#cin::placeholder{color:var(--gr)}
+#cf button{background:var(--gm);border:none;color:var(--grl);padding:10px 13px;cursor:pointer;font-size:14px}
+@media(max-width:1024px){section{padding:60px 40px}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){#nav{padding:0 18px;top:40px}.nlinks{display:none}.burger{display:flex}section{padding:56px 20px}.fgrid{grid-template-columns:1fr 1fr}footer{padding:44px 20px}}
+
+.hero-about{min-height:60vh;display:flex;align-items:flex-end;padding:140px 80px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--b)}
+.veg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.12}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-big-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,12vw,180px);color:var(--gm);line-height:.85;letter-spacing:-2px;user-select:none}
+.about-big-num span{color:var(--ga)}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b);margin-top:0}
+.value-card{background:var(--d2);padding:36px 28px}
+.value-icon{font-size:32px;margin-bottom:16px;opacity:.6}
+.value-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--grl)}
+.value-text{font-size:13px;color:var(--gr);line-height:1.9}
+.timeline{border-left:1px solid var(--b);padding-left:40px;margin-top:40px}
+.tl-item{position:relative;padding-bottom:36px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-45px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--ga);border:2px solid var(--gm)}
+.tl-year{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gb);letter-spacing:2px;margin-bottom:6px}
+.tl-text{font-size:13px;color:var(--gr);line-height:1.8}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b)}
+.team-card{background:var(--d2);padding:28px;text-align:center}
+.team-avatar{width:64px;height:64px;border-radius:50%;border:1px solid var(--bl);background:var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--ga)}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;color:var(--grl)}
+.team-role{font-size:11px;color:var(--gr);letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
+@media(max-width:1024px){.about-grid{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.hero-about{padding:120px 20px 60px}.values-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="announce" style="background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; 🎯 Code ODA10 : -10%</span></div>
+<div id="toast"></div>
+<nav id="nav">
+  <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
+  <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="montre.html">Montre</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nright"><a href="compte.html" class="cart-a">👤</a><a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a><a href="collections.html" class="ncta">Boutique</a><button class="burger" onclick="document.getElementById('mmenu').classList.toggle('open')">&#9776;</button></div>
+</nav>
+<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a></div>
+
+<div class="hero-about">
+  <div class="veg-bg"><svg viewBox="0 0 1440 700" style="position:absolute;bottom:0;width:100%;height:100%"><g opacity=".7"><path d="M-20 700Q10 500 0 300Q14 500 28 700Z" fill="#0c0e0b"/><path d="M35 700Q70 530 50 355Q82 525 96 700Z" fill="#111510"/><path d="M1460 700Q1430 500 1440 300Q1426 500 1412 700Z" fill="#0c0e0b"/><path d="M1405 700Q1370 530 1390 355Q1358 525 1344 700Z" fill="#111510"/></g></svg></div>
+  <div style="position:relative;z-index:1;max-width:700px">
+    <div class="stag">Notre Histoire</div>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,110px);line-height:.88;letter-spacing:2px">ODA<br><span style="color:var(--ga)">TACTICAL</span><br><span style="color:var(--gr);font-size:clamp(32px,4vw,60px)">SOUTH WEST</span></h1>
+    <p style="font-size:14px;color:var(--grl);max-width:520px;line-height:1.9;margin-top:24px">Née d'une passion pour l'équipement tactique et le design militaire, ODA Tactical SW propose des vêtements multi-poches et des montres all-black pensés pour ceux qui n'acceptent pas les compromis.</p>
+  </div>
+</div>
+
+<section>
+  <div class="about-grid">
+    <div>
+      <div class="stag">Notre mission</div>
+      <h2 class="stitle">ÉQUIPEMENT<br>SANS COMPROMIS</h2>
+      <p style="font-size:14px;color:var(--gr);line-height:1.9;margin-bottom:20px">ODA Tactical SW est née d'un constat simple : il n'existait pas de marque française proposant à la fois des vêtements tactiques multi-poches de qualité professionnelle et des montres all-black au design épuré, à des prix accessibles.</p>
+      <p style="font-size:14px;color:var(--gr);line-height:1.9;margin-bottom:32px">Chaque produit est sélectionné, testé et validé pour répondre aux exigences des professionnels comme des passionnés d'équipement tactique.</p>
+      <a href="collections.html" class="btn">Voir nos produits →</a>
+    </div>
+    <div>
+      <div class="about-big-num">O<span>D</span>A</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gr);margin-top:12px">Operational Detachment Alpha</div>
+    </div>
+  </div>
+</section>
+
+<div class="values-grid">
+  <div class="value-card"><div class="value-icon">🎯</div><div class="value-title">Précision</div><div class="value-text">Chaque détail est pensé. Emplacement des poches, qualité des fermetures, résistance des matériaux — rien n'est laissé au hasard.</div></div>
+  <div class="value-card"><div class="value-icon">🪖</div><div class="value-title">Authenticité</div><div class="value-text">Nos produits s'inspirent du monde militaire et tactique. Pas de compromis esthétiques, pas de fioriture inutile. Fonctionnel avant tout.</div></div>
+  <div class="value-card"><div class="value-icon">🛡️</div><div class="value-title">Durabilité</div><div class="value-text">Ripstop militaire, coutures renforcées, fermetures YKK grade professionnel. Nos produits sont faits pour durer dans toutes les conditions.</div></div>
+</div>
+
+<section style="background:var(--d2);border-top:1px solid var(--b);border-bottom:1px solid var(--b)">
+  <div class="stag">Notre parcours</div>
+  <h2 class="stitle">CHRONOLOGIE</h2>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2024 — Lancement</div><div class="tl-text">Création d'ODA Tactical SW. Premiers produits : la veste ODA-4 et le gilet multi-poches. Lancement en édition limitée.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2024 — La Montre</div><div class="tl-text">Lancement de la ODA Stealth Watch. 109 exemplaires numérotés. Écoulée en quelques semaines lors du premier drop.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2025 — Expansion</div><div class="tl-text">Ajout du Cargo ODA-7, refonte du site, programme de fidélité membres. La communauté ODA compte maintenant plus de 500 équipés.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2025 → Futur</div><div class="tl-text">Nouvelles collections à venir : sac tactique ODA-T1, casquette balistique, seconde édition de la Stealth Watch. Restez connectés.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="stag">L'équipe</div>
+  <h2 class="stitle">DERRIÈRE ODA</h2>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-avatar">F</div><div class="team-name">Fondateur</div><div class="team-role">Direction &amp; Création</div></div>
+    <div class="team-card"><div class="team-avatar">D</div><div class="team-name">Design</div><div class="team-role">Identité visuelle</div></div>
+    <div class="team-card"><div class="team-avatar">L</div><div class="team-name">Logistique</div><div class="team-role">Stock &amp; Expéditions</div></div>
+  </div>
+  <div style="text-align:center;margin-top:48px">
+    <p style="font-size:13px;color:var(--gr);margin-bottom:24px">Une question ? Une idée ? On veut vous entendre.</p>
+    <a href="contact.html" class="btn">Nous contacter</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fgrid">
+    <div><div class="flogo"><img src="logo.png" onerror="this.style.display='none'">ODA<span>·</span>TACTICAL SW</div><p class="fdesc">Équipement tactique premium. Vêtements multi-poches et montres all-black pour ceux qui ne font pas de compromis.</p></div>
+    <div><div class="fh">Collections</div><ul class="fl"><li><a href="montre.html">Montre Stealth</a></li><li><a href="produit-veste.html">Veste Tactique</a></li><li><a href="produit-gilet.html">Gilet Multi-poches</a></li><li><a href="produit-cargo.html">Cargo ODA-7</a></li></ul></div>
+    <div><div class="fh">Infos</div><ul class="fl"><li><a href="faq.html">FAQ</a></li><li><a href="cgv.html">CGV</a></li><li><a href="cgv.html#confidentialite">Confidentialité</a></li><li><a href="tracking.html">Suivi commande</a></li></ul></div>
+    <div><div class="fh">Liens</div><ul class="fl"><li><a href="apropos.html">À propos</a></li><li><a href="lookbook.html">Lookbook</a></li><li><a href="contact.html">Contact</a></li><li><a href="#">Instagram</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2025 <b style="color:var(--gb)">ODA Tactical SW</b> · <a href="cgv.html" style="color:var(--gr);text-decoration:none">CGV</a> · <a href="cgv.html#mentions" style="color:var(--gr);text-decoration:none">Mentions légales</a></span><div style="display:flex;gap:8px"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a></div></div>
+</footer>
+<div id="cw">
+  <div id="cb2"><div id="ch"><img src="logo.png" style="width:22px;height:22px;border-radius:50%;object-fit:contain;opacity:.6" onerror="this.style.display='none'"><div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">Assistant ODA</div><button onclick="document.getElementById('cb2').classList.toggle('on')" style="margin-left:auto;background:none;border:none;color:var(--gr);cursor:pointer;font-size:15px;line-height:1">✕</button></div>
+    <div id="cm"><div class="msg bot">Bonjour ! Comment puis-je vous aider ?</div></div>
+    <div id="cf"><input id="cin" placeholder="Votre question..." onkeydown="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">➤</button></div>
+  </div>
+  <button id="ct" onclick="document.getElementById('cb2').classList.toggle('on')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#828280" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+</div>
+<script>
+function sendChat(){const i=document.getElementById('cin');if(!i||!i.value.trim())return;const t=i.value;const d=document.createElement('div');d.className='msg usr';d.textContent=t;const m=document.getElementById('cm');if(m){m.appendChild(d);m.scrollTop=m.scrollHeight;}i.value='';const BOTS={livraison:'📦 Livraison offerte dès 100€ · 48h France · 3-5j Europe.',taille:'📏 Guide des tailles sur la page FAQ.',montre:'⌚ ODA Stealth Watch 149€ · Acier PVD noir · Étanche 200m · Éd. limitée.',def:'Je peux vous aider sur : livraison, tailles, montre, ou votre compte !'};function bR(x){x=x.toLowerCase();if(/livr/.test(x))return BOTS.livraison;if(/taille/.test(x))return BOTS.taille;if(/montre|watch/.test(x))return BOTS.montre;return BOTS.def;}setTimeout(()=>{const r=document.createElement('div');r.className='msg bot';r.textContent=bR(t);if(m){m.appendChild(r);m.scrollTop=m.scrollHeight;}},700);}
+const cart=JSON.parse(localStorage.getItem('oda_cart')||'[]');const cb=document.getElementById('cb');if(cb)cb.textContent=cart.reduce((s,i)=>s+i.qty,0);
+</script>
+
+<!-- RGPD COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:280px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:6px">🍪 Gestion des cookies</div>
+    <p style="font-size:12px;color:#525250;line-height:1.7">Nous utilisons des cookies essentiels (panier, session) et analytiques (mesure d'audience). <a href="cgv.html#cookies" style="color:#4a6030;text-decoration:none">En savoir plus →</a></p>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="acceptCookies()" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2d3d22';this.style.color='#e8e8e2'" onmouseout="this.style.borderColor='#171d14';this.style.color='#828280'">Essentiels uniquement</button>
+    <button onclick="acceptAllCookies()" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#171d14';this.style.color='#e8e8e2'" onmouseout="this.style.background='#111510';this.style.color='#828280'">Tout accepter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('oda_cookies');
+  if(!consent){ var b=document.getElementById('cookie-banner'); if(b)b.style.display='flex'; }
+})();
+function acceptCookies(){ localStorage.setItem('oda_cookies','essential'); hideCookieBanner(); }
+function acceptAllCookies(){ localStorage.setItem('oda_cookies','all'); hideCookieBanner(); }
+function hideCookieBanner(){ var b=document.getElementById('cookie-banner'); if(b){ b.style.opacity='0'; b.style.transition='opacity .3s'; setTimeout(function(){b.style.display='none';},300); } }
+</script>
+</body>
+</html>

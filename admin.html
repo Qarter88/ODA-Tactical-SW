@@ -3,776 +3,707 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin — ODA Tactical SW</title>
-<!-- No search engine indexing -->
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --dark:#080c08;--dark2:#0c110c;--green:#1b3d1b;--gm:#1a2514;--gl:#243018;--ga:#3d5230;
-  --white:#f0f0eb;--gray:#7a7a72;--grayl:#a8a89e;--border:#243824;--borderl:#2f4f2f;
-  --red:#8b2020;--redl:#c03030;--amber:#6b4f10;--amberl:#d4870a;
-}
-html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gm);}
-
-/* ===== LOGIN SCREEN ===== */
-#login-screen{position:fixed;inset:0;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
-.login-box{width:360px;border:1px solid var(--border);padding:48px 40px;background:var(--dark2);}
-.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px;justify-content:center;}
-.login-logo img{height:52px;width:52px;object-fit:contain;}
-.login-logo-text{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;}
-.login-logo-text span{color:var(--ga);}
-.login-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:6px;text-align:center;}
-.login-sub{font-size:12px;color:var(--gray);text-align:center;margin-bottom:28px;letter-spacing:0.5px;}
-.login-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:8px;}
-.login-input{width:100%;background:#060c06;border:1px solid var(--border);color:var(--white);padding:13px 16px;font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:16px;transition:border-color .2s;letter-spacing:2px;}
-.login-input:focus{border-color:var(--gm);}
-.login-btn{width:100%;background:var(--gm);border:1px solid var(--gl);color:var(--white);padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:4px;}
-.login-btn:hover{background:var(--gl);}
-.login-error{background:#2a0808;border:1px solid var(--red);color:#f08080;padding:10px 14px;font-size:13px;margin-bottom:16px;display:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
-.login-hint{font-size:11px;color:var(--gray);text-align:center;margin-top:16px;line-height:1.6;}
-
-/* ===== ADMIN LAYOUT ===== */
-#admin-app{display:none;}
-.admin-nav{position:fixed;top:0;left:0;width:100%;height:60px;background:rgba(8,12,8,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:100;backdrop-filter:blur(8px);}
-.admin-nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;display:flex;align-items:center;gap:10px;}
-.admin-nav-logo img{height:32px;width:32px;object-fit:contain;}
-.admin-badge{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;margin-left:8px;}
-.admin-nav-right{display:flex;align-items:center;gap:12px;}
-.admin-save-all{background:var(--gm);border:1px solid var(--gl);color:var(--white);padding:8px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
-.admin-save-all:hover{background:var(--gl);}
-.preview-btn{background:transparent;border:1px solid var(--borderl);color:var(--gray);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;}
-.preview-btn:hover{color:var(--white);border-color:var(--ga);}
-.logout-btn{background:transparent;border:1px solid var(--red);color:#f08080;padding:8px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.logout-btn:hover{background:var(--red);color:#fff;}
-
-.admin-body{display:flex;min-height:100vh;padding-top:60px;}
-
-/* ===== SIDEBAR ===== */
-.admin-sidebar{width:220px;background:#060c06;border-right:1px solid var(--border);position:fixed;top:60px;left:0;height:calc(100vh - 60px);overflow-y:auto;padding:24px 0;}
-.sidebar-section{margin-bottom:8px;}
-.sidebar-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);padding:8px 20px 4px;}
-.sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 20px;color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;border-left:2px solid transparent;}
-.sidebar-link:hover{color:var(--white);background:rgba(42,90,42,.1);}
-.sidebar-link.active{color:var(--ga);border-left-color:var(--ga);background:rgba(74,158,74,.08);}
-.sidebar-icon{font-size:14px;width:18px;text-align:center;}
-
-/* ===== MAIN CONTENT ===== */
-.admin-main{margin-left:220px;flex:1;padding:32px 40px;max-width:1100px;}
-.admin-page{display:none;}
-.admin-page.active{display:block;}
-
-/* ===== COMPONENTS ===== */
-.admin-header{margin-bottom:32px;}
-.admin-title{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;margin-bottom:6px;}
-.admin-subtitle{font-size:13px;color:var(--gray);line-height:1.6;}
-
-.card{background:var(--dark2);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px;}
-.card-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
-.card-title-icon{font-size:16px;}
-
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-.form-group{margin-bottom:16px;}
-.form-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:7px;}
-.form-input,.form-textarea,.form-select{width:100%;background:#060c08;border:1px solid var(--border);color:var(--white);padding:11px 14px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
-.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--gm);}
-.form-input::placeholder,.form-textarea::placeholder{color:var(--gray);}
-.form-textarea{resize:vertical;min-height:80px;line-height:1.6;}
-.form-select{appearance:none;cursor:pointer;}
-.form-select option{background:#0c140c;}
-.price-input{position:relative;}
-.price-input input{padding-left:30px;}
-.price-symbol{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ga);font-family:'Bebas Neue',sans-serif;font-size:18px;}
-
-.save-btn{background:var(--gm);border:1px solid var(--gl);color:var(--white);padding:11px 24px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:background .2s;}
-.save-btn:hover{background:var(--gl);}
-.reset-btn{background:transparent;border:1px solid var(--border);color:var(--gray);padding:11px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-left:8px;}
-.reset-btn:hover{border-color:var(--redl);color:var(--redl);}
-
-/* PHOTO UPLOAD */
-.photo-zone{border:2px dashed var(--borderl);padding:32px;text-align:center;cursor:pointer;transition:all .2s;position:relative;margin-bottom:12px;}
-.photo-zone:hover{border-color:var(--ga);background:rgba(74,158,74,.04);}
-.photo-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.photo-zone-icon{font-size:32px;margin-bottom:8px;}
-.photo-zone-text{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--gray);}
-.photo-zone-sub{font-size:11px;color:var(--gray);margin-top:4px;opacity:.7;}
-.photo-preview{width:100%;max-height:200px;object-fit:contain;background:#060c06;border:1px solid var(--border);margin-bottom:8px;display:none;}
-
-/* TOGGLE */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
-.toggle-label{font-size:13px;color:var(--grayl);}
-.toggle-sub{font-size:11px;color:var(--gray);margin-top:2px;}
-.toggle{position:relative;width:44px;height:24px;cursor:pointer;}
-.toggle input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;inset:0;background:var(--border);transition:.3s;border-radius:24px;}
-.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:var(--gray);transition:.3s;border-radius:50%;}
-.toggle input:checked+.toggle-slider{background:var(--gm);}
-.toggle input:checked+.toggle-slider::before{transform:translateX(20px);background:var(--white);}
-
-/* STATS CARDS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
-.stat-card{background:var(--dark2);border:1px solid var(--border);padding:20px 22px;}
-.stat-card-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--ga);line-height:1;}
-.stat-card-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:4px;}
-.stat-card-trend{font-size:11px;color:var(--ga);margin-top:6px;}
-
-/* PRODUCT ADMIN LIST */
-.prod-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
-.prod-row{background:var(--dark2);display:grid;grid-template-columns:60px 1fr auto auto;align-items:center;gap:16px;padding:16px 20px;}
-.prod-row-img{width:56px;height:56px;object-fit:contain;background:#060c06;border:1px solid var(--border);}
-.prod-row-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
-.prod-row-price{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--ga);}
-.prod-row-actions{display:flex;gap:8px;}
-.edit-btn{background:transparent;border:1px solid var(--borderl);color:var(--grayl);padding:6px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.edit-btn:hover{border-color:var(--ga);color:var(--ga);}
-
-/* ORDERS TABLE */
-.orders-table{width:100%;border-collapse:collapse;}
-.orders-table th{background:var(--green);color:var(--white);padding:10px 14px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
-.orders-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--grayl);}
-.orders-table tr:hover td{background:#0c110c;}
-.status{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;}
-.status.shipped{background:rgba(42,90,42,.3);color:var(--ga);border:1px solid var(--gm);}
-.status.pending{background:rgba(107,79,16,.3);color:var(--amberl);border:1px solid var(--amber);}
-.status.delivered{background:rgba(20,50,20,.3);color:#7ad47a;border:1px solid #1a2514;}
-
-/* COLOR PICKER */
-.color-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.color-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;color:var(--grayl);flex:1;}
-.color-picker{width:40px;height:32px;border:1px solid var(--borderl);background:transparent;cursor:pointer;padding:2px;}
-
-/* TOAST */
-#toast{position:fixed;top:72px;right:20px;z-index:9999;background:var(--gm);color:var(--white);border:1px solid var(--gl);padding:12px 22px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none;}
-#toast.show{opacity:1;}
-#toast.error{background:#2a0808;border-color:var(--red);}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;display:none;align-items:center;justify-content:center;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--dark2);border:1px solid var(--border);width:560px;max-width:90vw;max-height:90vh;overflow-y:auto;}
-.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;}
-.modal-close{background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;}
-.modal-close:hover{color:var(--white);}
-.modal-body{padding:24px;}
-.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
-
-@media(max-width:900px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:20px}.stats-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--d:#050505;--d2:#0a0a0a;--d3:#0f0f0f;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gb:#4a6030;--gbl:#6a8a44;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310;--bl:#181c15;--red:#3a1010;--redl:#8b3030;--amber:#2a2010;--amberl:#c09030}
+html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--ga)}
+input,select,textarea,button{font-family:'Barlow',sans-serif}
+#login{position:fixed;inset:0;background:var(--d);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-box{width:360px;background:var(--d2);border:1px solid var(--b);padding:44px 40px;text-align:center}
+.login-logo{height:56px;width:56px;object-fit:contain;opacity:.8;margin-bottom:20px}
+.login-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-bottom:6px}
+.login-sub{font-size:12px;color:var(--gr);margin-bottom:28px}
+.login-badge{display:inline-block;background:var(--red);color:#f08080;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:20px}
+.lfi{width:100%;background:#060606;border:1px solid var(--b);color:var(--w);padding:12px 14px;font-size:14px;outline:none;margin-bottom:12px;transition:border-color .2s}
+.lfi:focus{border-color:var(--ga)}.lfi::placeholder{color:var(--gr)}
+.lbtn{width:100%;background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.lbtn:hover{background:var(--gl);color:var(--w)}
+.lerr{background:rgba(58,16,16,.5);border:1px solid var(--redl);color:#d08080;padding:10px;font-size:12px;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;display:none}
+.lerr.on{display:block}
+.login-hint{font-size:11px;color:var(--gr);margin-top:16px;line-height:1.6}
+.login-hint code{color:var(--gb);background:var(--g);padding:2px 6px}
+#app{display:none;min-height:100vh}
+#topbar{position:fixed;top:0;left:220px;right:0;height:56px;background:rgba(5,5,5,.98);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:100;backdrop-filter:blur(10px)}
+.tb-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}
+.tb-badge{background:var(--red);color:#f08080;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;margin-left:10px}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-time{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--gr)}
+.tbtn{background:transparent;border:1px solid var(--b);color:var(--gr);padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center}
+.tbtn:hover{border-color:var(--ga);color:var(--grl)}
+.tbtn.p{background:var(--gm);border-color:var(--gl);color:var(--grl)}.tbtn.p:hover{background:var(--gl);color:var(--w)}
+.tbtn.d{border-color:var(--red);color:#885555}.tbtn.d:hover{background:var(--red);color:var(--w)}
+#sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--d2);border-right:1px solid var(--b);display:flex;flex-direction:column;z-index:101;overflow-y:auto}
+#sidebar::-webkit-scrollbar{width:2px}
+.sb-logo{padding:16px 18px;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:10px}
+.sb-logo img{height:34px;width:34px;object-fit:contain;opacity:.8}
+.sb-brand{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px}
+.sb-sub{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ga)}
+.sblbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gr);padding:12px 16px 5px;display:block}
+.sblink{display:flex;align-items:center;gap:10px;padding:9px 16px;color:var(--gr);font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;border-left:2px solid transparent}
+.sblink:hover{color:var(--grl);background:rgba(45,61,34,.06)}
+.sblink.active{color:var(--grl);border-left-color:var(--ga);background:rgba(45,61,34,.12)}
+.sbico{font-size:14px;width:18px;text-align:center;opacity:.7}
+.sbn{background:var(--redl);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin-left:auto;padding:0 4px;font-family:'Barlow Condensed',sans-serif}
+.sb-bot{margin-top:auto;padding:14px 16px;border-top:1px solid var(--b)}
+.sb-user{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-bottom:10px}
+.sb-user span{color:var(--grl)}
+#main{margin-left:220px;padding-top:56px;min-height:100vh}
+.page{display:none;padding:28px 32px}.page.active{display:block}
+.card{background:var(--d2);border:1px solid var(--b);padding:20px 24px;margin-bottom:16px}
+.ctitle{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gr);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stcard{background:var(--d2);border:1px solid var(--b);border-bottom:2px solid var(--ga);padding:18px 20px}
+.stn{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gb);line-height:1;margin-bottom:4px}
+.stl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr)}
+.stt{font-size:11px;color:var(--grl);margin-top:6px}
+.fg{margin-bottom:14px}
+.fl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);display:block;margin-bottom:6px}
+.fi{width:100%;background:#060606;border:1px solid var(--b);color:var(--w);padding:10px 12px;font-size:13px;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--ga)}.fi::placeholder{color:var(--gr);opacity:.5}
+.fsel{width:100%;background:#060606;border:1px solid var(--b);color:var(--w);padding:10px 12px;font-size:13px;outline:none;appearance:none;cursor:pointer}
+.fsel option{background:#0a0a0a}
+.fta{width:100%;background:#060606;border:1px solid var(--b);color:var(--w);padding:10px 12px;font-size:13px;outline:none;resize:vertical;min-height:72px;line-height:1.6}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.btn{background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--gl);color:var(--w)}
+.btnsm{padding:6px 12px;font-size:10px;letter-spacing:2px}
+.btno{background:transparent;border-color:var(--b);color:var(--gr)}.btno:hover{border-color:var(--ga);color:var(--grl);background:transparent}
+.btnred{background:transparent;border:1px solid var(--red);color:#885555}.btnred:hover{background:var(--red);color:var(--w)}
+.btnamb{background:transparent;border:1px solid var(--amber);color:var(--amberl)}.btnamb:hover{background:var(--amber);color:var(--w)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{background:var(--g);color:var(--grl);padding:10px 14px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;border-bottom:1px solid var(--b)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--b);font-size:13px;color:var(--grl);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(45,61,34,.04)}
+.pill{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border:1px solid;white-space:nowrap}
+.pg{color:var(--gbl);border-color:var(--gb);background:rgba(74,96,48,.15)}
+.pamb{color:var(--amberl);border-color:#5a4010;background:rgba(90,64,16,.15)}
+.pred{color:#d08080;border-color:var(--redl);background:rgba(139,48,48,.15)}
+.pgr{color:var(--grl);border-color:var(--bl);background:rgba(24,28,21,.4)}
+.tog{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
+.togsl{position:absolute;inset:0;background:var(--b);transition:.3s;border-radius:20px}
+.togsl::before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:var(--gr);transition:.3s;border-radius:50%}
+.tog input:checked+.togsl{background:var(--ga)}.tog input:checked+.togsl::before{transform:translateX(16px);background:var(--grl)}
+.togrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--b)}
+.togrow:last-child{border-bottom:none}
+.toglbl{font-size:13px;color:var(--grl)}.togsub{font-size:11px;color:var(--gr);margin-top:2px}
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.qa{background:var(--d2);border:1px solid var(--b);padding:16px;cursor:pointer;transition:all .2s;text-align:center}
+.qa:hover{border-color:var(--ga);background:rgba(45,61,34,.08)}
+.qa-ico{font-size:24px;margin-bottom:8px;opacity:.6}
+.qa-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gr)}
+.alert{padding:12px 16px;margin-bottom:14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;display:flex;align-items:flex-start;gap:8px;line-height:1.6}
+.awt{background:rgba(42,32,16,.5);border:1px solid var(--amberl);color:var(--amberl)}
+.ainfo{background:rgba(12,14,11,.5);border:1px solid var(--ga);color:var(--grl)}
+.aok{background:rgba(17,21,16,.5);border:1px solid var(--gb);color:var(--gbl)}
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.prod-card{background:var(--d2);border:1px solid var(--b);padding:18px 20px;display:flex;gap:16px}
+.prod-ico{font-size:36px;opacity:.5;flex-shrink:0}
+.prod-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.prod-id{font-size:10px;color:var(--gr);letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;margin-bottom:10px}
+.prod-price{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gb);margin-bottom:8px}
+.rev-card{background:var(--d);border:1px solid var(--b);padding:16px 18px;margin-bottom:10px}
+.rev-head{display:flex;justify-content:space-between;margin-bottom:10px}
+.rev-stars{font-size:16px;letter-spacing:2px}
+.rev-auth{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--grl)}
+.rev-prod{font-size:10px;color:var(--ga);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.rev-txt{font-size:13px;color:var(--gr);line-height:1.8;font-style:italic}
+.ann-prev{background:var(--gm);border:1px solid var(--ga);padding:10px 20px;text-align:center;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)}
+.mem-av{width:32px;height:32px;border-radius:50%;background:var(--g);border:1px solid var(--bl);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--ga);flex-shrink:0;overflow:hidden}
+.mem-av img{width:100%;height:100%;object-fit:cover}
+.empty{text-align:center;padding:44px 20px}
+.ei{font-size:36px;opacity:.18;margin-bottom:14px}.et{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-bottom:6px}.es{font-size:12px;color:var(--gr)}
+#toast{position:fixed;top:66px;right:18px;z-index:9999;background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none;max-width:320px}
+#toast.on{opacity:1}#toast.err{background:rgba(58,16,16,.9);border-color:var(--redl);color:#d08080}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--d2);border:1px solid var(--b);width:520px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.mhead{padding:18px 22px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.mtitle{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px}
+.mclose{background:none;border:none;color:var(--gr);font-size:18px;cursor:pointer}
+.mbody{padding:22px}
+.mfoot{padding:14px 22px;border-top:1px solid var(--b);display:flex;justify-content:flex-end;gap:10px}
+@media(max-width:900px){#sidebar{display:none}#topbar{left:0}#main{margin-left:0}.stats-row{grid-template-columns:repeat(2,1fr)}.prod-grid{grid-template-columns:1fr}.qa-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<div id="announce-bar" style="background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative;z-index:1000">
-  <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)" id="announce-text">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth — Édition limitée 74 ex. restants &nbsp;|&nbsp; 🎯 Code ODA10 : -10% sur tout le site</span>
-  <button onclick="this.parentElement.style.display='none'" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gr);cursor:pointer;font-size:14px;line-height:1">✕</button>
-</div>
 
-<!-- ===== LOGIN ===== -->
-<div id="login-screen">
+<div id="login">
   <div class="login-box">
-    <div class="login-logo">
-      <img src="logo.png" alt="ODA" onerror="this.style.display='none'">
-      <span class="login-logo-text">ODA<span>·</span>SW</span>
-    </div>
+    <img class="login-logo" src="logo.png" onerror="this.style.display='none'">
     <div class="login-title">PANNEAU ADMIN</div>
-    <div class="login-sub">Accès restreint — Propriétaire uniquement</div>
-    <div id="login-error" class="login-error">Mot de passe incorrect. Réessayez.</div>
-    <label class="login-label">Mot de passe</label>
-    <input class="login-input" type="password" id="pwd-input" placeholder="••••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Accéder au panneau</button>
-    <div class="login-hint">URL secrète : <code style="color:var(--ga)">admin.html</code><br>Ne partagez jamais ce lien.</div>
+    <div class="login-sub">ODA Tactical SW — Accès restreint</div>
+    <div class="login-badge">PROPRIÉTAIRE UNIQUEMENT</div>
+    <div class="lerr" id="lerr">Mot de passe incorrect.</div>
+    <input class="lfi" type="password" id="lpwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">Accéder au panneau</button>
+    <div class="login-hint">Mot de passe par défaut : <code>ODA2025admin</code><br>À changer dans Paramètres → Sécurité</div>
   </div>
 </div>
 
 <div id="toast"></div>
 
-<!-- ===== ADMIN APP ===== -->
-<div id="admin-app">
-  <!-- NAV -->
-  <nav class="admin-nav">
-    <div class="admin-nav-logo">
-      <img src="logo.png" alt="ODA" onerror="this.style.display='none'">
-      ODA TACTICAL SW
-      <span class="admin-badge">ADMIN</span>
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mhead"><div class="mtitle" id="modal-title">—</div><button class="mclose" onclick="closeModal()">✕</button></div>
+    <div class="mbody" id="modal-body"></div>
+    <div class="mfoot" id="modal-foot"></div>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="sb-logo">
+      <img src="logo.png" onerror="this.style.display='none'" style="height:34px;width:34px;object-fit:contain;opacity:.8">
+      <div><div class="sb-brand">ODA·SW</div><div class="sb-sub">Admin Panel</div></div>
     </div>
-    <div class="admin-nav-right">
-      <a href="index.html" target="_blank" class="preview-btn">↗ Voir le site</a>
-      <button class="admin-save-all" onclick="saveAll()">💾 Tout sauvegarder</button>
-      <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    <span class="sblbl">Vue d'ensemble</span>
+    <div class="sblink active" onclick="nav('dashboard',this)"><span class="sbico">📊</span>Dashboard</div>
+    <span class="sblbl">Boutique</span>
+    <div class="sblink" onclick="nav('orders',this)"><span class="sbico">📦</span>Commandes<span class="sbn" id="sbn-orders">0</span></div>
+    <div class="sblink" onclick="nav('products',this)"><span class="sbico">👕</span>Produits</div>
+    <div class="sblink" onclick="nav('promos',this)"><span class="sbico">🎯</span>Codes promo</div>
+    <span class="sblbl">Communauté</span>
+    <div class="sblink" onclick="nav('members',this)"><span class="sbico">👥</span>Membres<span class="sbn" id="sbn-members">0</span></div>
+    <div class="sblink" onclick="nav('reviews',this)"><span class="sbico">⭐</span>Avis clients<span class="sbn" id="sbn-reviews">0</span></div>
+    <div class="sblink" onclick="nav('drops',this)"><span class="sbico">🔥</span>Drops limités</div>
+    <span class="sblbl">Site</span>
+    <div class="sblink" onclick="nav('announce',this)"><span class="sbico">📢</span>Barre d'annonce</div>
+    <div class="sblink" onclick="nav('settings',this)"><span class="sbico">⚙️</span>Paramètres</div>
+    <div class="sblink" onclick="nav('security',this)"><span class="sbico">🔒</span>Sécurité</div>
+    <div class="sb-bot">
+      <div class="sb-user">Connecté : <span>Admin ODA</span></div>
+      <button onclick="doLogout()" class="btn btnsm btnred" style="width:100%;margin-bottom:8px">Déconnexion</button>
+      <a href="index.html" target="_blank" class="btn btnsm btno" style="display:block;text-align:center;text-decoration:none">↗ Voir le site</a>
     </div>
-  </nav>
+  </aside>
 
-  <div class="admin-body">
-    <!-- SIDEBAR -->
-    <aside class="admin-sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Vue d'ensemble</div>
-        <div class="sidebar-link active" onclick="showPage('dashboard',this)"><span class="sidebar-icon">📊</span>Tableau de bord</div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Contenu du site</div>
-        <div class="sidebar-link" onclick="showPage('hero',this)"><span class="sidebar-icon">🏠</span>Page d'accueil</div>
-        <div class="sidebar-link" onclick="showPage('nav',this)"><span class="sidebar-icon">🔗</span>Navigation</div>
-        <div class="sidebar-link" onclick="showPage('footer',this)"><span class="sidebar-icon">📄</span>Footer</div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Produits</div>
-        <div class="sidebar-link" onclick="showPage('products',this)"><span class="sidebar-icon">👕</span>Tous les produits</div>
-        <div class="sidebar-link" onclick="showPage('prod-montre',this)"><span class="sidebar-icon">⌚</span>Montre Stealth</div>
-        <div class="sidebar-link" onclick="showPage('prod-veste',this)"><span class="sidebar-icon">🧥</span>Veste ODA-4</div>
-        <div class="sidebar-link" onclick="showPage('prod-gilet',this)"><span class="sidebar-icon">🦺</span>Gilet Multi-poches</div>
-        <div class="sidebar-link" onclick="showPage('prod-cargo',this)"><span class="sidebar-icon">👖</span>Cargo ODA-7</div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Boutique</div>
-        <div class="sidebar-link" onclick="showPage('orders',this)"><span class="sidebar-icon">📦</span>Commandes</div>
-        <div class="sidebar-link" onclick="showPage('promo',this)"><span class="sidebar-icon">🎯</span>Codes promo</div>
-        <div class="sidebar-link" onclick="showPage('livraison',this)"><span class="sidebar-icon">🚚</span>Livraison</div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Paramètres</div>
-        <div class="sidebar-link" onclick="showPage('settings',this)"><span class="sidebar-icon">⚙️</span>Général</div>
-        <div class="sidebar-link" onclick="showPage('password',this)"><span class="sidebar-icon">🔒</span>Mot de passe</div>
-        <div class="sidebar-link" onclick="showPage('seo',this)"><span class="sidebar-icon">🔍</span>SEO</div>
-      </div>
-    </aside>
+  <div id="topbar">
+    <div style="display:flex;align-items:center">
+      <div class="tb-title" id="tb-title">DASHBOARD</div>
+      <span class="tb-badge">ADMIN</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-time" id="tb-time"></span>
+      <button onclick="saveAll()" class="tbtn p">💾 Sauvegarder</button>
+      <a href="index.html" target="_blank" class="tbtn">↗ Site</a>
+    </div>
+  </div>
 
-    <!-- MAIN -->
-    <main class="admin-main">
+  <div id="main">
 
-      <!-- DASHBOARD -->
-      <div class="admin-page active" id="page-dashboard">
-        <div class="admin-header">
-          <div class="admin-title">TABLEAU DE BORD</div>
-          <div class="admin-subtitle">Bienvenue dans votre panneau d'administration ODA Tactical SW.</div>
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-row">
+        <div class="stcard"><div class="stn" id="d-ord">0</div><div class="stl">Commandes</div><div class="stt" id="d-ord-t">En attente</div></div>
+        <div class="stcard"><div class="stn" id="d-rev">0€</div><div class="stl">Chiffre d'affaires</div><div class="stt">Cumulé</div></div>
+        <div class="stcard"><div class="stn" id="d-mem">0</div><div class="stl">Membres</div><div class="stt" id="d-mem-t">—</div></div>
+        <div class="stcard"><div class="stn" id="d-rv">0</div><div class="stl">Avis clients</div><div class="stt" id="d-rv-t">—</div></div>
+      </div>
+      <div class="alert awt" id="al-siret" style="display:none">⚠️ <strong>SIRET manquant —</strong> Complétez-le dans Paramètres avant tout lancement commercial (obligatoire légalement).</div>
+      <div class="alert ainfo">ℹ️ Connectez Stripe dans Paramètres pour activer les paiements réels.</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px;color:var(--grl)">ACTIONS RAPIDES</h3>
+      <div class="qa-grid">
+        <div class="qa" onclick="nav('orders',document.querySelectorAll('.sblink')[1])"><div class="qa-ico">📦</div><div class="qa-lbl">Commandes</div></div>
+        <div class="qa" onclick="openAddPromo()"><div class="qa-ico">🎯</div><div class="qa-lbl">Créer promo</div></div>
+        <div class="qa" onclick="nav('announce',document.querySelectorAll('.sblink')[7])"><div class="qa-ico">📢</div><div class="qa-lbl">Éditer annonce</div></div>
+        <div class="qa" onclick="nav('reviews',document.querySelectorAll('.sblink')[5])"><div class="qa-ico">⭐</div><div class="qa-lbl">Modérer avis</div></div>
+        <div class="qa" onclick="nav('products',document.querySelectorAll('.sblink')[2])"><div class="qa-ico">💰</div><div class="qa-lbl">Modifier prix</div></div>
+        <div class="qa" onclick="nav('members',document.querySelectorAll('.sblink')[4])"><div class="qa-ico">👥</div><div class="qa-lbl">Membres</div></div>
+        <div class="qa" onclick="nav('settings',document.querySelectorAll('.sblink')[8])"><div class="qa-ico">⚙️</div><div class="qa-lbl">Paramètres</div></div>
+        <div class="qa" onclick="window.open('index.html','_blank')"><div class="qa-ico">🌐</div><div class="qa-lbl">Voir le site</div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle"><span>📦 Dernières commandes</span><button class="btn btnsm" onclick="nav('orders',document.querySelectorAll('.sblink')[1])">Tout voir</button></div>
+        <div id="d-orders-list"><div class="empty"><div class="ei">📦</div><div class="et">Aucune commande</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card"><div class="ctitle"><span>👥 Derniers membres</span></div><div id="d-members-list"><div class="empty"><div class="ei">👥</div><div class="et">Aucun membre</div></div></div></div>
+        <div class="card"><div class="ctitle"><span>⭐ Derniers avis</span></div><div id="d-reviews-list"><div class="empty"><div class="ei">⭐</div><div class="et">Aucun avis</div></div></div></div>
+      </div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div class="page" id="page-orders">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px">COMMANDES</h2>
+        <div style="display:flex;gap:10px">
+          <select class="fsel" id="ord-filter" onchange="renderOrders()" style="width:160px;padding:8px 12px;font-size:12px"><option value="all">Toutes</option><option value="pending">En préparation</option><option value="shipped">Expédiées</option><option value="delivered">Livrées</option></select>
+          <button class="btn btnsm" onclick="exportOrders()">⬇ CSV</button>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-card-num" id="stat-products">4</div><div class="stat-card-label">Produits actifs</div><div class="stat-card-trend">↑ +2 prochainement</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="stat-orders">0</div><div class="stat-card-label">Commandes</div><div class="stat-card-trend">En attente</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="stat-revenue">0€</div><div class="stat-card-label">Chiffre d'affaires</div><div class="stat-card-trend">Total cumulé</div></div>
-          <div class="stat-card"><div class="stat-card-num" id="stat-visitors">—</div><div class="stat-card-label">Visiteurs</div><div class="stat-card-trend">Connecter Analytics</div></div>
-        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden"><div id="ord-wrap"><div class="empty" style="padding:48px"><div class="ei">📦</div><div class="et">Aucune commande</div><div class="es">Les commandes passeront par la page Paiement</div></div></div></div>
+    </div>
 
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">⚡</span>Actions rapides</div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <button class="save-btn" onclick="showPage('prod-montre',document.querySelector('.sidebar-link:nth-child(8)'))">✏️ Modifier la montre</button>
-            <button class="save-btn" onclick="showPage('hero',document.querySelectorAll('.sidebar-link')[1])">🏠 Éditer l'accueil</button>
-            <button class="save-btn" onclick="showPage('promo',document.querySelectorAll('.sidebar-link')[8])">🎯 Créer un code promo</button>
-            <a href="index.html" target="_blank" class="save-btn" style="text-decoration:none">↗ Voir le site</a>
+    <!-- PRODUITS -->
+    <div class="page" id="page-products">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:20px">PRODUITS</h2>
+      <div class="prod-grid" id="prod-grid"></div>
+    </div>
+
+    <!-- PROMOS -->
+    <div class="page" id="page-promos">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px">CODES PROMO</h2>
+        <button class="btn" onclick="openAddPromo()">+ Créer un code</button>
+      </div>
+      <div class="card"><div class="ctitle"><span>Codes actifs</span></div><div id="promo-list"><div class="empty"><div class="ei">🎯</div><div class="et">Aucun code promo</div></div></div></div>
+    </div>
+
+    <!-- MEMBRES -->
+    <div class="page" id="page-members">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px">MEMBRES</h2>
+        <div style="display:flex;gap:10px">
+          <input class="fi" id="mem-search" placeholder="Rechercher..." oninput="renderMembers()" style="width:220px;padding:8px 12px;font-size:12px">
+          <button class="btn btnsm" onclick="exportMembers()">⬇ CSV</button>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden"><div id="mem-wrap"><div class="empty" style="padding:48px"><div class="ei">👥</div><div class="et">Aucun membre</div></div></div></div>
+    </div>
+
+    <!-- AVIS -->
+    <div class="page" id="page-reviews">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px">AVIS CLIENTS</h2>
+        <button class="btn btnsm btnred" onclick="clearReviews()">🗑 Vider tous les avis</button>
+      </div>
+      <div id="rev-list"><div class="empty"><div class="ei">⭐</div><div class="et">Aucun avis</div><div class="es">Les avis du Lookbook apparaîtront ici</div></div></div>
+    </div>
+
+    <!-- ANNONCE -->
+    <div class="page" id="page-announce">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:20px">BARRE D'ANNONCE</h2>
+      <div class="card">
+        <div class="ctitle"><span>Aperçu en temps réel</span></div>
+        <div class="ann-prev" id="ann-prev">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h</div>
+        <div class="fg"><label class="fl">Texte de la barre</label><input class="fi" id="ann-txt" value="🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h" oninput="G('ann-prev').innerHTML=this.value"></div>
+        <div class="togrow"><div><div class="toglbl">Barre active</div><div class="togsub">Afficher sur toutes les pages</div></div><label class="tog"><input type="checkbox" id="ann-on" checked><span class="togsl"></span></label></div>
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <button class="btn" onclick="saveAnnounce()">💾 Sauvegarder</button>
+          <button class="btn btno" onclick="resetAnnounce()">Réinitialiser</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ctitle"><span>Messages rapides</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button class="btn btnsm btno" onclick="setAnn('🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; 📦 Expédition sous 24h')">Livraison</button>
+          <button class="btn btnsm btno" onclick="setAnn('⌚ Montre Stealth Watch — Stock limité ! Commandez vite &nbsp;|&nbsp; 🚚 Livraison offerte')">Urgence stock</button>
+          <button class="btn btnsm btno" onclick="setAnn('🎉 SOLDES — Profitez de -20% avec le code SOLDES20 &nbsp;|&nbsp; Offre limitée !')">Soldes</button>
+          <button class="btn btnsm btno" onclick="setAnn('🆕 Nouvelle collection disponible — Découvrez les dernières pièces ODA Tactical SW')">Nouvelle collection</button>
+          <button class="btn btnsm btno" onclick="setAnn('🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h')">Défaut</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARAMÈTRES -->
+    <div class="page" id="page-settings">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:20px">PARAMÈTRES</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div>
+          <div class="card">
+            <div class="ctitle"><span>🏪 Boutique</span></div>
+            <div class="fg"><label class="fl">Nom de la boutique</label><input class="fi" id="s-name" value="ODA Tactical SW"></div>
+            <div class="fg"><label class="fl">Email de contact</label><input class="fi" id="s-email" value="contact@odatactical.fr"></div>
+            <div class="fg"><label class="fl">SIRET <span style="color:#c08080;font-size:10px">— Obligatoire avant lancement</span></label><input class="fi" id="s-siret" placeholder="000 000 000 00000"></div>
+            <div class="fg"><label class="fl">Adresse légale</label><input class="fi" id="s-addr" placeholder="Adresse complète"></div>
           </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">📋</span>État du site</div>
-          <div class="toggle-row"><div><div class="toggle-label">Site en ligne</div><div class="toggle-sub">Afficher ou masquer le site aux visiteurs</div></div><label class="toggle"><input type="checkbox" id="site-online" checked><span class="toggle-slider"></span></label></div>
-          <div class="toggle-row"><div><div class="toggle-label">Mode maintenance</div><div class="toggle-sub">Afficher une page "Maintenance en cours"</div></div><label class="toggle"><input type="checkbox" id="maintenance-mode"><span class="toggle-slider"></span></label></div>
-          <div class="toggle-row"><div><div class="toggle-label">Chatbot IA actif</div><div class="toggle-sub">Activer/désactiver l'assistant sur le site</div></div><label class="toggle"><input type="checkbox" id="chatbot-active" checked><span class="toggle-slider"></span></label></div>
-          <div class="toggle-row"><div><div class="toggle-label">Newsletter</div><div class="toggle-sub">Afficher le formulaire d'inscription newsletter</div></div><label class="toggle"><input type="checkbox" id="newsletter-active" checked><span class="toggle-slider"></span></label></div>
-        </div>
-      </div>
-
-      <!-- PAGE ACCUEIL -->
-      <div class="admin-page" id="page-hero">
-        <div class="admin-header"><div class="admin-title">PAGE D'ACCUEIL</div><div class="admin-subtitle">Modifiez le contenu affiché sur votre page principale.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🏷️</span>Texte Hero principal</div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Titre ligne 1</label><input class="form-input" id="hero-l1" value="ODA"></div>
-            <div class="form-group"><label class="form-label">Titre ligne 2 (couleur verte)</label><input class="form-input" id="hero-l2" value="TACTICAL"></div>
-          </div>
-          <div class="form-group"><label class="form-label">Titre ligne 3 (gris)</label><input class="form-input" id="hero-l3" value="SOUTH WEST"></div>
-          <div class="form-group"><label class="form-label">Sous-titre / accroche</label><textarea class="form-textarea" id="hero-sub">Vêtements conçus pour l'action. Rangements optimisés, matériaux résistants, design épuré. Équipez-vous comme un professionnel.</textarea></div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Texte bouton principal</label><input class="form-input" id="hero-btn1" value="Découvrir la collection"></div>
-            <div class="form-group"><label class="form-label">Texte bouton secondaire</label><input class="form-input" id="hero-btn2" value="La montre ODA"></div>
-          </div>
-          <div class="form-group"><label class="form-label">Étiquette supérieure (eyebrow)</label><input class="form-input" id="hero-eyebrow" value="Équipement Tactique Premium — Collection 2025"></div>
-          <button class="save-btn" onclick="saveSection('hero')">Enregistrer la section</button>
-        </div>
-
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">📊</span>Barre de statistiques</div>
-          <div id="stats-editor">
-            <div class="form-row"><div class="form-group"><label class="form-label">Stat 1 — Chiffre</label><input class="form-input stat-num" value="12+"></div><div class="form-group"><label class="form-label">Stat 1 — Label</label><input class="form-input stat-label" value="Poches & rangements"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Stat 2 — Chiffre</label><input class="form-input stat-num" value="100%"></div><div class="form-group"><label class="form-label">Stat 2 — Label</label><input class="form-input stat-label" value="Matériaux premium"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Stat 3 — Chiffre</label><input class="form-input stat-num" value="48H"></div><div class="form-group"><label class="form-label">Stat 3 — Label</label><input class="form-input stat-label" value="Livraison express"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Stat 4 — Chiffre</label><input class="form-input stat-num" value="500+"></div><div class="form-group"><label class="form-label">Stat 4 — Label</label><input class="form-input stat-label" value="Clients équipés"></div></div>
-          </div>
-          <button class="save-btn" onclick="saveSection('stats')">Enregistrer</button>
-        </div>
-
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🖼️</span>Image Hero (montre flottante)</div>
-          <div class="photo-zone">
-            <input type="file" accept="image/*" onchange="previewPhoto(this,'hero-img-preview','hero-img-data')">
-            <div class="photo-zone-icon">📷</div>
-            <div class="photo-zone-text">Cliquer ou glisser une image</div>
-            <div class="photo-zone-sub">JPG, PNG, WEBP — Max 5MB</div>
-          </div>
-          <img id="hero-img-preview" class="photo-preview" src="montre.jpg" style="display:block;">
-          <button class="save-btn" onclick="saveSection('hero-img')">Enregistrer l'image</button>
-        </div>
-      </div>
-
-      <!-- NAVIGATION -->
-      <div class="admin-page" id="page-nav">
-        <div class="admin-header"><div class="admin-title">NAVIGATION</div><div class="admin-subtitle">Modifier les liens et le nom de la marque dans la barre de navigation.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🔗</span>Liens de navigation</div>
-          <div class="form-group"><label class="form-label">Nom de marque</label><input class="form-input" id="nav-brand" value="ODA·TACTICAL SW"></div>
-          <div id="nav-links-editor">
-            <div class="form-row"><div class="form-group"><label class="form-label">Lien 1 — Texte</label><input class="form-input nav-link-text" value="Accueil"></div><div class="form-group"><label class="form-label">Lien 1 — URL</label><input class="form-input nav-link-url" value="index.html"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Lien 2 — Texte</label><input class="form-input nav-link-text" value="Collections"></div><div class="form-group"><label class="form-label">Lien 2 — URL</label><input class="form-input nav-link-url" value="collections.html"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Lien 3 — Texte</label><input class="form-input nav-link-text" value="Montre"></div><div class="form-group"><label class="form-label">Lien 3 — URL</label><input class="form-input nav-link-url" value="montre.html"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Lien 4 — Texte</label><input class="form-input nav-link-text" value="FAQ"></div><div class="form-group"><label class="form-label">Lien 4 — URL</label><input class="form-input nav-link-url" value="faq.html"></div></div>
-            <div class="form-row"><div class="form-group"><label class="form-label">Lien 5 — Texte</label><input class="form-input nav-link-text" value="Contact"></div><div class="form-group"><label class="form-label">Lien 5 — URL</label><input class="form-input nav-link-url" value="contact.html"></div></div>
-          </div>
-          <button class="save-btn" onclick="saveSection('nav')">Enregistrer la navigation</button>
-        </div>
-      </div>
-
-      <!-- PRODUITS (liste) -->
-      <div class="admin-page" id="page-products">
-        <div class="admin-header"><div class="admin-title">TOUS LES PRODUITS</div><div class="admin-subtitle">Vue d'ensemble et accès rapide à chaque fiche produit.</div></div>
-        <div class="prod-list">
-          <div class="prod-row"><img class="prod-row-img" src="montre.jpg" onerror="this.style.background='#1b3d1b'"><div><div class="prod-row-name">ODA Stealth Watch</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Montre · watch-01 · En stock</div></div><div class="prod-row-price" id="list-price-watch">149€</div><div class="prod-row-actions"><button class="edit-btn" onclick="showPage('prod-montre',null)">✏️ Éditer</button></div></div>
-          <div class="prod-row"><div style="width:56px;height:56px;background:#1b3d1b;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px">🧥</div><div><div class="prod-row-name">Veste Tactique ODA-4</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Vêtement · veste-04 · En stock</div></div><div class="prod-row-price" id="list-price-veste">189€</div><div class="prod-row-actions"><button class="edit-btn" onclick="showPage('prod-veste',null)">✏️ Éditer</button></div></div>
-          <div class="prod-row"><div style="width:56px;height:56px;background:#111811;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px">🦺</div><div><div class="prod-row-name">Gilet Multi-poches ODA</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Vêtement · gilet-01 · En stock</div></div><div class="prod-row-price" id="list-price-gilet">129€</div><div class="prod-row-actions"><button class="edit-btn" onclick="showPage('prod-gilet',null)">✏️ Éditer</button></div></div>
-          <div class="prod-row"><div style="width:56px;height:56px;background:#131a13;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px">👖</div><div><div class="prod-row-name">Cargo Tactique ODA-7</div><div style="font-size:12px;color:var(--gray);margin-top:3px">Vêtement · cargo-07 · En stock</div></div><div class="prod-row-price" id="list-price-cargo">109€</div><div class="prod-row-actions"><button class="edit-btn" onclick="showPage('prod-cargo',null)">✏️ Éditer</button></div></div>
-        </div>
-      </div>
-
-      <!-- PRODUIT — MONTRE -->
-      <div class="admin-page" id="page-prod-montre">
-        <div class="admin-header"><div class="admin-title">⌚ MONTRE STEALTH</div><div class="admin-subtitle">Modifiez toutes les informations de la fiche montre.</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-          <div>
-            <div class="card">
-              <div class="card-title">Informations principales</div>
-              <div class="form-group"><label class="form-label">Nom du produit</label><input class="form-input" id="p-watch-name" value="ODA Stealth Watch"></div>
-              <div class="form-group"><label class="form-label">Prix (€)</label><div class="price-input"><span class="price-symbol">€</span><input class="form-input" id="p-watch-price" type="number" value="149" style="padding-left:30px" onchange="document.getElementById('list-price-watch').textContent=this.value+'€'"></div></div>
-              <div class="form-group"><label class="form-label">Badge (ex: Nouveau, Bestseller)</label><input class="form-input" id="p-watch-badge" value="Nouveau"></div>
-              <div class="form-group"><label class="form-label">Description courte (card)</label><textarea class="form-textarea" id="p-watch-desc-short">Montre tactique tout noir. Verre saphir, waterproof 200m, bracelet nylon balistique.</textarea></div>
-              <div class="form-group"><label class="form-label">Description longue (fiche produit)</label><textarea class="form-textarea" id="p-watch-desc-long" style="min-height:120px">Design entièrement noir mat, sans compromis. Conçue pour les environnements extrêmes. Chaque exemplaire est numéroté — édition limitée à 109 pièces.</textarea></div>
+          <div class="card">
+            <div class="ctitle"><span>🚚 Livraison</span></div>
+            <div class="fr2">
+              <div class="fg"><label class="fl">Tarif France (€)</label><input class="fi" id="s-sfr" type="number" value="5.90" step="0.01"></div>
+              <div class="fg"><label class="fl">Offerte dès (€)</label><input class="fi" id="s-sfree" type="number" value="100"></div>
             </div>
-            <div class="card">
-              <div class="card-title">Stock & disponibilité</div>
-              <div class="form-row">
-                <div class="form-group"><label class="form-label">Stock total</label><input class="form-input" id="p-watch-stock" type="number" value="109"></div>
-                <div class="form-group"><label class="form-label">Stock restant (affiché)</label><input class="form-input" id="p-watch-stock-left" type="number" value="74"></div>
-              </div>
-              <div class="toggle-row"><div><div class="toggle-label">Afficher le compteur de stock</div></div><label class="toggle"><input type="checkbox" id="p-watch-show-stock" checked><span class="toggle-slider"></span></label></div>
-              <div class="toggle-row"><div><div class="toggle-label">Produit visible sur le site</div></div><label class="toggle"><input type="checkbox" id="p-watch-visible" checked><span class="toggle-slider"></span></label></div>
+            <div class="fr2">
+              <div class="fg"><label class="fl">Tarif Europe (€)</label><input class="fi" id="s-seu" type="number" value="12.90" step="0.01"></div>
+              <div class="fg"><label class="fl">Délai France</label><input class="fi" id="s-sdelay" value="48h"></div>
             </div>
+            <div class="togrow"><div><div class="toglbl">Livraison offerte sur la montre</div></div><label class="tog"><input type="checkbox" id="s-swatch" checked><span class="togsl"></span></label></div>
           </div>
-          <div>
-            <div class="card">
-              <div class="card-title">Photo du produit</div>
-              <div class="photo-zone">
-                <input type="file" accept="image/*" onchange="previewPhoto(this,'watch-preview','watch-img-data')">
-                <div class="photo-zone-icon">📷</div>
-                <div class="photo-zone-text">Changer la photo</div>
-                <div class="photo-zone-sub">JPG, PNG, WEBP</div>
-              </div>
-              <img id="watch-preview" class="photo-preview" src="montre.jpg" style="display:block;max-height:180px;">
+          <div class="card">
+            <div class="ctitle"><span>📱 Réseaux sociaux</span></div>
+            <div class="fg"><label class="fl">Instagram</label><input class="fi" id="s-insta" placeholder="https://instagram.com/..."></div>
+            <div class="fg"><label class="fl">TikTok</label><input class="fi" id="s-tiktok" placeholder="https://tiktok.com/..."></div>
+            <div class="fg"><label class="fl">YouTube</label><input class="fi" id="s-yt" placeholder="https://youtube.com/..."></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="ctitle"><span>⌚ Montre — Stock édition limitée</span></div>
+            <div class="fr2">
+              <div class="fg"><label class="fl">Total édition</label><input class="fi" id="s-wtot" type="number" value="109"></div>
+              <div class="fg"><label class="fl">Restants (affiché)</label><input class="fi" id="s-wleft" type="number" value="109"></div>
             </div>
-            <div class="card">
-              <div class="card-title">Spécifications techniques</div>
-              <div class="form-group"><label class="form-label">Boîtier</label><input class="form-input" id="spec-watch-1" value="Acier 316L — PVD Noir Mat"></div>
-              <div class="form-group"><label class="form-label">Diamètre</label><input class="form-input" id="spec-watch-2" value="40mm"></div>
-              <div class="form-group"><label class="form-label">Verre</label><input class="form-input" id="spec-watch-3" value="Saphir anti-reflets double face"></div>
-              <div class="form-group"><label class="form-label">Étanchéité</label><input class="form-input" id="spec-watch-4" value="200m / 20 ATM"></div>
-              <div class="form-group"><label class="form-label">Bracelet</label><input class="form-input" id="spec-watch-5" value="Nylon balistique, boucle PVD noir"></div>
-              <div class="form-group"><label class="form-label">Mouvement</label><input class="form-input" id="spec-watch-6" value="Miyota 9015 automatique"></div>
-              <div class="form-group"><label class="form-label">Garantie</label><input class="form-input" id="spec-watch-7" value="2 ans"></div>
-            </div>
+            <div class="togrow"><div><div class="toglbl">Afficher compteur de stock</div></div><label class="tog"><input type="checkbox" id="s-wcounter" checked><span class="togsl"></span></label></div>
           </div>
-        </div>
-        <button class="save-btn" onclick="saveProd('watch')" style="margin-top:8px">💾 Enregistrer la montre</button>
-        <button class="reset-btn" onclick="resetProd('watch')">Réinitialiser</button>
-      </div>
-
-      <!-- PRODUIT — VESTE -->
-      <div class="admin-page" id="page-prod-veste">
-        <div class="admin-header"><div class="admin-title">🧥 VESTE TACTIQUE ODA-4</div><div class="admin-subtitle">Modifiez toutes les informations de la veste.</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-          <div>
-            <div class="card">
-              <div class="card-title">Informations principales</div>
-              <div class="form-group"><label class="form-label">Nom du produit</label><input class="form-input" id="p-veste-name" value="Veste Tactique ODA-4"></div>
-              <div class="form-group"><label class="form-label">Prix (€)</label><div class="price-input"><span class="price-symbol">€</span><input class="form-input" id="p-veste-price" type="number" value="189" style="padding-left:30px" onchange="document.getElementById('list-price-veste').textContent=this.value+'€'"></div></div>
-              <div class="form-group"><label class="form-label">Badge</label><input class="form-input" id="p-veste-badge" value="Bestseller"></div>
-              <div class="form-group"><label class="form-label">Description courte</label><textarea class="form-textarea" id="p-veste-desc-short">8 poches ext. + 4 int. Ripstop imperméable, doublure thermique amovible.</textarea></div>
-              <div class="form-group"><label class="form-label">Description longue</label><textarea class="form-textarea" id="p-veste-desc-long" style="min-height:120px">8 poches extérieures + 4 poches intérieures organisées. Ripstop 300D imperméable DWR, doublure thermique amovible. Fermetures YKK militaire sur toutes les poches.</textarea></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Tailles disponibles</div>
-              <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> S</label>
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> M</label>
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> L</label>
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> XL</label>
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> 2XL</label>
-                <label style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;cursor:pointer"><input type="checkbox" checked> 3XL</label>
-              </div>
-            </div>
+          <div class="card">
+            <div class="ctitle"><span>⚙️ Site</span></div>
+            <div class="togrow"><div><div class="toglbl">Site en ligne</div><div class="togsub">Désactivez pour page maintenance</div></div><label class="tog"><input type="checkbox" id="s-online" checked><span class="togsl"></span></label></div>
+            <div class="togrow"><div><div class="toglbl">Chatbot IA</div></div><label class="tog"><input type="checkbox" id="s-chatbot" checked><span class="togsl"></span></label></div>
+            <div class="togrow"><div><div class="toglbl">Newsletter</div></div><label class="tog"><input type="checkbox" id="s-news" checked><span class="togsl"></span></label></div>
           </div>
-          <div>
-            <div class="card">
-              <div class="card-title">Photo produit</div>
-              <div class="photo-zone">
-                <input type="file" accept="image/*" onchange="previewPhoto(this,'veste-preview','veste-img-data')">
-                <div class="photo-zone-icon">📷</div>
-                <div class="photo-zone-text">Ajouter une photo</div>
-                <div class="photo-zone-sub">JPG, PNG, WEBP</div>
-              </div>
-              <img id="veste-preview" class="photo-preview" src="">
-            </div>
-            <div class="card">
-              <div class="card-title">Spécifications</div>
-              <div class="form-group"><label class="form-label">Matière</label><input class="form-input" value="Ripstop 300D imperméable DWR"></div>
-              <div class="form-group"><label class="form-label">Poches</label><input class="form-input" value="12 total (8 ext. + 4 int.)"></div>
-              <div class="form-group"><label class="form-label">Fermetures</label><input class="form-input" value="YKK militaire grade"></div>
-              <div class="form-group"><label class="form-label">Doublure</label><input class="form-input" value="Thermique amovible"></div>
-            </div>
-          </div>
-        </div>
-        <button class="save-btn" onclick="saveProd('veste')" style="margin-top:8px">💾 Enregistrer la veste</button>
-        <button class="reset-btn">Réinitialiser</button>
-      </div>
-
-      <!-- PRODUIT — GILET -->
-      <div class="admin-page" id="page-prod-gilet">
-        <div class="admin-header"><div class="admin-title">🦺 GILET MULTI-POCHES</div><div class="admin-subtitle">Modifiez toutes les informations du gilet.</div></div>
-        <div class="card">
-          <div class="card-title">Informations principales</div>
-          <div class="form-row"><div class="form-group"><label class="form-label">Nom du produit</label><input class="form-input" id="p-gilet-name" value="Gilet Multi-poches ODA"></div><div class="form-group"><label class="form-label">Prix (€)</label><div class="price-input"><span class="price-symbol">€</span><input class="form-input" id="p-gilet-price" type="number" value="129" style="padding-left:30px" onchange="document.getElementById('list-price-gilet').textContent=this.value+'€'"></div></div></div>
-          <div class="form-group"><label class="form-label">Badge</label><input class="form-input" value="Nouveau"></div>
-          <div class="form-group"><label class="form-label">Description courte</label><textarea class="form-textarea">12 poches organisées, compatible porte-plaque. Velcro MOLLE sur l'avant.</textarea></div>
-          <div class="form-group"><label class="form-label">Description longue</label><textarea class="form-textarea" style="min-height:100px">12 poches organisées et accessibles. Compatible porte-plaque. Velcro MOLLE sur l'avant et le dos. Construction ultra-résistante pour un usage intensif.</textarea></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Photo produit</div>
-          <div class="photo-zone"><input type="file" accept="image/*" onchange="previewPhoto(this,'gilet-preview','gilet-img-data')"><div class="photo-zone-icon">📷</div><div class="photo-zone-text">Ajouter une photo</div><div class="photo-zone-sub">JPG, PNG, WEBP</div></div>
-          <img id="gilet-preview" class="photo-preview">
-        </div>
-        <button class="save-btn" onclick="saveProd('gilet')" style="margin-top:8px">💾 Enregistrer le gilet</button>
-      </div>
-
-      <!-- PRODUIT — CARGO -->
-      <div class="admin-page" id="page-prod-cargo">
-        <div class="admin-header"><div class="admin-title">👖 CARGO TACTIQUE ODA-7</div><div class="admin-subtitle">Modifiez toutes les informations du cargo.</div></div>
-        <div class="card">
-          <div class="card-title">Informations principales</div>
-          <div class="form-row"><div class="form-group"><label class="form-label">Nom du produit</label><input class="form-input" id="p-cargo-name" value="Cargo Tactique ODA-7"></div><div class="form-group"><label class="form-label">Prix (€)</label><div class="price-input"><span class="price-symbol">€</span><input class="form-input" id="p-cargo-price" type="number" value="109" style="padding-left:30px" onchange="document.getElementById('list-price-cargo').textContent=this.value+'€'"></div></div></div>
-          <div class="form-group"><label class="form-label">Description courte</label><textarea class="form-textarea">7 poches renforcées, genouillères intégrées, tissu stretch 4 voies.</textarea></div>
-          <div class="form-group"><label class="form-label">Description longue</label><textarea class="form-textarea" style="min-height:100px">7 poches renforcées dont 2 latérales cargo. Genouillères intégrées amovibles. Tissu stretch 4 voies pour une mobilité totale en toutes circonstances.</textarea></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Photo produit</div>
-          <div class="photo-zone"><input type="file" accept="image/*" onchange="previewPhoto(this,'cargo-preview','cargo-img-data')"><div class="photo-zone-icon">📷</div><div class="photo-zone-text">Ajouter une photo</div><div class="photo-zone-sub">JPG, PNG, WEBP</div></div>
-          <img id="cargo-preview" class="photo-preview">
-        </div>
-        <button class="save-btn" onclick="saveProd('cargo')" style="margin-top:8px">💾 Enregistrer le cargo</button>
-      </div>
-
-      <!-- COMMANDES -->
-      <div class="admin-page" id="page-orders">
-        <div class="admin-header"><div class="admin-title">COMMANDES</div><div class="admin-subtitle">Suivi et gestion des commandes clients.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">📦</span>Commandes récentes</div>
-          <div id="orders-list">
-            <table class="orders-table" style="width:100%">
-              <tr><th>#</th><th>Client</th><th>Produits</th><th>Total</th><th>Date</th><th>Statut</th></tr>
-            </table>
-            <p style="text-align:center;padding:32px;color:var(--gray);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-size:13px">Aucune commande pour le moment.<br>Les commandes apparaîtront ici une fois votre système de paiement connecté.</p>
+          <div class="card">
+            <div class="ctitle"><span>💳 Paiement Stripe</span></div>
+            <div class="alert ainfo" style="margin-bottom:14px;font-size:11px">Créez un compte sur <strong>stripe.com</strong> → Dashboard → API keys → copiez la clé publique ici.</div>
+            <div class="fg"><label class="fl">Clé publique (pk_live_...)</label><input class="fi" id="s-stripe" placeholder="pk_live_VOTRE_CLE"></div>
+            <div class="fg"><label class="fl">Mode</label><select class="fsel fi" id="s-stripe-mode"><option value="test">Test (aucun vrai paiement)</option><option value="live">Production (vrais paiements)</option></select></div>
           </div>
         </div>
       </div>
+      <button class="btn" onclick="saveSettings()">💾 Sauvegarder tous les paramètres</button>
+    </div>
 
-      <!-- CODES PROMO -->
-      <div class="admin-page" id="page-promo">
-        <div class="admin-header"><div class="admin-title">CODES PROMO</div><div class="admin-subtitle">Créez et gérez vos codes de réduction.</div></div>
+    <!-- SÉCURITÉ -->
+    <div class="page" id="page-security">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:20px">SÉCURITÉ</h2>
+      <div style="max-width:440px">
         <div class="card">
-          <div class="card-title"><span class="card-title-icon">🎯</span>Créer un code promo</div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Code promo</label><input class="form-input" id="promo-code" value="ODA10" style="text-transform:uppercase"></div>
-            <div class="form-group"><label class="form-label">Réduction (%)</label><input class="form-input" id="promo-pct" type="number" value="10" min="1" max="100"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Date d'expiration</label><input class="form-input" id="promo-exp" type="date"></div>
-            <div class="form-group"><label class="form-label">Utilisations max</label><input class="form-input" id="promo-max" type="number" value="100"></div>
-          </div>
-          <div class="form-group"><label class="form-label">Commande minimum (€)</label><input class="form-input" id="promo-min" type="number" value="0"></div>
-          <button class="save-btn" onclick="addPromo()">+ Créer le code</button>
+          <div class="ctitle"><span>🔒 Changer le mot de passe admin</span></div>
+          <div class="fg"><label class="fl">Mot de passe actuel</label><input class="fi" type="password" id="sec-old" placeholder="••••••••"></div>
+          <div class="fg"><label class="fl">Nouveau mot de passe</label><input class="fi" type="password" id="sec-new" placeholder="Min. 8 caractères"></div>
+          <div class="fg"><label class="fl">Confirmer</label><input class="fi" type="password" id="sec-conf" placeholder="••••••••"></div>
+          <button class="btn" onclick="changePwd()">Changer le mot de passe</button>
         </div>
-        <div class="card">
-          <div class="card-title">Codes actifs</div>
-          <div id="promo-list">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)">
-              <div><span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--ga);letter-spacing:2px">ODA10</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--gray);margin-left:12px;letter-spacing:1px">-10% · Illimité</span></div>
-              <button class="reset-btn" style="padding:5px 12px;font-size:11px">Désactiver</button>
-            </div>
-          </div>
+        <div class="card" style="border-color:var(--red);margin-top:14px">
+          <div class="ctitle" style="color:#884444"><span>⚠️ Zone de danger</span></div>
+          <p style="font-size:12px;color:var(--gr);margin-bottom:14px;line-height:1.7">Réinitialise toutes les données (membres, commandes, avis, promos). <strong style="color:#d08080">Irréversible.</strong></p>
+          <button onclick="resetAll()" class="btn btnred">Réinitialiser toutes les données</button>
         </div>
       </div>
+    </div>
 
-      <!-- LIVRAISON -->
-      <div class="admin-page" id="page-livraison">
-        <div class="admin-header"><div class="admin-title">LIVRAISON</div><div class="admin-subtitle">Configurez vos tarifs et zones de livraison.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🚚</span>Tarifs de livraison</div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Livraison standard France (€)</label><input class="form-input" id="ship-fr" type="number" value="5.90"></div>
-            <div class="form-group"><label class="form-label">Livraison offerte dès (€)</label><input class="form-input" id="ship-free" type="number" value="100"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Livraison Europe (€)</label><input class="form-input" id="ship-eu" type="number" value="12.90"></div>
-            <div class="form-group"><label class="form-label">Délai France (ex: 48h)</label><input class="form-input" id="ship-delay" value="48h"></div>
-          </div>
-          <div class="toggle-row"><div><div class="toggle-label">Livraison toujours offerte sur la montre</div></div><label class="toggle"><input type="checkbox" id="ship-watch-free" checked><span class="toggle-slider"></span></label></div>
-          <button class="save-btn" onclick="saveSection('livraison')" style="margin-top:16px">Enregistrer</button>
-        </div>
-      </div>
-
-      <!-- SETTINGS -->
-      <div class="admin-page" id="page-settings">
-        <div class="admin-header"><div class="admin-title">PARAMÈTRES</div><div class="admin-subtitle">Configuration générale du site.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🏪</span>Informations boutique</div>
-          <div class="form-group"><label class="form-label">Nom de la boutique</label><input class="form-input" id="set-shop-name" value="ODA Tactical SW"></div>
-          <div class="form-group"><label class="form-label">Email de contact</label><input class="form-input" id="set-email" value="contact@odatactical.fr"></div>
-          <div class="form-group"><label class="form-label">Lien Instagram</label><input class="form-input" id="set-insta" placeholder="https://instagram.com/..."></div>
-          <div class="form-group"><label class="form-label">Lien TikTok</label><input class="form-input" id="set-tiktok" placeholder="https://tiktok.com/..."></div>
-          <div class="form-group"><label class="form-label">Lien YouTube</label><input class="form-input" id="set-youtube" placeholder="https://youtube.com/..."></div>
-          <button class="save-btn" onclick="saveSection('settings')">Enregistrer</button>
-        </div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🎨</span>Couleurs du site</div>
-          <div class="color-row"><span class="color-label">Couleur principale (vert accent)</span><input type="color" class="color-picker" value="#3d5230" id="color-accent"><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gray)">#3d5230</span></div>
-          <div class="color-row"><span class="color-label">Fond sombre principal</span><input type="color" class="color-picker" value="#080c08" id="color-bg"><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gray)">#080c08</span></div>
-          <div class="color-row"><span class="color-label">Vert militaire (boutons)</span><input type="color" class="color-picker" value="#1a2514" id="color-gm"><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--gray)">#1a2514</span></div>
-          <p style="font-size:12px;color:var(--gray);margin-top:14px">Les changements de couleur s'appliquent au prochain rechargement.</p>
-          <button class="save-btn" onclick="saveSection('colors')" style="margin-top:12px">Appliquer les couleurs</button>
-        </div>
-      </div>
-
-      <!-- MOT DE PASSE -->
-      <div class="admin-page" id="page-password">
-        <div class="admin-header"><div class="admin-title">MOT DE PASSE ADMIN</div><div class="admin-subtitle">Changez votre mot de passe d'accès au panneau admin.</div></div>
-        <div class="card" style="max-width:420px">
-          <div class="card-title"><span class="card-title-icon">🔒</span>Changer le mot de passe</div>
-          <div class="form-group"><label class="form-label">Mot de passe actuel</label><input class="form-input" type="password" id="pwd-current" placeholder="••••••••"></div>
-          <div class="form-group"><label class="form-label">Nouveau mot de passe</label><input class="form-input" type="password" id="pwd-new" placeholder="••••••••"></div>
-          <div class="form-group"><label class="form-label">Confirmer le nouveau mot de passe</label><input class="form-input" type="password" id="pwd-confirm" placeholder="••••••••"></div>
-          <button class="save-btn" onclick="changePwd()">Changer le mot de passe</button>
-          <p style="font-size:12px;color:var(--gray);margin-top:14px;line-height:1.6">Mot de passe par défaut : <code style="color:var(--ga)">ODA2025admin</code><br>Changez-le immédiatement après la première connexion.</p>
-        </div>
-      </div>
-
-      <!-- SEO -->
-      <div class="admin-page" id="page-seo">
-        <div class="admin-header"><div class="admin-title">SEO</div><div class="admin-subtitle">Optimisez votre référencement sur Google.</div></div>
-        <div class="card">
-          <div class="card-title"><span class="card-title-icon">🔍</span>Méta-données</div>
-          <div class="form-group"><label class="form-label">Titre de la page (balise title)</label><input class="form-input" value="ODA Tactical SW — Équipement Tactique Premium"></div>
-          <div class="form-group"><label class="form-label">Description meta</label><textarea class="form-textarea">Vêtements tactiques multi-poches et montres all-black premium. ODA Tactical SW — Équipez-vous comme un professionnel.</textarea></div>
-          <div class="form-group"><label class="form-label">Mots-clés (séparés par des virgules)</label><input class="form-input" value="vêtements tactiques, montre militaire, cargo multi-poches, gilet tactique"></div>
-          <button class="save-btn" onclick="saveSection('seo')">Enregistrer le SEO</button>
-        </div>
-      </div>
-
-      <!-- FOOTER -->
-      <div class="admin-page" id="page-footer">
-        <div class="admin-header"><div class="admin-title">FOOTER</div><div class="admin-subtitle">Modifiez le contenu du pied de page.</div></div>
-        <div class="card">
-          <div class="card-title">Texte du footer</div>
-          <div class="form-group"><label class="form-label">Description de la marque</label><textarea class="form-textarea" id="footer-desc">Équipement tactique premium. Vêtements multi-poches et montres all-black pour ceux qui ne font pas de compromis.</textarea></div>
-          <div class="form-group"><label class="form-label">Texte copyright</label><input class="form-input" id="footer-copy" value="© 2025 ODA Tactical SW — Tous droits réservés"></div>
-          <button class="save-btn" onclick="saveSection('footer')">Enregistrer</button>
-        </div>
-      </div>
-
-    </main>
   </div>
 </div>
 
 <script>
-// ===== PASSWORD SYSTEM =====
-const DEFAULT_PWD = 'ODA2025admin';
-function getPassword(){ return localStorage.getItem('oda_admin_pwd') || DEFAULT_PWD; }
+const DEFAULT_PWD='ODA2025admin';
+function getPwd(){return localStorage.getItem('oda_admin_pwd')||DEFAULT_PWD;}
+function G(id){return document.getElementById(id);}
+function V(id){return G(id)?.value?.trim()||'';}
+function toast(m,t='ok'){const el=G('toast');el.textContent=m;el.className=t==='err'?'on err':'on';setTimeout(()=>el.className='',3000);}
+function users(){try{return JSON.parse(localStorage.getItem('oda_users')||'[]');}catch{return[];}}
+function allOrders(){
+  const u=users();const a=[];
+  u.forEach(usr=>(usr.orders||[]).forEach(o=>a.push({...o,userEmail:usr.email,userName:((usr.firstname||'')+(usr.lastname?' '+usr.lastname:'')).trim()})));
+  return a.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+}
+function reviews(){try{return JSON.parse(localStorage.getItem('oda_reviews')||'[]');}catch{return[];}}
+function promos(){try{return JSON.parse(localStorage.getItem('oda_promos')||'[]');}catch{return[];}}
+function cfg(){try{return JSON.parse(localStorage.getItem('oda_settings')||'{}');}catch{return{};}}
+function fmtDate(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}
+function pill(s){
+  const m={pending:['pamb','En préparation'],shipped:['pg','Expédiée'],delivered:['pg','Livrée'],processing:['pgr','En cours']};
+  const [c,l]=m[s]||['pgr',s||'—'];
+  return '<span class="pill '+c+'">'+l+'</span>';
+}
 
 function doLogin(){
-  const input = document.getElementById('pwd-input').value;
-  const err = document.getElementById('login-error');
-  if(input === getPassword()){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('admin-app').style.display='block';
-    localStorage.setItem('oda_admin_session', Date.now());
-    loadAllData();
-  } else {
-    err.style.display='block';
-    document.getElementById('pwd-input').value='';
-    document.getElementById('pwd-input').focus();
-    setTimeout(()=>err.style.display='none', 3000);
-  }
+  const v=G('lpwd').value;const err=G('lerr');
+  if(v===getPwd()){
+    err.className='lerr';G('login').style.display='none';G('app').style.display='block';
+    localStorage.setItem('oda_admin_sess',Date.now());initAdmin();
+  }else{err.className='lerr on';G('lpwd').value='';setTimeout(()=>err.className='lerr',3000);}
 }
-document.getElementById('pwd-input').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+G('lpwd').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+function doLogout(){localStorage.removeItem('oda_admin_sess');location.reload();}
+const _sess=localStorage.getItem('oda_admin_sess');
+if(_sess&&Date.now()-parseInt(_sess)<4*3600*1000){G('login').style.display='none';G('app').style.display='block';window.addEventListener('load',initAdmin);}
 
-// Check existing session (1h expiry)
-const session = localStorage.getItem('oda_admin_session');
-if(session && Date.now()-parseInt(session) < 3600000){
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('admin-app').style.display='block';
-  loadAllData();
+function initAdmin(){
+  updateClock();renderDashboard();renderProducts();loadSettings();
+  G('sbn-orders').textContent=allOrders().length;
+  G('sbn-members').textContent=users().length;
+  G('sbn-reviews').textContent=reviews().length;
 }
 
-function logout(){
-  localStorage.removeItem('oda_admin_session');
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('admin-app').style.display='none';
-  document.getElementById('pwd-input').value='';
+function updateClock(){const n=new Date();G('tb-time').textContent=n.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'short'})+' '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+setInterval(updateClock,1000);
+
+function nav(p,l){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sblink').forEach(x=>x.classList.remove('active'));
+  G('page-'+p)?.classList.add('active');l?.classList.add('active');
+  const t={dashboard:'Dashboard',orders:'Commandes',products:'Produits',promos:'Codes Promo',members:'Membres',reviews:'Avis Clients',announce:"Barre d'Annonce",settings:'Paramètres',security:'Sécurité'};
+  G('tb-title').textContent=t[p]||p.toUpperCase();
+  if(p==='dashboard')renderDashboard();
+  if(p==='orders')renderOrders();
+  if(p==='products')renderProducts();
+  if(p==='promos')renderPromos();
+  if(p==='members')renderMembers();
+  if(p==='reviews')renderReviews();
+  if(p==='settings')loadSettings();
+  if(p==='drops')renderDrops();
 }
+
+function renderDashboard(){
+  const o=allOrders();const u=users();const r=reviews();
+  const rev=o.reduce((s,x)=>s+(x.total||0),0);
+  G('d-ord').textContent=o.length;G('d-rev').textContent=rev+'€';G('d-mem').textContent=u.length;G('d-rv').textContent=r.length;
+  G('d-ord-t').textContent=o.length?o.length+' au total':'Aucune';
+  G('d-mem-t').textContent=u.length?u.length+' inscrits':'Aucun';
+  G('d-rv-t').textContent=r.length?r.length+' avis':'Aucun';
+  const s=cfg();if(!s.siret)G('al-siret').style.display='flex';else G('al-siret').style.display='none';
+  // Recent orders
+  const ro=G('d-orders-list');
+  if(!o.length){ro.innerHTML='<div class="empty"><div class="ei">📦</div><div class="et">Aucune commande</div></div>';}
+  else ro.innerHTML='<table class="tbl"><thead><tr><th>Commande</th><th>Client</th><th>Total</th><th>Statut</th><th></th></tr></thead><tbody>'+o.slice(0,5).map(x=>'<tr><td style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gb)">'+x.id+'</td><td>'+( x.userName||x.userEmail||'—')+'</td><td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gb)">'+x.total+'€</td><td>'+pill(x.status)+'</td><td><button class="btn btnsm" onclick="openOrderModal(''+x.id+'')">Détail</button></td></tr>').join('')+'</tbody></table>';
+  // Recent members
+  const rm=G('d-members-list');
+  if(!u.length){rm.innerHTML='<div class="empty"><div class="ei">👥</div><div class="et">Aucun membre</div></div>';}
+  else rm.innerHTML=u.slice(-4).reverse().map(x=>'<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--b)"><div class="mem-av">'+( x.avatar?'<img src="'+x.avatar+'">':(x.firstname?.charAt(0)||'?').toUpperCase())+'</div><div><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;color:var(--grl)">'+(x.firstname||'')+(x.lastname?' '+x.lastname:'')+'</div><div style="font-size:11px;color:var(--gr)">'+x.email+'</div></div><div style="margin-left:auto;font-size:11px;color:var(--gr)">'+fmtDate(x.createdAt)+'</div></div>').join('');
+  // Recent reviews
+  const rr=G('d-reviews-list');
+  if(!r.length){rr.innerHTML='<div class="empty"><div class="ei">⭐</div><div class="et">Aucun avis</div></div>';}
+  else rr.innerHTML=r.slice(-3).reverse().map(x=>'<div style="padding:10px 0;border-bottom:1px solid var(--b)"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--grl)">'+x.name+'</span><span style="color:var(--gb);font-size:14px">'+'★'.repeat(x.stars)+'</span></div><div style="font-size:12px;color:var(--gr);font-style:italic">"'+x.text.substring(0,80)+(x.text.length>80?'...':''')+'</div></div>').join('');
+}
+
+function renderOrders(){
+  const f=G('ord-filter')?.value||'all';
+  let o=allOrders();if(f!=='all')o=o.filter(x=>x.status===f);
+  const w=G('ord-wrap');
+  if(!o.length){w.innerHTML='<div class="empty" style="padding:48px"><div class="ei">📦</div><div class="et">Aucune commande'+(f!=='all'?' dans cette catégorie':'')+'</div></div>';return;}
+  w.innerHTML='<table class="tbl"><thead><tr><th>Commande</th><th>Client</th><th>Produits</th><th>Total</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead><tbody>'+
+  o.map(x=>'<tr><td style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gb);white-space:nowrap">'+x.id+'</td><td><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--grl)">'+(x.userName||'—')+'</div><div style="font-size:11px;color:var(--gr)">'+(x.userEmail||'')+'</div></td><td style="font-size:12px;color:var(--gr)">'+(x.items||[]).map(i=>i.name+'&nbsp;×'+i.qty).join('<br>')+'</td><td style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gb)">'+x.total+'€</td><td style="font-size:12px;color:var(--gr);white-space:nowrap">'+(x.date||fmtDate(x.createdAt))+'</td><td>'+pill(x.status)+'</td><td><div style="display:flex;gap:6px"><button class="btn btnsm" onclick="openOrderModal(''+x.id+'')">Détail</button><button class="btn btnsm btnamb" onclick="cycleStatus(''+x.id+'')">Statut ▶</button></div></td></tr>').join('')+'</tbody></table>';
+}
+
+function openOrderModal(id){
+  const o=allOrders().find(x=>x.id===id);if(!o)return;
+  G('modal-title').textContent='Commande '+id;
+  G('modal-body').innerHTML='<div class="fr2" style="margin-bottom:16px"><div><div class="fl">Client</div><div style="font-size:13px;color:var(--grl)">'+(o.userName||'—')+'<br><span style="color:var(--gr)">'+(o.userEmail||'')+'</span></div></div><div><div class="fl">Date</div><div style="font-size:13px;color:var(--grl)">'+(o.date||fmtDate(o.createdAt))+'</div></div></div>'+
+  '<div class="fl" style="margin-bottom:8px">Produits</div>'+
+  (o.items||[]).map(i=>'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b);font-size:13px"><span style="color:var(--grl)">'+i.name+' × '+i.qty+'</span><span style="color:var(--gb);font-family:'Bebas Neue',sans-serif;font-size:16px">'+(i.price*i.qty)+'€</span></div>').join('')+
+  '<div style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gb);margin-top:8px">'+o.total+'€</div>'+
+  '<div class="fg" style="margin-top:16px"><label class="fl">Statut</label><select class="fsel fi" id="mo-status"><option value="pending" '+(o.status==='pending'?'selected':'')+'>En préparation</option><option value="shipped" '+(o.status==='shipped'?'selected':'')+'>Expédiée</option><option value="delivered" '+(o.status==='delivered'?'selected':'')+'>Livrée</option></select></div>'+
+  '<div class="fg"><label class="fl">N° de suivi Colissimo</label><input class="fi" id="mo-track" placeholder="6X123456789FR" value="'+(o.tracking||'')+'"></div>'+
+  '<div class="fg"><label class="fl">Note interne</label><textarea class="fta" id="mo-note">'+(o.note||'')+'</textarea></div>';
+  G('modal-foot').innerHTML='<button class="btn btno" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveOrder(''+id+'')">💾 Sauvegarder</button>';
+  G('modal').classList.add('open');
+}
+
+function saveOrder(id){
+  const u=users();let ok=false;
+  u.forEach(usr=>(usr.orders||[]).forEach(o=>{if(o.id===id){o.status=V('mo-status');o.tracking=V('mo-track');o.note=G('mo-note')?.value?.trim();ok=true;}}));
+  if(ok){localStorage.setItem('oda_users',JSON.stringify(u));toast('Commande mise à jour ✓');closeModal();renderOrders();renderDashboard();}
+}
+
+function cycleStatus(id){
+  const nx={pending:'shipped',shipped:'delivered',delivered:'pending'};
+  const u=users();
+  u.forEach(usr=>(usr.orders||[]).forEach(o=>{if(o.id===id)o.status=nx[o.status]||'pending';}));
+  localStorage.setItem('oda_users',JSON.stringify(u));
+  toast('Statut mis à jour ✓');renderOrders();renderDashboard();
+  G('sbn-orders').textContent=allOrders().length;
+}
+
+function exportOrders(){
+  const o=allOrders();if(!o.length){toast('Aucune commande','err');return;}
+  let csv='N° Commande,Client,Email,Total,Date,Statut
+';
+  o.forEach(x=>csv+=x.id+',"'+(x.userName||'')+'","'+(x.userEmail||'')+'",'+x.total+'€,"'+(x.date||'')+'","'+x.status+'"
+');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='commandes-oda.csv';a.click();
+  toast('Export CSV ✓');
+}
+
+const PRODS_DEF=[
+  {id:'watch-01',name:'ODA Stealth Watch',ico:'⌚',price:149,badge:'Nouveau',visible:true,desc:'Montre tactique tout noir. Verre saphir, waterproof 200m, bracelet nylon balistique.'},
+  {id:'veste-04',name:'Veste Tactique ODA-4',ico:'🧥',price:189,badge:'',visible:true,desc:'8 poches ext. + 4 int. Ripstop imperméable, doublure thermique amovible.'},
+  {id:'gilet-01',name:'Gilet Multi-poches ODA',ico:'🦺',price:129,badge:'',visible:true,desc:'12 poches organisées, compatible porte-plaque. Velcro MOLLE.'},
+  {id:'cargo-07',name:'Cargo Tactique ODA-7',ico:'👖',price:109,badge:'',visible:true,desc:'7 poches renforcées, genouillères intégrées, tissu stretch 4 voies.'},
+];
+function getProds(){try{return JSON.parse(localStorage.getItem('oda_products'))||PRODS_DEF;}catch{return PRODS_DEF;}}
+function saveProds(p){localStorage.setItem('oda_products',JSON.stringify(p));}
+
+function renderProducts(){
+  const prods=getProds();
+  G('prod-grid').innerHTML=prods.map((p,i)=>
+    '<div class="prod-card"><div class="prod-ico">'+p.ico+'</div><div style="flex:1">'+
+    '<div class="prod-name">'+p.name+'</div><div class="prod-id">'+p.id+'</div>'+
+    '<div class="prod-price" id="pp-'+i+'">'+p.price+'€</div>'+
+    '<div class="fr2" style="margin-bottom:12px">'+
+    '<div><label class="fl">Prix (€)</label><input class="fi" id="pi-'+i+'" type="number" value="'+p.price+'" oninput="G('pp-'+i+'').textContent=this.value+'€'"></div>'+
+    '<div><label class="fl">Badge</label><input class="fi" id="pb-'+i+'" value="'+(p.badge||'')+'" placeholder="Nouveau..."></div></div>'+
+    '<div class="fg"><label class="fl">Description</label><textarea class="fta" id="pd-'+i+'" style="min-height:52px">'+p.desc+'</textarea></div>'+
+    '<div class="togrow" style="margin-bottom:12px"><div><div class="toglbl">Visible sur le site</div></div><label class="tog"><input type="checkbox" id="pv-'+i+'" '+(p.visible?'checked':'')+'><span class="togsl"></span></label></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn btnsm" onclick="saveProd('+i+')">💾 Enregistrer</button><button class="btn btnsm btno" onclick="resetProd('+i+')">Reset</button></div>'+
+    '</div></div>'
+  ).join('');
+}
+
+function saveProd(i){
+  const p=getProds();
+  p[i].price=parseInt(G('pi-'+i)?.value)||p[i].price;
+  p[i].badge=V('pb-'+i);p[i].desc=G('pd-'+i)?.value?.trim()||p[i].desc;
+  p[i].visible=G('pv-'+i)?.checked!==false;
+  saveProds(p);toast(p[i].name+' sauvegardé ✓');
+}
+function resetProd(i){if(!confirm('Réinitialiser ?'))return;const p=getProds();p[i]={...PRODS_DEF[i]};saveProds(p);renderProducts();toast('Réinitialisé');}
+
+function renderPromos(){
+  const p=promos();const el=G('promo-list');
+  if(!p.length){el.innerHTML='<div class="empty"><div class="ei">🎯</div><div class="et">Aucun code promo</div></div>';return;}
+  el.innerHTML='<table class="tbl"><thead><tr><th>Code</th><th>Réduction</th><th>Min.</th><th>Max utilisations</th><th>Expire</th><th>Actions</th></tr></thead><tbody>'+
+  p.map((pr,i)=>'<tr><td style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gb);letter-spacing:2px">'+pr.code+'</td><td><span class="pill pg">-'+pr.pct+'%</span></td><td style="font-size:13px;color:var(--gr)">'+(pr.minOrder?pr.minOrder+'€':'—')+'</td><td style="font-size:13px;color:var(--gr)">'+(pr.maxUses||'Illimité')+'</td><td style="font-size:12px;color:var(--gr)">'+(pr.expires||'—')+'</td><td><div style="display:flex;gap:6px"><button class="btn btnsm" onclick="cpCode(''+pr.code+'')">Copier</button><button class="btn btnsm btnred" onclick="delPromo('+i+')">Suppr.</button></div></td></tr>').join('')+'</tbody></table>';
+}
+
+function openAddPromo(){
+  G('modal-title').textContent='Nouveau code promo';
+  G('modal-body').innerHTML='<div class="fr2"><div class="fg"><label class="fl">Code *</label><input class="fi" id="np-code" placeholder="ODA10" oninput="this.value=this.value.toUpperCase()"></div><div class="fg"><label class="fl">Réduction % *</label><input class="fi" id="np-pct" type="number" min="1" max="100" placeholder="10"></div></div><div class="fr2"><div class="fg"><label class="fl">Min. commande (€)</label><input class="fi" id="np-min" type="number" placeholder="0"></div><div class="fg"><label class="fl">Max utilisations</label><input class="fi" id="np-max" type="number" placeholder="0 = illimité"></div></div><div class="fg"><label class="fl">Date d'expiration</label><input class="fi" id="np-exp" type="date"></div>';
+  G('modal-foot').innerHTML='<button class="btn btno" onclick="closeModal()">Annuler</button><button class="btn" onclick="addPromo()">+ Créer le code</button>';
+  G('modal').classList.add('open');
+}
+
+function addPromo(){
+  const code=V('np-code'),pct=parseInt(V('np-pct'));
+  if(!code||!pct){toast('Code et réduction requis','err');return;}
+  const p=promos();if(p.find(x=>x.code===code)){toast('Code déjà existant','err');return;}
+  p.push({code,pct,minOrder:parseInt(V('np-min'))||0,maxUses:parseInt(V('np-max'))||0,expires:V('np-exp'),createdAt:Date.now()});
+  localStorage.setItem('oda_promos',JSON.stringify(p));
+  toast('Code '+code+' créé ✓');closeModal();renderPromos();
+}
+function cpCode(c){try{navigator.clipboard.writeText(c);}catch(e){}toast('Code '+c+' copié ✓');}
+function delPromo(i){if(!confirm('Supprimer ce code ?'))return;const p=promos();p.splice(i,1);localStorage.setItem('oda_promos',JSON.stringify(p));toast('Supprimé');renderPromos();}
+
+function renderMembers(){
+  const q=(G('mem-search')?.value||'').toLowerCase();
+  let u=users();if(q)u=u.filter(x=>(x.email+' '+(x.firstname||'')+' '+(x.lastname||'')+' '+(x.discord||'')).toLowerCase().includes(q));
+  const w=G('mem-wrap');
+  if(!u.length){w.innerHTML='<div class="empty" style="padding:48px"><div class="ei">👥</div><div class="et">'+(q?'Aucun résultat':'Aucun membre')+'</div></div>';return;}
+  w.innerHTML='<table class="tbl"><thead><tr><th>Membre</th><th>Email</th><th>Discord</th><th>Commandes</th><th>Points</th><th>Inscrit</th><th>Actions</th></tr></thead><tbody>'+
+  u.map((x,i)=>'<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="mem-av">'+(x.avatar?'<img src="'+x.avatar+'">':(x.firstname?.charAt(0)||'?').toUpperCase())+'</div><span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--grl)">'+(x.firstname||'')+' '+(x.lastname||'')+'</span></div></td><td style="font-size:12px;color:var(--gr)">'+x.email+'</td><td style="font-size:12px;color:var(--gr)">'+(x.discord||'—')+'</td><td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gb)">'+(x.orders||[]).length+'</td><td style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gb)">'+(x.points||0)+'</td><td style="font-size:12px;color:var(--gr)">'+fmtDate(x.createdAt)+'</td><td><div style="display:flex;gap:6px"><button class="btn btnsm" onclick="openMember(''+x.email+'')">Voir</button><button class="btn btnsm btnred" onclick="delMember(''+x.email+'')">✕</button></div></td></tr>').join('')+'</tbody></table>';
+}
+
+function openMember(email){
+  const x=users().find(u=>u.email===email);if(!x)return;
+  G('modal-title').textContent=(x.firstname||'')+(x.lastname?' '+x.lastname:'');
+  G('modal-body').innerHTML='<div class="fr2" style="margin-bottom:14px"><div><div class="fl">Email</div><div style="font-size:13px;color:var(--grl)">'+x.email+'</div></div><div><div class="fl">Téléphone</div><div style="font-size:13px;color:var(--grl)">'+(x.tel||'—')+'</div></div><div><div class="fl">Discord</div><div style="font-size:13px;color:var(--grl)">'+(x.discord||'—')+'</div></div><div><div class="fl">Points fidélité</div><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gb)">'+(x.points||0)+'</div></div></div>'+
+  (x.addresses?.length?'<div class="fl" style="margin-bottom:6px">Adresses</div>'+x.addresses.map(a=>'<div style="font-size:12px;color:var(--gr);padding:5px 0;border-bottom:1px solid var(--b)">'+(a.label||'')+' — '+a.street+', '+a.zip+' '+a.city+'</div>').join(''):'')+'<div style="margin-top:14px"><div class="fl" style="margin-bottom:6px">Commandes ('+(x.orders||[]).length+')</div>'+(x.orders?.length?x.orders.map(o=>'<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b);font-size:12px"><span style="color:var(--grl)">'+o.id+'</span>'+pill(o.status)+'<span style="font-family:'Bebas Neue',sans-serif;color:var(--gb)">'+o.total+'€</span></div>').join(''):'<div style="font-size:12px;color:var(--gr)">Aucune commande</div>')+'</div>'+
+  '<div class="fg" style="margin-top:14px"><label class="fl">Ajouter des points</label><div style="display:flex;gap:10px"><input class="fi" id="add-pts" type="number" placeholder="Ex: 50" style="flex:1"><button class="btn btnsm" onclick="addPts(''+email+'')">Ajouter</button></div></div>';
+  G('modal-foot').innerHTML='<button class="btn btno" onclick="closeModal()">Fermer</button>';
+  G('modal').classList.add('open');
+}
+
+function addPts(email){
+  const pts=parseInt(G('add-pts')?.value)||0;if(!pts)return;
+  const u=users();const i=u.findIndex(x=>x.email===email);if(i<0)return;
+  u[i].points=(u[i].points||0)+pts;localStorage.setItem('oda_users',JSON.stringify(u));
+  toast(pts+' points ajoutés ✓');closeModal();renderMembers();
+}
+function delMember(email){
+  if(!confirm('Supprimer ce membre ?'))return;
+  const u=users().filter(x=>x.email!==email);localStorage.setItem('oda_users',JSON.stringify(u));
+  toast('Membre supprimé');renderMembers();renderDashboard();G('sbn-members').textContent=u.length;
+}
+function exportMembers(){
+  const u=users();if(!u.length){toast('Aucun membre','err');return;}
+  let csv='Prénom,Nom,Email,Discord,Tel,Commandes,Points,Inscrit
+';
+  u.forEach(x=>csv+='"'+(x.firstname||'')+'","'+(x.lastname||'')+'","'+x.email+'","'+(x.discord||'')+'","'+(x.tel||'')+'",'+((x.orders||[]).length)+','+(x.points||0)+',"'+fmtDate(x.createdAt)+'"
+');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='membres-oda.csv';a.click();
+  toast('Export CSV ✓');
+}
+
+function renderReviews(){
+  const r=reviews();const el=G('rev-list');
+  if(!r.length){el.innerHTML='<div class="empty"><div class="ei">⭐</div><div class="et">Aucun avis</div><div class="es">Les avis du Lookbook apparaîtront ici</div></div>';return;}
+  el.innerHTML=r.map((x,i)=>'<div class="rev-card"><div class="rev-head"><div><div class="rev-stars" style="color:var(--gb)">'+'★'.repeat(x.stars)+'☆'.repeat(5-x.stars)+'</div><div class="rev-auth">'+x.name+'</div><div class="rev-prod">'+x.product+'</div></div><div style="text-align:right"><div style="font-size:11px;color:var(--gr)">'+(x.date||'—')+'</div></div></div><div class="rev-txt">"'+x.text+'"</div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btnsm btnred" onclick="delReview('+i+')">🗑 Supprimer</button></div></div>').join('');
+}
+function delReview(i){if(!confirm('Supprimer ?'))return;const r=reviews();r.splice(i,1);localStorage.setItem('oda_reviews',JSON.stringify(r));toast('Avis supprimé');renderReviews();renderDashboard();G('sbn-reviews').textContent=reviews().length;}
+function clearReviews(){if(!confirm('Supprimer TOUS les avis ?'))return;localStorage.removeItem('oda_reviews');toast('Tous les avis supprimés');renderReviews();renderDashboard();G('sbn-reviews').textContent=0;}
+
+function saveAnnounce(){localStorage.setItem('oda_announce',JSON.stringify({text:V('ann-txt'),active:G('ann-on')?.checked}));toast("Barre d'annonce sauvegardée ✓");}
+function resetAnnounce(){const d='🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h';G('ann-txt').value=d;G('ann-prev').innerHTML=d;}
+function setAnn(t){G('ann-txt').value=t;G('ann-prev').innerHTML=t;}
+
+function loadSettings(){
+  const s=cfg();
+  if(s.name)G('s-name').value=s.name;if(s.email)G('s-email').value=s.email;
+  if(s.siret)G('s-siret').value=s.siret;if(s.addr)G('s-addr').value=s.addr;
+  if(s.sfr)G('s-sfr').value=s.sfr;if(s.sfree)G('s-sfree').value=s.sfree;
+  if(s.seu)G('s-seu').value=s.seu;if(s.sdelay)G('s-sdelay').value=s.sdelay;
+  if(s.insta)G('s-insta').value=s.insta;if(s.tiktok)G('s-tiktok').value=s.tiktok;
+  if(s.yt)G('s-yt').value=s.yt;if(s.stripe)G('s-stripe').value=s.stripe;
+  if(s.wtot)G('s-wtot').value=s.wtot;if(s.wleft!==undefined)G('s-wleft').value=s.wleft;
+}
+
+function saveSettings(){
+  const s={
+    name:V('s-name'),email:V('s-email'),siret:V('s-siret'),addr:V('s-addr'),
+    sfr:parseFloat(V('s-sfr'))||5.90,sfree:parseFloat(V('s-sfree'))||100,
+    seu:parseFloat(V('s-seu'))||12.90,sdelay:V('s-sdelay'),
+    swatch:G('s-swatch')?.checked,
+    insta:V('s-insta'),tiktok:V('s-tiktok'),yt:V('s-yt'),
+    wtot:parseInt(V('s-wtot'))||109,wleft:parseInt(V('s-wleft'))||109,
+    wcounter:G('s-wcounter')?.checked,
+    online:G('s-online')?.checked,chatbot:G('s-chatbot')?.checked,newsletter:G('s-news')?.checked,
+    stripe:V('s-stripe'),stripeMode:G('s-stripe-mode')?.value,
+    savedAt:Date.now()
+  };
+  localStorage.setItem('oda_settings',JSON.stringify(s));
+  toast('Paramètres sauvegardés ✓');
+  if(!s.siret)G('al-siret').style.display='flex';else G('al-siret').style.display='none';
+}
+
+function saveAll(){saveSettings();saveAnnounce();toast('Tout sauvegardé ✓');}
 
 function changePwd(){
-  const cur = document.getElementById('pwd-current').value;
-  const nw = document.getElementById('pwd-new').value;
-  const conf = document.getElementById('pwd-confirm').value;
-  if(cur !== getPassword()){ toast('Mot de passe actuel incorrect','error'); return; }
-  if(nw.length < 6){ toast('Le nouveau mot de passe doit faire au moins 6 caractères','error'); return; }
-  if(nw !== conf){ toast('Les mots de passe ne correspondent pas','error'); return; }
-  localStorage.setItem('oda_admin_pwd', nw);
-  toast('Mot de passe changé avec succès ✓');
-  document.getElementById('pwd-current').value='';
-  document.getElementById('pwd-new').value='';
-  document.getElementById('pwd-confirm').value='';
+  const old=G('sec-old')?.value,nw=G('sec-new')?.value,conf=G('sec-conf')?.value;
+  if(old!==getPwd()){toast('Mot de passe actuel incorrect','err');return;}
+  if(!nw||nw.length<8){toast('Minimum 8 caractères','err');return;}
+  if(nw!==conf){toast('Les mots de passe ne correspondent pas','err');return;}
+  localStorage.setItem('oda_admin_pwd',nw);toast('Mot de passe changé ✓');
+  ['sec-old','sec-new','sec-conf'].forEach(id=>{const el=G(id);if(el)el.value='';});
 }
 
-// ===== NAVIGATION =====
-function showPage(id, linkEl){
-  document.querySelectorAll('.admin-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
-  const page = document.getElementById('page-'+id);
-  if(page) page.classList.add('active');
-  if(linkEl) linkEl.classList.add('active');
+function resetAll(){
+  if(!confirm('Réinitialiser TOUTES les données ? Irréversible.'))return;
+  if(!confirm('Dernière confirmation.'))return;
+  ['oda_users','oda_reviews','oda_promos','oda_settings','oda_products','oda_announce','oda_cart'].forEach(k=>localStorage.removeItem(k));
+  toast('Données réinitialisées');setTimeout(()=>location.reload(),1500);
 }
 
-// ===== TOAST =====
-function toast(msg, type='success'){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = type==='error' ? 'show error' : 'show';
-  setTimeout(()=>t.className='', 3000);
+function saveDrop(){
+  const s=cfg();
+  s.wleft=parseInt(G('dr-left')?.value)||109;
+  s.wtot=parseInt(G('dr-total')?.value)||109;
+  s.wcounter=G('dr-counter')?.checked;
+  s.wtimer=G('dr-timer')?.checked;
+  const endVal=G('dr-end')?.value;
+  if(endVal){localStorage.setItem('oda_drop1_end',new Date(endVal).toISOString());}
+  localStorage.setItem('oda_settings',JSON.stringify(s));
+  G('sbn-orders').textContent=allOrders().length;
+  toast('Drop mis à jour ✓');
 }
-
-// ===== DATA PERSISTENCE =====
-function saveSection(section){
-  const data = {};
-  switch(section){
-    case 'hero':
-      data.l1 = document.getElementById('hero-l1')?.value;
-      data.l2 = document.getElementById('hero-l2')?.value;
-      data.l3 = document.getElementById('hero-l3')?.value;
-      data.sub = document.getElementById('hero-sub')?.value;
-      data.btn1 = document.getElementById('hero-btn1')?.value;
-      data.btn2 = document.getElementById('hero-btn2')?.value;
-      data.eyebrow = document.getElementById('hero-eyebrow')?.value;
-      break;
-    case 'stats':
-      const nums = [...document.querySelectorAll('.stat-num')].map(i=>i.value);
-      const labs = [...document.querySelectorAll('.stat-label')].map(i=>i.value);
-      data.stats = nums.map((n,i)=>({num:n,label:labs[i]}));
-      break;
-    default:
-      data.saved = true;
-  }
-  localStorage.setItem('oda_'+section, JSON.stringify(data));
-  toast('Section "'+section+'" sauvegardée ✓');
+function renderDrops(){
+  const wl=JSON.parse(localStorage.getItem('oda_waitlist')||'[]');
+  const el=G('waitlist-admin');
+  if(!el)return;
+  const s=cfg();
+  if(G('dr-left'))G('dr-left').value=s.wleft||109;
+  if(G('dr-total'))G('dr-total').value=s.wtot||109;
+  if(G('dr-counter'))G('dr-counter').checked=s.wcounter!==false;
+  if(G('dr-timer'))G('dr-timer').checked=s.wtimer!==false;
+  const end=localStorage.getItem('oda_drop1_end');
+  if(end&&G('dr-end')){try{const d=new Date(end);G('dr-end').value=d.toISOString().slice(0,16);}catch(e){}}
+  if(!wl.length){el.innerHTML='<div class="empty"><div class="ei">📧</div><div class="et">Aucune inscription waitlist</div></div>';return;}
+  el.innerHTML='<table class="tbl"><thead><tr><th>Email</th><th>Drop</th><th>Date</th><th></th></tr></thead><tbody>'+
+  wl.map((x,i)=>'<tr><td style="font-size:13px;color:var(--grl)">'+x.email+'</td><td style="font-size:12px;color:var(--gr)">'+(x.dropId||'—')+'</td><td style="font-size:12px;color:var(--gr)">'+new Date(x.date).toLocaleDateString('fr-FR')+'</td><td><button class="btn btnsm btnred" onclick="delWl('+i+')">✕</button></td></tr>').join('')+'</tbody></table>'+
+  '<div style="margin-top:12px;display:flex;gap:10px"><button class="btn btnsm" onclick="exportWl()">⬇ Exporter CSV</button><button class="btn btnsm btnred" onclick="clearWl()">🗑 Vider la liste</button></div>';
 }
-
-function saveProd(prod){
-  const data = {
-    name: document.getElementById('p-'+prod+'-name')?.value,
-    price: document.getElementById('p-'+prod+'-price')?.value,
-    badge: document.getElementById('p-'+prod+'-badge')?.value,
-    descShort: document.getElementById('p-'+prod+'-desc-short')?.value,
-    descLong: document.getElementById('p-'+prod+'-desc-long')?.value,
-  };
-  // Save image if present
-  const imgData = localStorage.getItem(prod+'_img_data');
-  if(imgData) data.img = imgData;
-  localStorage.setItem('oda_prod_'+prod, JSON.stringify(data));
-  toast('Produit "'+data.name+'" sauvegardé ✓');
-}
-
-function resetProd(prod){
-  if(!confirm('Réinitialiser ce produit aux valeurs par défaut ?')) return;
-  localStorage.removeItem('oda_prod_'+prod);
-  toast('Produit réinitialisé');
-  location.reload();
-}
-
-function saveAll(){
-  ['hero','stats','nav','footer','settings','livraison'].forEach(s=>saveSection(s));
-  ['watch','veste','gilet','cargo'].forEach(p=>saveProd(p));
-  toast('Tout sauvegardé avec succès ✓');
-}
-
-function loadAllData(){
-  // Load hero
-  const hero = JSON.parse(localStorage.getItem('oda_hero')||'{}');
-  if(hero.l1) document.getElementById('hero-l1').value = hero.l1;
-  if(hero.l2) document.getElementById('hero-l2').value = hero.l2;
-  if(hero.l3) document.getElementById('hero-l3').value = hero.l3;
-  if(hero.sub) document.getElementById('hero-sub').value = hero.sub;
-  // Load products prices in list
-  ['watch','veste','gilet','cargo'].forEach(p=>{
-    const d = JSON.parse(localStorage.getItem('oda_prod_'+p)||'{}');
-    if(d.price){
-      const el = document.getElementById('list-price-'+p);
-      if(el) el.textContent = d.price+'€';
-      const inp = document.getElementById('p-'+p+'-price');
-      if(inp) inp.value = d.price;
-    }
-    if(d.name){
-      const inp = document.getElementById('p-'+p+'-name');
-      if(inp) inp.value = d.name;
-    }
-  });
-}
-
-// ===== PHOTO UPLOAD =====
-function previewPhoto(input, previewId, dataId){
-  const file = input.files[0];
-  if(!file) return;
-  if(file.size > 5*1024*1024){ toast('Image trop lourde (max 5MB)','error'); return; }
-  const reader = new FileReader();
-  reader.onload = e=>{
-    const preview = document.getElementById(previewId);
-    if(preview){ preview.src=e.target.result; preview.style.display='block'; }
-    localStorage.setItem(dataId, e.target.result);
-    toast('Photo chargée — cliquez Enregistrer pour sauvegarder ✓');
-  };
-  reader.readAsDataURL(file);
-}
-
-// ===== PROMO =====
-function addPromo(){
-  const code = document.getElementById('promo-code').value.toUpperCase().trim();
-  const pct = document.getElementById('promo-pct').value;
-  if(!code||!pct){ toast('Remplissez le code et la réduction','error'); return; }
-  const promos = JSON.parse(localStorage.getItem('oda_promos')||'[]');
-  promos.push({code,pct,active:true});
-  localStorage.setItem('oda_promos', JSON.stringify(promos));
-  const list = document.getElementById('promo-list');
-  const div = document.createElement('div');
-  div.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)';
-  div.innerHTML=`<div><span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--ga);letter-spacing:2px">${code}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--gray);margin-left:12px;letter-spacing:1px">-${pct}%</span></div><button class="reset-btn" style="padding:5px 12px;font-size:11px" onclick="this.parentElement.remove()">Désactiver</button>`;
-  list.appendChild(div);
-  toast('Code promo '+code+' créé ✓');
-}
+function delWl(i){const wl=JSON.parse(localStorage.getItem('oda_waitlist')||'[]');wl.splice(i,1);localStorage.setItem('oda_waitlist',JSON.stringify(wl));renderDrops();}
+function clearWl(){if(!confirm('Vider la liste d'attente ?'))return;localStorage.removeItem('oda_waitlist');renderDrops();toast('Liste vidée');}
+function exportWl(){const wl=JSON.parse(localStorage.getItem('oda_waitlist')||'[]');if(!wl.length){toast('Liste vide','err');return;}let csv='Email,Drop,Date
+';wl.forEach(x=>csv+=x.email+','+(x.dropId||'')+',"'+new Date(x.date).toLocaleDateString('fr-FR')+'"
+');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='waitlist-oda.csv';a.click();toast('Export CSV ✓');}
+function closeModal(){G('modal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+window.addEventListener('load',()=>{const s=localStorage.getItem('oda_admin_sess');if(s&&Date.now()-parseInt(s)<4*3600*1000)initAdmin();});
 </script>
 </body>
 </html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Collection Limitée — ODA Tactical SW</title>
+<meta name="description" content="Éditions limitées ODA Tactical SW. Des pièces rares, numérotées, disponibles en quantité très limitée.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--d:#050505;--d2:#0a0a0a;--d3:#0f0f0f;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gaa:#3a4e2a;--gb:#4a6030;--gbl:#6a8a44;--w:#e8e8e2;--gr:#525250;--grl:#828280;--b:#101310;--bl:#181c15;--red:#3a1010;--redl:#8b3030}
+html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--ga)}
+
+/* NAV */
+.announce{background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative}
+#nav{position:fixed;top:40px;left:0;width:100%;z-index:999;background:rgba(5,5,5,.98);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(16px)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}.nlogo img{height:40px;width:40px;object-fit:contain;opacity:.85}
+.nbrand{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:5px;color:var(--w)}.nbrand em{font-style:normal;color:var(--gb)}
+.nlinks{display:flex;gap:36px;list-style:none}
+.nlinks a{color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;transition:color .3s;position:relative}
+.nlinks a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1px;background:var(--gb);transition:width .3s}
+.nlinks a:hover{color:var(--w)}.nlinks a:hover::after,.nlinks a.active::after{width:100%}.nlinks a.active{color:var(--grl)}
+.nright{display:flex;align-items:center;gap:10px}
+.cart-a{color:var(--gr);border:1px solid var(--b);padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:all .3s;text-decoration:none}.cart-a:hover{color:var(--grl);border-color:var(--ga)}
+.cbadge{background:var(--ga);color:var(--grl);font-size:9px;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-left:4px}
+.ncta{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:8px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none}.ncta:hover{background:var(--gl);color:var(--w)}
+.burger{display:none;background:none;border:1px solid var(--b);color:var(--gr);width:34px;height:34px;cursor:pointer;font-size:14px;align-items:center;justify-content:center}
+#mmenu{display:none;position:fixed;top:108px;left:0;width:100%;background:rgba(5,5,5,.99);border-bottom:1px solid var(--b);z-index:998;flex-direction:column}
+#mmenu a{padding:14px 24px;color:var(--gr);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--b);transition:color .2s}.#mmenu a:hover{color:var(--grl)}
+#mmenu.open{display:flex}
+
+/* HERO */
+.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;padding:140px 80px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--b)}
+.hero-veg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.drop-tag{display:inline-flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gb);text-transform:uppercase;margin-bottom:20px}
+.drop-tag::before{content:'';width:20px;height:1px;background:var(--gb)}
+.drop-tag .live-dot{width:8px;height:8px;background:var(--gbl);border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vw,130px);line-height:.85;letter-spacing:2px;margin-bottom:8px}
+.hero-title .t-green{color:var(--ga)}
+.hero-title .t-dim{color:var(--gr);font-size:clamp(36px,5vw,72px)}
+.hero-sub{font-size:14px;color:var(--grl);max-width:460px;line-height:1.9;margin:22px 0 36px;font-weight:300}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hstat{text-align:left}
+.hstat-n{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gb);line-height:1}
+.hstat-l{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gr);margin-top:3px}
+
+/* DROPS GRID */
+.drops-section{padding:88px 80px}
+.stag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:var(--ga);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.stag::before{content:'';width:20px;height:1px;background:var(--ga)}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5vw,60px);letter-spacing:2px;margin-bottom:48px}
+
+/* DROP CARD — FEATURED */
+.drop-featured{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--b);margin-bottom:1px;position:relative;overflow:hidden}
+.drop-featured:hover{border-color:var(--ga)}
+.drop-visual{background:#060c06;display:flex;align-items:center;justify-content:center;padding:72px 60px;position:relative;overflow:hidden;border-right:1px solid var(--b);min-height:480px}
+.drop-visual-veg{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.1}
+.drop-img{position:relative;z-index:1;text-align:center}
+.drop-img img{width:300px;max-width:100%;filter:drop-shadow(0 20px 60px rgba(74,96,48,.3));animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.drop-number{position:absolute;bottom:20px;left:20px;font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(45,61,34,.2);line-height:1;z-index:0;pointer-events:none}
+.drop-info{padding:60px 64px;display:flex;flex-direction:column;justify-content:center}
+.drop-edition{display:inline-flex;align-items:center;gap:8px;background:var(--g);border:1px solid var(--ga);color:var(--gbl);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;margin-bottom:20px;width:fit-content}
+.drop-edition .dot{width:6px;height:6px;background:var(--gbl);border-radius:50%}
+.drop-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:2px;line-height:.9;margin-bottom:16px}
+.drop-desc{font-size:14px;color:var(--gr);line-height:1.9;max-width:400px;margin-bottom:28px}
+
+/* STOCK BAR */
+.stock-wrap{margin-bottom:28px}
+.stock-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.stock-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gr)}
+.stock-count{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gb)}
+.stock-bar{height:4px;background:var(--b);position:relative;overflow:hidden}
+.stock-fill{height:100%;background:linear-gradient(90deg,var(--ga),var(--gbl));transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.stock-pct{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--gr);margin-top:6px;text-transform:uppercase}
+
+/* TIMER */
+.timer-wrap{background:var(--g);border:1px solid var(--ga);padding:18px 22px;margin-bottom:28px}
+.timer-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ga);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.timer-label::before{content:'⏱'}
+.timer-digits{display:flex;gap:16px;align-items:center}
+.tunit{text-align:center}
+.tnum{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--w);line-height:1}
+.tlbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-top:2px}
+.tsep{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--ga);padding-bottom:8px}
+
+/* PRICE ROW */
+.drop-price-row{display:flex;align-items:baseline;gap:16px;margin-bottom:24px}
+.drop-price{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--gb)}
+.drop-price-sub{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gr)}
+
+/* BUTTONS */
+.btn{background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-flex;align-items:center;gap:10px}.btn:hover{background:var(--gl);color:var(--w)}
+.btn-o{background:transparent;border-color:var(--b);color:var(--gr)}.btn-o:hover{border-color:var(--ga);color:var(--grl);background:transparent}
+.btn-reserve{background:var(--ga);border-color:var(--gaa);color:var(--w)}.btn-reserve:hover{background:var(--gaa)}
+
+/* SPECS MINI */
+.drop-specs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--b);margin-bottom:28px}
+.ds-item{padding:10px 14px;border-right:1px solid var(--b);border-bottom:1px solid var(--b)}
+.ds-item:nth-child(even){border-right:none}
+.ds-item:nth-last-child(-n+2){border-bottom:none}
+.ds-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-bottom:3px}
+.ds-value{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--grl);font-weight:600}
+
+/* WAITLIST FORM */
+.waitlist-form{display:flex;gap:0;max-width:460px}
+.wl-input{flex:1;background:#060606;border:1px solid var(--b);border-right:none;color:var(--w);padding:12px 16px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;transition:border-color .2s}.wl-input:focus{border-color:var(--ga)}.wl-input::placeholder{color:var(--gr);opacity:.5}
+.wl-btn{background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:12px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .2s}.wl-btn:hover{background:var(--gl);color:var(--w)}
+.wl-success{display:none;background:rgba(17,21,16,.8);border:1px solid var(--gb);color:var(--gbl);padding:12px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:1px;max-width:460px}
+
+/* MEMBER EXCLUSIVE */
+.member-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(45,61,34,.25);border:1px solid var(--ga);color:var(--gbl);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;padding:5px 12px;margin-bottom:16px}
+.member-badge svg{width:12px;height:12px;fill:var(--gbl)}
+
+/* DROP CARD — UPCOMING */
+.drops-upcoming{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b);margin-top:1px}
+.drop-upcoming-card{background:var(--d2);padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
+.drop-upcoming-card:hover{background:#0d0f0d}
+.duc-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gr);margin-bottom:8px}
+.duc-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:6px;color:var(--grl)}
+.duc-date{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ga);margin-bottom:16px}
+.duc-icon{font-size:48px;opacity:.18;position:absolute;bottom:16px;right:16px}
+.duc-tag{display:inline-block;background:var(--gm);border:1px solid var(--gl);color:var(--gr);font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:16px}
+.duc-tag.soon{background:rgba(45,61,34,.2);border-color:var(--ga);color:var(--gbl)}
+.duc-desc{font-size:12px;color:var(--gr);line-height:1.8;margin-bottom:20px;max-width:260px}
+.duc-notify{display:flex;gap:0;margin-top:4px}
+.duc-input{flex:1;background:#060606;border:1px solid var(--b);border-right:none;color:var(--w);padding:9px 12px;font-size:12px;outline:none}.duc-input::placeholder{color:var(--gr);opacity:.5}
+.duc-btn{background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:9px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .2s}.duc-btn:hover{background:var(--gl);color:var(--w)}
+
+/* ACCESS MEMBERS */
+.access-section{background:#060c06;border-top:1px solid var(--b);border-bottom:1px solid var(--b);padding:72px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.access-left .stitle{margin-bottom:16px}
+.access-perk{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--b)}
+.access-perk:last-child{border-bottom:none}
+.access-perk-icon{font-size:20px;opacity:.6;flex-shrink:0;width:28px}
+.access-perk-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grl);margin-bottom:4px}
+.access-perk-desc{font-size:12px;color:var(--gr);line-height:1.7}
+.access-cta{background:var(--d2);border:1px solid var(--b);padding:36px;text-align:center}
+.access-cta-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;margin-bottom:10px}
+.access-cta-sub{font-size:13px;color:var(--gr);line-height:1.8;margin-bottom:24px}
+.access-cta-free{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ga);margin-top:12px}
+
+/* HISTORY */
+.history-section{padding:88px 80px;background:var(--d2);border-top:1px solid var(--b)}
+.history-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--b)}
+.hist-item{background:var(--d);padding:24px}
+.hist-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grl);margin-bottom:4px}
+.hist-date{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr);margin-bottom:8px}
+.hist-qty{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--ga)}
+.hist-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border:1px solid;display:inline-block;margin-top:6px}
+.hist-sold{color:var(--redl);border-color:var(--red);background:rgba(58,16,16,.2)}
+.hist-live{color:var(--gbl);border-color:var(--gb);background:rgba(74,96,48,.15)}
+
+/* FOOTER */
+footer{background:#030303;border-top:1px solid var(--b);padding:56px 80px 28px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px}
+.flogo{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:12px}.flogo img{height:36px;width:36px;object-fit:contain;opacity:.7}.flogo span{color:var(--gb)}
+.fdesc{font-size:12px;color:var(--gr);line-height:1.9;max-width:260px}
+.fh{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--grl);margin-bottom:14px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:10px}.fl a{font-size:12px;color:var(--gr);text-decoration:none;transition:color .2s}.fl a:hover{color:var(--grl)}
+.fbot{border-top:1px solid var(--b);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gr)}
+.sbtn{width:28px;height:28px;border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--gr);text-decoration:none;transition:all .2s}.sbtn:hover{border-color:var(--ga);color:var(--grl)}
+
+/* TOAST */
+#toast{position:fixed;top:80px;right:18px;z-index:9999;background:var(--gm);color:var(--grl);border:1px solid var(--gl);padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+
+/* CHATBOT */
+#cw{position:fixed;bottom:20px;right:20px;z-index:9998}
+#ct{width:46px;height:46px;border-radius:50%;background:var(--gm);border:1px solid var(--gl);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.7);transition:all .25s}.#ct:hover{background:var(--gl)}
+#cb2{display:none;position:absolute;bottom:56px;right:0;width:285px;background:var(--d2);border:1px solid var(--b);flex-direction:column;overflow:hidden}#cb2.on{display:flex}
+#ch{background:var(--g);padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--b)}
+#cm{height:200px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:86%;padding:8px 12px;font-size:12px;line-height:1.6}
+.bot{background:var(--g);border:1px solid var(--b);color:var(--grl);align-self:flex-start;border-radius:0 6px 6px 6px}
+.usr{background:var(--gm);color:var(--grl);align-self:flex-end;border-radius:6px 0 6px 6px}
+#cf{display:flex;border-top:1px solid var(--b)}
+#cin{flex:1;background:var(--d);border:none;color:var(--w);padding:10px 12px;font-size:12px;outline:none}#cin::placeholder{color:var(--gr)}
+#cf button{background:var(--gm);border:none;color:var(--grl);padding:10px 13px;cursor:pointer;font-size:14px}
+
+@media(max-width:1200px){.drops-upcoming{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){.drop-featured{grid-template-columns:1fr}.drop-visual{min-height:320px;border-right:none;border-bottom:1px solid var(--b)}.access-section{grid-template-columns:1fr;gap:32px}.history-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.hero{padding:120px 20px 60px}.drops-section{padding:56px 20px}.drops-upcoming{grid-template-columns:1fr}.access-section{padding:56px 20px}.history-section{padding:56px 20px}.fgrid{grid-template-columns:1fr 1fr}footer{padding:44px 20px}#nav{padding:0 18px;top:40px}.nlinks{display:none}.burger{display:flex}}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCE BAR -->
+<div class="announce"><span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h</span></div>
+
+<div id="toast"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
+  <ul class="nlinks">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="collection-limitee.html" class="active">Éditions Limitées</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nright">
+    <a href="compte.html" class="cart-a">👤 Compte</a>
+    <a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a>
+    <a href="collections.html" class="ncta">Boutique</a>
+    <button class="burger" onclick="document.getElementById('mmenu').classList.toggle('open')">&#9776;</button>
+  </div>
+</nav>
+<div id="mmenu">
+  <a href="index.html">Accueil</a><a href="collections.html">Collections</a>
+  <a href="collection-limitee.html">Éditions Limitées</a><a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a><a href="panier.html">Panier</a>
+  <a href="compte.html">Mon compte</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-veg">
+    <svg viewBox="0 0 1440 700" style="position:absolute;bottom:0;width:100%;height:100%;pointer-events:none">
+      <g opacity=".14">
+        <path d="M-20 700Q10 500 0 300Q14 500 28 700Z" fill="#0c0e0b"/>
+        <path d="M35 700Q70 530 50 355Q82 525 96 700Z" fill="#111510"/>
+        <path d="M1460 700Q1430 500 1440 300Q1426 500 1412 700Z" fill="#0c0e0b"/>
+        <path d="M1405 700Q1370 530 1390 355Q1358 525 1344 700Z" fill="#111510"/>
+        <path d="M-10 690Q90 640 200 610Q130 660 155 710Z" fill="#0c0e0b"/>
+        <path d="M1450 690Q1350 640 1240 610Q1310 660 1285 710Z" fill="#0c0e0b"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="drop-tag"><span class="live-dot"></span>Drops exclusifs ODA</div>
+    <h1 class="hero-title">
+      ÉDITIONS<br>
+      <span class="t-green">LIMITÉES</span><br>
+      <span class="t-dim">ODA TACTICAL</span>
+    </h1>
+    <p class="hero-sub">Des pièces rares, numérotées, disponibles en quantité très limitée. Une fois le stock épuisé, il n'y a pas de second run.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n" id="hero-total-drops">1</div><div class="hstat-l">Drop actif</div></div>
+      <div class="hstat"><div class="hstat-n" id="hero-stock-left">109</div><div class="hstat-l">Pièces disponibles</div></div>
+      <div class="hstat"><div class="hstat-n">2+</div><div class="hstat-l">Drops à venir</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DROPS ACTIFS -->
+<section class="drops-section">
+  <div class="stag">Drop actif</div>
+  <h2 class="stitle">DISPONIBLE MAINTENANT</h2>
+
+  <!-- DROP #1 — MONTRE -->
+  <div class="drop-featured">
+    <div class="drop-visual">
+      <div class="drop-visual-veg">
+        <svg viewBox="0 0 700 600" style="position:absolute;bottom:0;width:100%;height:100%">
+          <path d="M-20 600Q30 450 10 300Q50 450 80 600Z" fill="#2a3d22" opacity=".5"/>
+          <path d="M680 600Q640 450 660 300Q620 450 600 600Z" fill="#2a3d22" opacity=".5"/>
+          <path d="M-10 590Q80 540 200 510Q130 560 155 610Z" fill="#1e2d14" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="drop-img">
+        <img src="montre.jpg" alt="ODA Stealth Watch — Drop #01" onerror="this.style.display='none'">
+      </div>
+      <div class="drop-number">01</div>
+    </div>
+    <div class="drop-info">
+      <div class="member-badge">
+        <svg viewBox="0 0 16 16"><path d="M8 1l2.163 4.279L15 6.082l-3.5 3.498.826 4.92L8 12.279 3.674 14.5l.826-4.92L1 6.082l4.837-.803z"/></svg>
+        Accès anticipé membres — 24h avant
+      </div>
+      <div class="drop-edition"><span class="dot"></span>Drop #01 · Édition Fondateurs</div>
+      <h2 class="drop-name">ODA STEALTH<br><span style="color:var(--ga)">WATCH</span></h2>
+      <p class="drop-desc">La première pièce de la collection limitée ODA. Boîtier acier 316L traitement PVD noir mat, verre saphir anti-reflets, mouvement automatique Miyota 9015. Chaque exemplaire est numéroté à la main.</p>
+
+      <div class="drop-specs">
+        <div class="ds-item"><div class="ds-label">Boîtier</div><div class="ds-value">Acier 316L PVD Noir</div></div>
+        <div class="ds-item"><div class="ds-label">Verre</div><div class="ds-value">Saphir anti-reflets</div></div>
+        <div class="ds-item"><div class="ds-label">Étanchéité</div><div class="ds-value">200m / 20 ATM</div></div>
+        <div class="ds-item"><div class="ds-label">Mouvement</div><div class="ds-value">Miyota 9015 Auto</div></div>
+      </div>
+
+      <div class="stock-wrap">
+        <div class="stock-head">
+          <span class="stock-label">Stock disponible</span>
+          <span class="stock-count"><span id="stock-left">109</span><span style="font-size:16px;color:var(--gr)">/109</span></span>
+        </div>
+        <div class="stock-bar"><div class="stock-fill" id="stock-fill" style="width:100%"></div></div>
+        <div class="stock-pct" id="stock-pct">109 exemplaires restants — édition numérotée</div>
+      </div>
+
+      <div class="timer-wrap" id="timer-section">
+        <div class="timer-label">Fin du drop</div>
+        <div class="timer-digits">
+          <div class="tunit"><div class="tnum" id="t-days">--</div><div class="tlbl">Jours</div></div>
+          <div class="tsep">:</div>
+          <div class="tunit"><div class="tnum" id="t-hours">--</div><div class="tlbl">Heures</div></div>
+          <div class="tsep">:</div>
+          <div class="tunit"><div class="tnum" id="t-min">--</div><div class="tlbl">Min</div></div>
+          <div class="tsep">:</div>
+          <div class="tunit"><div class="tnum" id="t-sec">--</div><div class="tlbl">Sec</div></div>
+        </div>
+      </div>
+
+      <div class="drop-price-row">
+        <div class="drop-price">149€</div>
+        <div class="drop-price-sub">Livraison offerte<br>Numérotée à la main</div>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn" data-add='{"id":"watch-01","name":"ODA Stealth Watch — Drop #01","price":149}'>+ Ajouter au panier</button>
+        <a href="montre.html" class="btn btn-o">Voir la fiche complète</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTE D'ATTENTE si stock épuisé -->
+<div id="waitlist-section" style="display:none;background:var(--d2);border:1px solid var(--b);padding:36px 80px;border-top:none">
+  <div style="max-width:580px;margin:0 auto;text-align:center">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;margin-bottom:8px">STOCK ÉPUISÉ</div>
+    <p style="font-size:13px;color:var(--gr);line-height:1.8;margin-bottom:24px">Ce drop est complet. Inscrivez-vous pour être informé(e) en priorité du prochain drop ou d'un éventuel restockage.</p>
+    <div class="waitlist-form" style="margin:0 auto">
+      <input class="wl-input" id="wl-email-1" type="email" placeholder="votre@email.com">
+      <button class="wl-btn" onclick="joinWaitlist('wl-email-1','wl-success-1')">M'alerter</button>
+    </div>
+    <div class="wl-success" id="wl-success-1" style="margin:12px auto">✓ Vous serez alerté(e) en priorité pour le prochain drop.</div>
+  </div>
+</div>
+
+<!-- PROCHAINS DROPS -->
+<section class="drops-section" style="background:var(--d2);border-top:1px solid var(--b)">
+  <div class="stag">Prochainement</div>
+  <h2 class="stitle">DROPS À VENIR</h2>
+
+  <div class="drops-upcoming">
+
+    <!-- DROP #02 -->
+    <div class="drop-upcoming-card">
+      <div class="duc-label">Drop #02</div>
+      <div class="duc-tag soon">Bientôt</div>
+      <div class="duc-name">VESTE STEALTH<br>ÉDITION NUIT</div>
+      <div class="duc-date">Printemps 2025</div>
+      <div class="duc-desc">La Veste ODA-4 dans un coloris exclusif à la collection limitée. Détails phosphorescents, numérotation laser sur la poche intérieure.</div>
+      <div class="duc-notify">
+        <input class="duc-input" id="wl-drop2" type="email" placeholder="Email pour l'alerte...">
+        <button class="duc-btn" onclick="joinWaitlist('wl-drop2','wl-ok-2')">Alerter</button>
+      </div>
+      <div class="wl-success" id="wl-ok-2" style="margin-top:10px">✓ Inscrit(e) pour le Drop #02</div>
+      <div class="duc-icon">🧥</div>
+    </div>
+
+    <!-- DROP #03 -->
+    <div class="drop-upcoming-card">
+      <div class="duc-label">Drop #03</div>
+      <div class="duc-tag">À venir</div>
+      <div class="duc-name">SAC TACTIQUE<br>ODA-T1</div>
+      <div class="duc-date">Été 2025</div>
+      <div class="duc-desc">Le sac à dos tactique 25L en édition limitée. Compartiments MOLLE, système de portage ergonomique, coloris exclusif noir kaki.</div>
+      <div class="duc-notify">
+        <input class="duc-input" id="wl-drop3" type="email" placeholder="Email pour l'alerte...">
+        <button class="duc-btn" onclick="joinWaitlist('wl-drop3','wl-ok-3')">Alerter</button>
+      </div>
+      <div class="wl-success" id="wl-ok-3" style="margin-top:10px">✓ Inscrit(e) pour le Drop #03</div>
+      <div class="duc-icon">🎒</div>
+    </div>
+
+    <!-- DROP MYSTÈRE -->
+    <div class="drop-upcoming-card" style="background:var(--g)">
+      <div class="duc-label">Drop #04</div>
+      <div class="duc-tag">Secret</div>
+      <div class="duc-name" style="color:var(--ga)">DROP<br>MYSTÈRE</div>
+      <div class="duc-date">Automne 2025</div>
+      <div class="duc-desc">Seuls les membres inscrits connaîtront la nature de ce drop 48h avant son lancement. Devenez membre pour avoir l'accès anticipé.</div>
+      <a href="compte.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gbl);text-decoration:none;margin-top:4px;transition:color .2s">Créer un compte →</a>
+      <div class="duc-icon" style="opacity:.1">❓</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACCÈS MEMBRES -->
+<div class="access-section">
+  <div class="access-left">
+    <div class="stag">Avantages membres</div>
+    <h2 class="stitle">ACCÈS ANTICIPÉ<br><span style="color:var(--ga)">RÉSERVÉ</span><br>AUX MEMBRES</h2>
+    <p style="font-size:13px;color:var(--gr);line-height:1.9;margin-bottom:32px">Les membres ODA Tactical SW bénéficient d'un accès exclusif aux drops 24h avant leur mise en vente publique.</p>
+    <div>
+      <div class="access-perk">
+        <div class="access-perk-icon">⏰</div>
+        <div><div class="access-perk-title">Accès 24h avant</div><div class="access-perk-desc">Accédez aux drops en avant-première, avant la mise en vente publique.</div></div>
+      </div>
+      <div class="access-perk">
+        <div class="access-perk-icon">🔔</div>
+        <div><div class="access-perk-title">Alertes exclusives</div><div class="access-perk-desc">Soyez notifié(e) à chaque nouveau drop dès l'annonce.</div></div>
+      </div>
+      <div class="access-perk">
+        <div class="access-perk-icon">🎯</div>
+        <div><div class="access-perk-title">Codes promo membres</div><div class="access-perk-desc">Des codes de réduction exclusifs réservés aux membres fidèles.</div></div>
+      </div>
+      <div class="access-perk">
+        <div class="access-perk-icon">🏅</div>
+        <div><div class="access-perk-title">Programme fidélité</div><div class="access-perk-desc">Points, badges et niveaux : de Recrue à Commandant ODA.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="access-cta">
+    <div class="access-cta-title">REJOINDRE<br>LA COMMUNAUTÉ</div>
+    <div class="access-cta-sub">Créez votre compte en 2 minutes. Gratuit, sans engagement.</div>
+    <a href="compte.html" class="btn" style="width:100%;justify-content:center">Créer un compte gratuit</a>
+    <div class="access-cta-free">100% gratuit · Aucun engagement</div>
+    <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--b)">
+      <div style="font-size:12px;color:var(--gr);margin-bottom:10px">Déjà membre ?</div>
+      <a href="compte.html" class="btn btn-o" style="width:100%;justify-content:center">Se connecter</a>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORIQUE DROPS -->
+<section class="history-section">
+  <div class="stag">Historique</div>
+  <h2 class="stitle">DROPS PASSÉS</h2>
+  <div class="history-grid" id="history-grid">
+    <!-- Populated by JS -->
+  </div>
+  <p style="font-size:12px;color:var(--gr);margin-top:20px;text-align:center">Chaque drop est unique et ne sera jamais reproduit à l'identique.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fgrid">
+    <div><div class="flogo"><img src="logo.png" onerror="this.style.display='none'">ODA<span>·</span>TACTICAL SW</div><p class="fdesc">Équipement tactique premium. Vêtements multi-poches et montres all-black pour ceux qui ne font pas de compromis.</p></div>
+    <div><div class="fh">Collections</div><ul class="fl"><li><a href="collection-limitee.html">Éditions limitées</a></li><li><a href="montre.html">Montre Stealth</a></li><li><a href="produit-veste.html">Veste Tactique</a></li><li><a href="produit-gilet.html">Gilet Multi-poches</a></li></ul></div>
+    <div><div class="fh">Infos</div><ul class="fl"><li><a href="faq.html">FAQ</a></li><li><a href="cgv.html">CGV</a></li><li><a href="tracking.html">Suivi commande</a></li><li><a href="apropos.html">À propos</a></li></ul></div>
+    <div><div class="fh">Suivez-nous</div><ul class="fl"><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2025 <b style="color:var(--gb)">ODA Tactical SW</b></span><div style="display:flex;gap:8px"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a></div></div>
+</footer>
+
+<!-- CHATBOT -->
+<div id="cw">
+  <div id="cb2">
+    <div id="ch"><img src="logo.png" style="width:22px;height:22px;border-radius:50%;object-fit:contain;opacity:.6" onerror="this.style.display='none'"><div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)">Assistant ODA</div><button onclick="document.getElementById('cb2').classList.toggle('on')" style="margin-left:auto;background:none;border:none;color:var(--gr);cursor:pointer;font-size:15px;line-height:1">✕</button></div>
+    <div id="cm"><div class="msg bot">Bonjour ! Des questions sur nos éditions limitées ?</div></div>
+    <div id="cf"><input id="cin" placeholder="Votre question..." onkeydown="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">➤</button></div>
+  </div>
+  <button id="ct" onclick="document.getElementById('cb2').classList.toggle('on')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#828280" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+</div>
+
+<!-- COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:260px"><div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:4px">🍪 Cookies</div><p style="font-size:12px;color:#525250;line-height:1.6">Cookies essentiels et analytiques. <a href="cgv.html" style="color:#4a6030">En savoir plus</a></p></div>
+  <div style="display:flex;gap:10px;flex-shrink:0">
+    <button onclick="localStorage.setItem('oda_cookies','essential');this.closest('#cookie-banner').style.display='none'" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer">Essentiels</button>
+    <button onclick="localStorage.setItem('oda_cookies','all');this.closest('#cookie-banner').style.display='none'" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer">Tout accepter</button>
+  </div>
+</div>
+
+<script>
+// ===== INIT =====
+(function(){
+  if(!localStorage.getItem('oda_cookies')){const b=document.getElementById('cookie-banner');if(b)b.style.display='flex';}
+  const cart=JSON.parse(localStorage.getItem('oda_cart')||'[]');
+  const cb=document.getElementById('cb');if(cb)cb.textContent=cart.reduce((s,i)=>s+i.qty,0);
+  document.querySelectorAll('[data-add]').forEach(btn=>{btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();addToCart(JSON.parse(btn.dataset.add));});});
+})();
+
+function addToCart(p){
+  const cart=JSON.parse(localStorage.getItem('oda_cart')||'[]');
+  const ex=cart.find(i=>i.id===p.id);if(ex)ex.qty++;else cart.push({...p,qty:1});
+  localStorage.setItem('oda_cart',JSON.stringify(cart));
+  const cb=document.getElementById('cb');if(cb)cb.textContent=cart.reduce((s,i)=>s+i.qty,0);
+  toast('Ajouté au panier ✓');
+}
+
+// ===== STOCK =====
+function initStock(){
+  const s=JSON.parse(localStorage.getItem('oda_settings')||'{}');
+  const left=s.wleft!==undefined?s.wleft:109;
+  const total=s.wtot||109;
+  document.getElementById('stock-left').textContent=left;
+  document.getElementById('hero-stock-left').textContent=left;
+  const pct=Math.round(left/total*100);
+  const fill=document.getElementById('stock-fill');
+  if(fill){setTimeout(()=>fill.style.width=pct+'%',300);}
+  const pctEl=document.getElementById('stock-pct');
+  if(pctEl){
+    if(left<=10) pctEl.textContent='⚠️ '+left+' exemplaires restants — presque épuisé !';
+    else if(left<=20) pctEl.textContent='🔥 Seulement '+left+' exemplaires restants';
+    else pctEl.textContent=left+' exemplaires restants — édition numérotée';
+  }
+  if(left<=0){
+    document.getElementById('timer-section').style.display='none';
+    document.getElementById('waitlist-section').style.display='block';
+    document.querySelectorAll('[data-add]').forEach(b=>{b.textContent='Stock épuisé';b.disabled=true;b.style.opacity='.5';b.style.cursor='default';});
+  }
+  const showCounter=s.wcounter!==false;
+  if(!showCounter){const sw=document.querySelector('.stock-wrap');if(sw)sw.style.display='none';}
+}
+
+// ===== TIMER =====
+function initTimer(){
+  // Drop end date — set to 30 days from now if not stored
+  let endDate=localStorage.getItem('oda_drop1_end');
+  if(!endDate){
+    const d=new Date();d.setDate(d.getDate()+30);
+    endDate=d.toISOString();localStorage.setItem('oda_drop1_end',endDate);
+  }
+  function tick(){
+    const now=new Date();const end=new Date(endDate);
+    const diff=end-now;
+    if(diff<=0){
+      ['t-days','t-hours','t-min','t-sec'].forEach(id=>document.getElementById(id).textContent='00');
+      return;
+    }
+    const days=Math.floor(diff/86400000);
+    const hrs=Math.floor((diff%86400000)/3600000);
+    const min=Math.floor((diff%3600000)/60000);
+    const sec=Math.floor((diff%60000)/1000);
+    const pad=n=>String(n).padStart(2,'0');
+    document.getElementById('t-days').textContent=pad(days);
+    document.getElementById('t-hours').textContent=pad(hrs);
+    document.getElementById('t-min').textContent=pad(min);
+    document.getElementById('t-sec').textContent=pad(sec);
+  }
+  tick();setInterval(tick,1000);
+}
+
+// ===== WAITLIST =====
+function joinWaitlist(inputId,successId){
+  const email=document.getElementById(inputId)?.value?.trim();
+  if(!email||!/\S+@\S+\.\S+/.test(email)){toast('Email invalide');return;}
+  const wl=JSON.parse(localStorage.getItem('oda_waitlist')||'[]');
+  if(!wl.find(e=>e.email===email)){
+    wl.push({email,date:new Date().toISOString(),dropId:inputId});
+    localStorage.setItem('oda_waitlist',JSON.stringify(wl));
+  }
+  const s=document.getElementById(successId);if(s)s.style.display='block';
+  document.getElementById(inputId).value='';
+  toast('Inscription confirmée ✓');
+}
+
+// ===== HISTORY =====
+function renderHistory(){
+  const grid=document.getElementById('history-grid');if(!grid)return;
+  const drops=[
+    {name:'ODA Stealth Watch',date:'Drop #01 · 2025',qty:109,status:'live',icon:'⌚'},
+    {name:'Drop #02 — Veste',date:'Printemps 2025',qty:'?',status:'soon',icon:'🧥'},
+    {name:'Drop #03 — Sac',date:'Été 2025',qty:'?',status:'soon',icon:'🎒'},
+    {name:'Drop #04 — Secret',date:'Automne 2025',qty:'?',status:'soon',icon:'❓'},
+  ];
+  grid.innerHTML=drops.map(d=>`
+    <div class="hist-item">
+      <div style="font-size:28px;opacity:.4;margin-bottom:10px">${d.icon}</div>
+      <div class="hist-name">${d.name}</div>
+      <div class="hist-date">${d.date}</div>
+      <div class="hist-qty">${d.qty}</div>
+      <span class="hist-tag ${d.status==='live'?'hist-live':'hist-sold'}">${d.status==='live'?'En vente':'À venir'}</span>
+    </div>`).join('');
+}
+
+// ===== CHATBOT =====
+const BOTS={limited:'⌚ Le Drop #01 est la ODA Stealth Watch — 109 exemplaires numérotés à 149€. Chaque pièce est unique.',stock:'📦 Le stock exact est visible sur la barre de progression. En cas de rupture, inscrivez-vous à la liste d\'attente.',member:'👤 Les membres ont accès aux drops 24h avant le public. Créez votre compte gratuitement sur compte.html.',next:'🔔 Le Drop #02 sera une veste édition spéciale. Inscrivez votre email pour être alerté(e).',def:'Je peux vous aider sur : le drop actuel, le stock, les drops à venir, ou l\'accès membres.'};
+function botR(t){t=t.toLowerCase();if(/montre|watch|drop.*01|01/.test(t))return BOTS.limited;if(/stock|dispo|combien|reste/.test(t))return BOTS.stock;if(/membre|compte|acc.s|priorit/.test(t))return BOTS.member;if(/prochain|suivant|drop.*02|veste/.test(t))return BOTS.next;return BOTS.def;}
+function addMsg(t,w){const d=document.createElement('div');d.className='msg '+w;d.textContent=t;const m=document.getElementById('cm');if(m){m.appendChild(d);m.scrollTop=m.scrollHeight;}}
+function sendChat(){const i=document.getElementById('cin');if(!i||!i.value.trim())return;const t=i.value;addMsg(t,'usr');i.value='';setTimeout(()=>addMsg(botR(t),'bot'),700);}
+
+// ===== TOAST =====
+function toast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=m;t.className='on';setTimeout(()=>t.className='',3000);}
+
+// ===== LAUNCH =====
+document.addEventListener('DOMContentLoaded',()=>{
+  initStock();
+  initTimer();
+  renderHistory();
+});
+</script>
+</body>
+</html>

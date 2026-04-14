@@ -5,7 +5,7 @@
 <title>Collections — ODA Tactical SW</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>*{margin:0;padding:0;box-sizing:border-box}
-:root{--d:#080c08;--d2:#0c110c;--g:#1b3d1b;--gm:#2a5a2a;--gl:#3a7a3a;--ga:#4a9e4a;--gb:#5dbf5d;--w:#f0f0eb;--gr:#7a7a72;--grl:#a8a89e;--b:#243824;--bl:#2f4f2f}
+:root{--d:#050505;--d2:#0a0a0a;--g:#0c0e0b;--gm:#111510;--gl:#171d14;--ga:#2d3d22;--gb:#3d5230;--gaa:#4a6030;--w:#e8e8e2;--gr:#5a5a56;--grl:#8a8a84;--b:#121510;--bl:#1a1f16}
 html{scroll-behavior:smooth}body{background:var(--d);color:var(--w);font-family:'Barlow',sans-serif;overflow-x:hidden}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gm)}
 #nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:rgba(8,12,8,.97);border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;backdrop-filter:blur(10px)}
@@ -102,12 +102,16 @@ footer{background:#040804;border-top:1px solid var(--b);padding:60px 80px 28px}
 @media(max-width:768px){#nav{padding:0 20px}.nlinks{display:none}.burger{display:flex;align-items:center;justify-content:center}section{padding:56px 20px}.stats{flex-wrap:wrap}.stat{flex:1 1 50%;border-bottom:1px solid var(--b)}.pgrid{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}footer{padding:48px 20px}.bc{padding:84px 20px 0}#cbox{width:calc(100vw - 48px);right:-4px}}.fbtn{background:transparent;border:1px solid var(--b);color:var(--gr);padding:8px 18px;font-family:"Barlow Condensed",sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}.fbtn:hover,.fbtn.active{background:var(--gm);border-color:var(--gl);color:var(--w);}@media(max-width:768px){#filters{padding:16px 20px;}}</style>
 </head>
 <body>
+<div id="announce-bar" style="background:var(--gm);border-bottom:1px solid var(--ga);padding:9px 20px;text-align:center;position:relative;z-index:1000">
+  <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--grl)" id="announce-text">🚚 Livraison offerte dès 100€ &nbsp;|&nbsp; ⌚ Montre Stealth Watch — Édition limitée &nbsp;|&nbsp; 📦 Expédition sous 24h</span>
+  <button onclick="this.parentElement.style.display='none'" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gr);cursor:pointer;font-size:14px;line-height:1">✕</button>
+</div>
 <nav id="nav">
   <a class="nlogo" href="index.html"><img src="logo.png" onerror="this.style.display='none'"><span class="nbrand">ODA<em>·</em>TACTICAL SW</span></a>
-  <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="montre.html">Montre</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <ul class="nlinks"><li><a href="index.html">Accueil</a></li><li><a href="collections.html">Collections</a></li><li><a href="montre.html">Montre</a><a href="collection-limitee.html">Drops Limités</a></li><li><a href="collection-limitee.html">Drops</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
   <div class="nright"><a href="panier.html" class="cart-a">Panier<span id="cb" class="cbadge">0</span></a><a href="collections.html" class="ncta">Boutique</a><button class="burger" onclick="toggleMenu()">&#9776;</button></div>
 </nav>
-<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a></div>
+<div id="mmenu"><a href="index.html">Accueil</a><a href="collections.html">Collections</a><a href="montre.html">Montre</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="panier.html">Panier</a><a href="compte.html">Mon compte 👤</a></div>
 
 <div style="padding:140px 80px 60px;border-bottom:1px solid var(--b);position:relative;overflow:hidden">
   <div style="position:absolute;inset:0;overflow:hidden;z-index:0"><svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax meet" style="position:absolute;bottom:0;width:100%;height:100%;pointer-events:none">
@@ -130,10 +134,50 @@ footer{background:#040804;border-top:1px solid var(--b);padding:60px 80px 28px}
   <button class="fbtn" onclick="filt('accessoire',this)">Accessoires</button>
 </div>
 
+
+<!-- ÉDITIONS LIMITÉES SECTION -->
+<div style="background:var(--g);border-top:1px solid var(--ga);border-bottom:1px solid var(--ga);padding:0">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+    <div style="padding:56px 60px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--ga)">
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gb);margin-bottom:16px">
+        <span style="width:7px;height:7px;background:var(--gbl);border-radius:50%;animation:pulsedot 2s ease-in-out infinite"></span>
+        Drop actif maintenant
+      </div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:2px;line-height:.9;margin-bottom:16px">ÉDITIONS<br><span style="color:var(--ga)">LIMITÉES</span><br><span style="color:var(--gr);font-size:clamp(22px,3vw,36px)">ODA TACTICAL</span></h2>
+      <p style="font-size:13px;color:var(--gr);line-height:1.9;max-width:380px;margin-bottom:28px">Des pièces rares, numérotées, disponibles en quantité très limitée. Une fois le stock épuisé, il n'y a pas de second run.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="collection-limitee.html" style="background:var(--gm);border:1px solid var(--gl);color:var(--grl);padding:13px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--gl)';this.style.color='var(--w)'" onmouseout="this.style.background='var(--gm)';this.style.color='var(--grl)'">Voir les drops →</a>
+      </div>
+    </div>
+    <div style="background:#060c06;display:flex;align-items:center;justify-content:center;padding:48px;position:relative;overflow:hidden;min-height:340px">
+      <div style="position:absolute;inset:0;overflow:hidden;opacity:.1;pointer-events:none">
+        <svg viewBox="0 0 600 400" style="position:absolute;bottom:0;width:100%;height:100%"><path d="M-20 400Q30 280 10 160Q50 280 80 400Z" fill="#2a3d22"/><path d="M580 400Q540 280 560 160Q520 280 500 400Z" fill="#2a3d22"/></svg>
+      </div>
+      <div style="text-align:center;position:relative;z-index:1">
+        <img src="montre.jpg" alt="ODA Stealth Watch" style="width:200px;max-width:100%;filter:drop-shadow(0 16px 48px rgba(74,96,48,.3));animation:floatimg 6s ease-in-out infinite" onerror="this.style.display='none'">
+        <div style="margin-top:16px;background:var(--gm);border:1px solid var(--gl);display:inline-block;padding:6px 16px">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--grl)">Drop #01 · <span id="cl-stock">109</span> restants</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes pulsedot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+@keyframes floatimg{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+<script>
+(function(){
+  const s=JSON.parse(localStorage.getItem('oda_settings')||'{}');
+  const el=document.getElementById('cl-stock');
+  if(el&&s.wleft!==undefined)el.textContent=s.wleft;
+})();
+</script>
+
 <div class="pgrid" id="cgrid">
   <div class="pc" data-cat="montre"><a href="montre.html"><div class="pci"><img src="montre.jpg" alt="ODA Stealth Watch"></div><div class="pbadge">Nouveau</div><div class="pinfo"><div class="pname">ODA Stealth Watch</div><div class="pdesc">Boîtier 40mm PVD noir, verre saphir, bracelet nylon, mouvement automatique. Étanche 200m.</div><div class="pfoot"><div class="pprice">149€</div><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--ga);letter-spacing:2px">VOIR →</span></div></div></a></div>
 
-  <div class="pc" data-cat="veste"><a href="produit-veste.html"><div class="pci"><svg width="150" height="150" viewBox="0 0 80 80" fill="none"><path d="M20 20L10 35l8 3-2 32h48l-2-32 8-3L60 20l-10 8c-4 4-16 4-20 0z" stroke="#4a9e4a" stroke-width="1.5" fill="#1b3d1b"/><line x1="40" y1="30" x2="40" y2="70" stroke="#2a5a2a" stroke-width="1"/><rect x="22" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="22" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/></svg></div><div class="pbadge">Bestseller</div><div class="pinfo"><div class="pname">Veste Tactique ODA-4</div><div class="pdesc">12 poches total, ripstop imperméable, doublure thermique amovible. S à 3XL.</div><div class="pfoot"><div class="pprice">189€</div><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--ga);letter-spacing:2px">VOIR →</span></div></div></a></div>
+  <div class="pc" data-cat="veste"><a href="produit-veste.html"><div class="pci"><svg width="150" height="150" viewBox="0 0 80 80" fill="none"><path d="M20 20L10 35l8 3-2 32h48l-2-32 8-3L60 20l-10 8c-4 4-16 4-20 0z" stroke="#4a9e4a" stroke-width="1.5" fill="#1b3d1b"/><line x1="40" y1="30" x2="40" y2="70" stroke="#2a5a2a" stroke-width="1"/><rect x="22" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="40" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="22" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="54" width="12" height="8" rx="1" stroke="#4a9e4a" stroke-width="1"/></svg></div><div class="pinfo"><div class="pname">Veste Tactique ODA-4</div><div class="pdesc">12 poches total, ripstop imperméable, doublure thermique amovible. S à 3XL.</div><div class="pfoot"><div class="pprice">189€</div><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--ga);letter-spacing:2px">VOIR →</span></div></div></a></div>
 
   <div class="pc" data-cat="gilet"><a href="produit-gilet.html"><div class="pci"><svg width="150" height="150" viewBox="0 0 80 80" fill="none"><path d="M25 15L15 25l3 45h44l3-45L55 15l-5 7c-4 6-16 6-20 0z" stroke="#4a9e4a" stroke-width="1.5" fill="#111811"/><rect x="20" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="32" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="20" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/><rect x="46" y="48" width="14" height="10" rx="1" stroke="#4a9e4a" stroke-width="1"/></svg></div><div class="pinfo"><div class="pname">Gilet Multi-poches ODA</div><div class="pdesc">12 poches organisées, compatible porte-plaque. Velcro MOLLE, fermetures YKK.</div><div class="pfoot"><div class="pprice">129€</div><span style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--ga);letter-spacing:2px">VOIR →</span></div></div></a></div>
 
@@ -155,7 +199,7 @@ function filt(cat,btn){document.querySelectorAll('.fbtn').forEach(b=>b.classList
     <div><div class="fh">Aide</div><ul class="fl"><li><a href="faq.html">FAQ</a></li><li><a href="faq.html#livraison">Livraison & retours</a></li><li><a href="faq.html#tailles">Guide des tailles</a></li><li><a href="contact.html">Contact</a></li></ul></div>
     <div><div class="fh">Suivez-nous</div><ul class="fl"><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div>
   </div>
-  <div class="fbot"><span>© 2025 <b style="color:#4a9e4a">ODA Tactical SW</b></span><div style="display:flex;gap:8px;"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a><a href="#" class="sbtn">YT</a></div></div>
+  <div class="fbot"><span>© 2025 <b style="color:var(--gaa)">ODA Tactical SW</b></span><div style="display:flex;gap:8px;"><a href="#" class="sbtn">IG</a><a href="#" class="sbtn">TT</a><a href="#" class="sbtn">YT</a></div></div>
 </footer>
 <div id="toast"></div>
 <div id="cwrap">
@@ -187,5 +231,26 @@ function toggleChat(){const b=document.getElementById('cbox');b.classList.toggle
 function addMsg(txt,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=txt;const m=document.getElementById('cmsgs');m.appendChild(d);m.scrollTop=m.scrollHeight;}
 function askBot(txt){addMsg(txt,'user');const tp=document.createElement('div');tp.className='msg bot';tp.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';const m=document.getElementById('cmsgs');m.appendChild(tp);m.scrollTop=m.scrollHeight;setTimeout(()=>{tp.remove();addMsg(botReply(txt),'bot');},800+Math.random()*400);}
 function sendChat(){const i=document.getElementById('cin');if(!i.value.trim())return;askBot(i.value);i.value='';}</script>
+
+<!-- RGPD COOKIE POPUP -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9997;background:rgba(10,10,10,.97);border-top:1px solid #101310;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;backdrop-filter:blur(10px)">
+  <div style="flex:1;min-width:280px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8e8e2;margin-bottom:6px">🍪 Gestion des cookies</div>
+    <p style="font-size:12px;color:#525250;line-height:1.7">Nous utilisons des cookies essentiels (panier, session) et analytiques (mesure d'audience). <a href="cgv.html#cookies" style="color:#4a6030;text-decoration:none">En savoir plus →</a></p>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap">
+    <button onclick="acceptCookies()" style="background:#111510;border:1px solid #171d14;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#2d3d22';this.style.color='#e8e8e2'" onmouseout="this.style.borderColor='#171d14';this.style.color='#828280'">Essentiels uniquement</button>
+    <button onclick="acceptAllCookies()" style="background:#111510;border:1px solid #2d3d22;color:#828280;padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#171d14';this.style.color='#e8e8e2'" onmouseout="this.style.background='#111510';this.style.color='#828280'">Tout accepter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var consent = localStorage.getItem('oda_cookies');
+  if(!consent){ var b=document.getElementById('cookie-banner'); if(b)b.style.display='flex'; }
+})();
+function acceptCookies(){ localStorage.setItem('oda_cookies','essential'); hideCookieBanner(); }
+function acceptAllCookies(){ localStorage.setItem('oda_cookies','all'); hideCookieBanner(); }
+function hideCookieBanner(){ var b=document.getElementById('cookie-banner'); if(b){ b.style.opacity='0'; b.style.transition='opacity .3s'; setTimeout(function(){b.style.display='none';},300); } }
+</script>
 </body>
 </html>
